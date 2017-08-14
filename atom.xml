@@ -503,11 +503,116 @@
   </entry>
   
   <entry>
+    <title>权限模型RBAC的使用</title>
+    <link href="http://blog.vnicers.com/2016/03/12/%E6%9D%83%E9%99%90%E6%A8%A1%E5%9E%8BRBAC%E7%9A%84%E4%BD%BF%E7%94%A8/"/>
+    <id>http://blog.vnicers.com/2016/03/12/权限模型RBAC的使用/</id>
+    <published>2016-03-11T16:00:00.000Z</published>
+    <updated>2017-08-14T17:07:18.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>今天看了一篇文章说的是权限管理RBAC，这个缩略词感觉很高大上，然后细读之后发现就是我之前在项目中所使用的，差不多一样的套路。<br>文章地址 <a href="http://blog.csdn.net/zwk626542417/article/details/46726491" target="_blank" rel="external"> RBAC权限模型——项目实战</a></p>
+<p>整理一下之前负责的项目所使用的权限是如何处理的，具体的RBAC的原理可以看上面这篇文章，我这里简单说一下为什么这样处理。</p>
+<h1 id="如何设计权限"><a href="#如何设计权限" class="headerlink" title="如何设计权限"></a>如何设计权限</h1><h2 id="第一个版本"><a href="#第一个版本" class="headerlink" title="第一个版本"></a>第一个版本</h2><p>任何一个项目只要涉及到不同的用户使用就会使用权限控制。这里的权限控制就是指一个用户登录系统之后拥有哪些可以使用的功能，哪些可以查看的数据。常见于一个系统之中，不同的角色的人登录系统之后，所看到的菜单是否一样，每个菜单打开之后是否都具有增删查改的权限。</p>
+<p>根据以上就出涉及到的几个相关的对象</p>
+<ol>
+<li>用户</li>
+<li>菜单</li>
+<li>操作(按钮,链接,api的调用,数据的查看)</li>
+</ol>
+<p>很容易设计出数据库的表结构</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://ws1.sinaimg.cn/large/818b7fe3gy1fijnnh412aj20j80e3dh9.jpg" alt="第一版，用户和权限之间应该有个中间表弄掉了" title="">
+                </div>
+                <div class="image-caption">第一版，用户和权限之间应该有个中间表弄掉了</div>
+            </figure>
+<p>这是最简单的设计，用户和菜单多对多 则需要一个中间表，总共四张表搞定。适合小系统。<br>这里解释一下permission表</p>
+<p><img src="https://ws1.sinaimg.cn/large/818b7fe3gy1fijnp4r6r6j20og04lq37.jpg" alt="示例数据"><br>其中 name表示权限的名称，field表示受控制的元素name,如果type是1,表示控制按钮的操作，前端页面会根据用户的权限是否显示该按钮，同时根据url字段后台也会控制相应的请求是否有权限。<br>如果type为0，则表示后端查询的数据要过滤掉field中所设置的字段。同时前端也要控制表格的列显示。这样前后端都可以控制住权限<br>所有的数据不设置则表示默认有权限。</p>
+<p>这样设计的目的能够从前端到后端统一控制</p>
+<p>前端草图</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://ws1.sinaimg.cn/large/818b7fe3gy1fijohd270hj20ld0g00u3.jpg" alt="添加菜单" title="">
+                </div>
+                <div class="image-caption">添加菜单</div>
+            </figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://ws1.sinaimg.cn/large/818b7fe3gy1fijpg89agcj20ll0fb75z.jpg" alt="添加用户" title="">
+                </div>
+                <div class="image-caption">添加用户</div>
+            </figure>
+<p>但是，随着用户后期的添加，每增加一个用户，就需要制定该用户的一系列菜单。简单也带来了相应的问题。所有需要角色表来处理</p>
+<h2 id="第二个版本-RBAC0"><a href="#第二个版本-RBAC0" class="headerlink" title="第二个版本 RBAC0"></a>第二个版本 RBAC0</h2><p>当添加了角色表后，用户和角色多对多，角色和菜单多对多，然后角色和权限多对多，因此会多出三张张中间表</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://ws1.sinaimg.cn/large/818b7fe3gy1fijq8upsvuj20t60k0go9.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>这个版本就已经达到了RBAC0的结构</p>
+<h2 id="第三个版本-RBAC1"><a href="#第三个版本-RBAC1" class="headerlink" title="第三个版本 RBAC1"></a>第三个版本 RBAC1</h2><p>在第二版中，基本上可以满足一般系统的需求，但是当角色过多的时候，会出现一个问题就是，用户赋予多个角色的时候，多个角色之间的权限如何管理。比如同时赋予分管领导的角色和公司领导的角色，那么公司领导的角色是大于分管领导的。拥有的权限完全包括分管领导的权限，<br>这个时候引入了RBAC1,</p>
+<blockquote>
+<p>角色间的继承关系可分为一般继承关系和受限继承关系。一般继承关系仅要求角色继承关系是一个绝对偏序关系，允许角色间的多继承。而受限继承关系则进一步要求角色继承关系是一个树结构</p>
+</blockquote>
+<p>这个版本在第二版的基础上改进新增了一张角色分级表，有了这个表，当用户拥有了多个角色之后，安装level的大小分级，处理拥有level越大的权限越大。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://ws1.sinaimg.cn/large/818b7fe3gy1fijqprzcl6j208g0bk74s.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>在随着系统的扩大之后，可以引入用户组的概念，但是我觉得没有这个必要，角色已经充当了用户组的概念，没必要多弄几张表搞这么复杂。</p>
+<h2 id="RBAC2"><a href="#RBAC2" class="headerlink" title="RBAC2"></a>RBAC2</h2><p>主要是指在授权阶段</p>
+<p>RBAC2，它是RBAC的约束模型，RBAC2也是建立的RBAC0的基础之上的，在RBAC0基础上假如了约束的概念，主要引入了静态职责分离SSD(Static Separation of Duty)和动态职责分离DSD(Dynamic Separation of Duty)。</p>
+<pre><code>SSD是用户和角色的指派阶段加入的，主要是对用户和角色有如下约束:
+a、互斥角色：同一个用户在两个互斥角色中只能选择一个
+b、基数约束：一个用户拥有的角色是有限的，一个角色拥有的许可也是有限的
+c、先决条件约束：用户想要获得高级角色，首先必须拥有低级角色
+
+DSD是会话和角色之间的约束，可以动态的约束用户拥有的角色，如一个用户可以拥有两个角色，但是运行时只能激活一个角色。
+</code></pre><h2 id="RBAC3"><a href="#RBAC3" class="headerlink" title="RBAC3"></a>RBAC3</h2><p>   RBAC3，它是RBAC1与RBAC2合集，所以RBAC3是既有角色分层又有约束的一种模型</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;介绍&quot;&gt;&lt;a href=&quot;#介绍&quot; class=&quot;headerlink&quot; title=&quot;介绍&quot;&gt;&lt;/a&gt;介绍&lt;/h1&gt;&lt;p&gt;今天看了一篇文章说的是权限管理RBAC，这个缩略词感觉很高大上，然后细读之后发现就是我之前在项目中所使用的，差不多一样的套路。&lt;br&gt;文章地
+    
+    </summary>
+    
+    
+      <category term="系统设计" scheme="http://blog.vnicers.com/tags/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Apache Shiro 十分钟入门</title>
+    <link href="http://blog.vnicers.com/2016/02/10/Apache%20Shiro%20%E5%8D%81%E5%88%86%E9%92%9F%E5%85%A5%E9%97%A8/"/>
+    <id>http://blog.vnicers.com/2016/02/10/Apache Shiro 十分钟入门/</id>
+    <published>2016-02-09T16:00:00.000Z</published>
+    <updated>2017-08-14T13:29:35.000Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+      <category term="十分钟入门系列" scheme="http://blog.vnicers.com/categories/%E5%8D%81%E5%88%86%E9%92%9F%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97/"/>
+    
+    
+      <category term="开源组件" scheme="http://blog.vnicers.com/tags/%E5%BC%80%E6%BA%90%E7%BB%84%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
     <title>FreeMarker十分钟入门</title>
     <link href="http://blog.vnicers.com/2016/01/11/FreeMarker%E5%8D%81%E5%88%86%E9%92%9F%E5%85%A5%E9%97%A8/"/>
     <id>http://blog.vnicers.com/2016/01/11/FreeMarker十分钟入门/</id>
     <published>2016-01-10T16:00:00.000Z</published>
-    <updated>2017-08-13T15:05:31.000Z</updated>
+    <updated>2017-08-14T02:22:51.000Z</updated>
     
     <content type="html"><![CDATA[<p>在要学习一门新技术直接，一般如何开始入手，达到什么程度叫入门，达到什么程度较学会，达到什么程度叫精通。<br>学习计算机相关的知识，需要我们时刻保持一颗学习的心态。这里打算写一下我的学习过程，叫做《十分钟入门系列》<br>当然十分钟并不能保证你完全入门，但是我们更重要的是学习方法。这里第一篇入门系列是以FreeMarker为开篇，因为最近项目中需要用到，而且以前只是听说，所以要用到才会学习，如果你学了，一时半会用不到，那样也很快会忘记。</p>
 <h1 id="如何学习"><a href="#如何学习" class="headerlink" title="如何学习"></a>如何学习</h1><p>直接Google FreeMarker 关键字，为什么不用百度，这个做开发的都知道，百度上的技术文章烂得跟啥一样的。前排一律，文不对题。不适合技术人员寻找资料，如果没办法Google，再怎么着也得用Bing搜索，百度我觉得只是时候查下身边相关的资料，技术文章Google才是归属。</p>
@@ -620,7 +725,8 @@ user?starts_with(&quot;J&quot;) 判断表达式的值是否是指定的参数开
 <h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><h4 id="标识符"><a href="#标识符" class="headerlink" title="标识符"></a>标识符</h4><pre><code>字符串，数字，布尔值，日期(日期/时间/日期时间)
 </code></pre><h4 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h4><pre><code>哈希(对象)，序列(可以使用索引访问)，集合(有限的序列，不能使用索引访问)
 </code></pre><h4 id="方法和函数"><a href="#方法和函数" class="headerlink" title="方法和函数"></a>方法和函数</h4><pre><code>${avg(3,5)} 获取平均数
-</code></pre>]]></content>
+</code></pre><h3 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h3><p>FreeMarker的文档应该算是非常的详细了，各种错误示例都有。更多的信息可以直接去官网看文档，小白都可以看懂。</p>
+]]></content>
     
     <summary type="html">
     
@@ -864,212 +970,6 @@ user?starts_with(&quot;J&quot;) 判断表达式的值是否是指定的参数开
     
     
       <category term="多线程" scheme="http://blog.vnicers.com/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>VIM编辑器的基本用法</title>
-    <link href="http://blog.vnicers.com/2014/04/06/VIM%E7%BC%96%E8%BE%91%E5%99%A8%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95/"/>
-    <id>http://blog.vnicers.com/2014/04/06/VIM编辑器的基本用法/</id>
-    <published>2014-04-05T16:00:00.000Z</published>
-    <updated>2017-08-05T07:15:56.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="编辑模式使用按下aio任意三个键"><a href="#编辑模式使用按下aio任意三个键" class="headerlink" title="编辑模式使用按下aio任意三个键"></a>编辑模式使用按下aio任意三个键</h1><pre><code>a 在光标所有字符后插入
-A 在光标所在行尾插入
-i  在光标所在字符前插入
-I 在光标所在行首插入
-o 在光标所在下行插入新行
-O 在光标所在上行插入新行
-</code></pre><h1 id="光标定位命令"><a href="#光标定位命令" class="headerlink" title="光标定位命令"></a>光标定位命令</h1><pre><code>设置行号 set nu
-取消行号 set nonu
-到最后一行 G
-到第一行 gg
-到任意一行 : n
-</code></pre><h1 id="删除字符"><a href="#删除字符" class="headerlink" title="删除字符"></a>删除字符</h1><pre><code>删除光标所在字符x或者Backspace
-删除光标所在行 dd
-删除光标后面的一行D
-删除光标后面的所有行dG
-</code></pre><h1 id="复制和粘贴"><a href="#复制和粘贴" class="headerlink" title="复制和粘贴"></a>复制和粘贴</h1><pre><code>yy 复制一行
-dd 剪切一行
-p 粘贴到光标下面一行
-P 粘贴到光标上面一行
-</code></pre><h1 id="u-撤销上一步的操作"><a href="#u-撤销上一步的操作" class="headerlink" title="u 撤销上一步的操作"></a>u 撤销上一步的操作</h1><h1 id="搜索指定的字符-string"><a href="#搜索指定的字符-string" class="headerlink" title="搜索指定的字符 /string"></a>搜索指定的字符 /string</h1><pre><code>按n在搜索到的高亮条件中移动
-</code></pre><h1 id="全文替换-s-oldStr-newStr-g"><a href="#全文替换-s-oldStr-newStr-g" class="headerlink" title="全文替换 :%s /oldStr/newStr/g"></a>全文替换 :%s /oldStr/newStr/g</h1><pre><code>%s 代表全文
-/g 直接替换不询问
-/c 替换前询问
-</code></pre><h1 id="保存与退出"><a href="#保存与退出" class="headerlink" title="保存与退出"></a>保存与退出</h1><pre><code>:w 保存修改
-：wq 保存修改并退出
-：ZZ 保存修改并退出
-：q!直接退出不保存
-：wq! 文件所有者和root 强制修改只读文件并保持
-</code></pre><h1 id="将其他文件内容导入到当前文件中来"><a href="#将其他文件内容导入到当前文件中来" class="headerlink" title="将其他文件内容导入到当前文件中来"></a>将其他文件内容导入到当前文件中来</h1><pre><code>:r 文件名
-</code></pre>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;编辑模式使用按下aio任意三个键&quot;&gt;&lt;a href=&quot;#编辑模式使用按下aio任意三个键&quot; class=&quot;headerlink&quot; title=&quot;编辑模式使用按下aio任意三个键&quot;&gt;&lt;/a&gt;编辑模式使用按下aio任意三个键&lt;/h1&gt;&lt;pre&gt;&lt;code&gt;a 在光标所
-    
-    </summary>
-    
-    
-      <category term="Linux" scheme="http://blog.vnicers.com/tags/Linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux 常用命令</title>
-    <link href="http://blog.vnicers.com/2014/04/05/Linux%20%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"/>
-    <id>http://blog.vnicers.com/2014/04/05/Linux 常用命令/</id>
-    <published>2014-04-04T16:00:00.000Z</published>
-    <updated>2017-08-05T07:15:56.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h1><pre><code>显示当前目录下的所有文件
-ls [OPTION]... [FILE]...
--a --all显示隐藏文件(linux隐藏文件都是.开头)
--l --list 显示文件的详细信息(依次为文件权限,引用次数,所有者,所属组,文件大小,最后修改时间，文件名)
-ls -alh 显示所有文件详细信息，文件大小按照可读的格式显示出来
-ls -ld 显示当前目录本身的详细信息
-</code></pre><h1 id="mkdir"><a href="#mkdir" class="headerlink" title="mkdir"></a>mkdir</h1><pre><code>make  directories  创建目录
-mkdir -p [目录名称] 递归创建目录
-</code></pre><h1 id="cd"><a href="#cd" class="headerlink" title="cd"></a>cd</h1><pre><code>change directories 切换目录
-cd ~ 切换到根目录
-cd .. 切换到上级目录
-</code></pre><h1 id="pwd"><a href="#pwd" class="headerlink" title="pwd"></a>pwd</h1><pre><code>print working directories 显示当前目录
-</code></pre><h1 id="rmdir"><a href="#rmdir" class="headerlink" title="rmdir"></a>rmdir</h1><pre><code>remove empty directories 删除空目录
-</code></pre><h1 id="cp"><a href="#cp" class="headerlink" title="cp"></a>cp</h1><pre><code>copy 复制目录
-cp [源文件...] [目标文件]
-cp -r 复制目录
-cp -rp 复制目录保留属性
-</code></pre><h1 id="mv"><a href="#mv" class="headerlink" title="mv"></a>mv</h1><pre><code>move 剪切和改名
-mv[源文件或者目录...] [目标文件或者目录]
-</code></pre><h1 id="rm"><a href="#rm" class="headerlink" title="rm"></a>rm</h1><pre><code>remove 删除命令
-rm -r -f [文件或者目录]
-  ■ -r 删除目录
-  ■ -f 强制执行
-</code></pre><h1 id="touch"><a href="#touch" class="headerlink" title="touch"></a>touch</h1><pre><code>创建空文件
-touch [文件名称]
-</code></pre><h1 id="cat"><a href="#cat" class="headerlink" title="cat"></a>cat</h1><pre><code>查看文件 适合查看内容较少的文件
-cat -n 查看文件并显示行号
-</code></pre><h1 id="more"><a href="#more" class="headerlink" title="more"></a>more</h1><pre><code>分页查看文件
-more [文件名]
-空格或者f 翻页
-Enter 换行
-q或者Q 退出
-</code></pre><h1 id="less"><a href="#less" class="headerlink" title="less"></a>less</h1><pre><code>分页查看文件，可以选择往回翻页
-在翻页过程中可以 输入/xx 查找相关类容
-</code></pre><h1 id="head"><a href="#head" class="headerlink" title="head"></a>head</h1><pre><code>查看文件的前几行
-head -n 10 查看文件前10行
-</code></pre><h1 id="tail"><a href="#tail" class="headerlink" title="tail"></a>tail</h1><pre><code>查看文件的末尾几行
-tail -n 10 显示文件末尾10行
-tail -f 动态显示文件末尾内容
-</code></pre><h1 id="ln"><a href="#ln" class="headerlink" title="ln"></a>ln</h1><pre><code>link 创建链接文件
-ln -s [源文件] [目标文件] 创建软链接文件
-</code></pre><hr>
-<h1 id="chmod"><a href="#chmod" class="headerlink" title="chmod"></a>chmod</h1><pre><code>权限管理命令 更改目录或者文件的权限
-change the permissions of a file
-chmod [{ugoa}{+-=}{rwx}] [文件或者目录]
-chmod -R 777 使用数字表示权限 r=4,w=2,x=1, -R递归修改
-</code></pre><h1 id="chown"><a href="#chown" class="headerlink" title="chown"></a>chown</h1><pre><code>权限管理命令 chown 更改目录或者文件的所有者
-change file ownership
-chown [用户] [文件或者目录]
-</code></pre><h1 id="chgrp"><a href="#chgrp" class="headerlink" title="chgrp"></a>chgrp</h1><pre><code>权限管理命令 chgrp 更改文件或者目录的所属组
-chgrp [组的名称] [文件或者目录]
-</code></pre><h1 id="umask"><a href="#umask" class="headerlink" title="umask"></a>umask</h1><pre><code>权限管理命令 umask 显示新建文件的缺省权限
-umask -S 以rwx形式显示文件的缺省权限
-</code></pre><hr>
-<h1 id="find"><a href="#find" class="headerlink" title="find"></a>find</h1><pre><code>文件搜索命令
-find [搜索范围] [匹配条件]
-find /etc -name init 在 etc 目录下搜索 名称为init的文件
-find /etc -name *init* 在 etc 目录下模糊搜索名称带有init的文件
-find /etc -name init??? 在 etc 目录下搜索 名称为init后带有三个字符的文件？代表三个字符
-  -iname 不区分大小写
-  -size 根据文件大小来查找 +n 204800 代表大于100MB的文件 -n 小于多少的文件 根据数据块的大小来搜索
-    ■ 一个数据块=512字节=0.5k
-  -user 查找所有者的文件
-  -amin 访问时间 -cmin 文件属性 -mmin 文件内容 find /etc -mmin -5 表示查找5分钟之类被修改过得文件
-  -type 按照文件类型查找 f 文件 d 是目录 l 是软链接
-  -a -o 多个条件搜索是使用and 还是or
-  find /etc/ -name inittab -exec ls -l {} \; 查找文件并执行命令
-  find /home  -user dev -ok rm {} \; 查找用户dev下的文件找到后询问删除
-  find . -inum 31531 -exec rm {} \; 查找文件节点是31531的文件并删除
-</code></pre><h1 id="locate"><a href="#locate" class="headerlink" title="locate"></a>locate</h1><pre><code>文件快速搜索命令
-在新建文件之后需要updatedb 更新索引 -i不区分大小写
-</code></pre><h1 id="which"><a href="#which" class="headerlink" title="which"></a>which</h1><pre><code>命令搜索
-which rm 查找命令所在目录 并且列出是否有 别名
-</code></pre><h1 id="whereis"><a href="#whereis" class="headerlink" title="whereis"></a>whereis</h1><pre><code>命令搜索 以及帮助文档的位置
-</code></pre><h1 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h1><pre><code>文件内容搜索
-grep -iv [指定字符] [文件]
--i 不区分大小写
--v 排除指定字符 grep -v ^#  /ect/inittab  查找指定文件 忽略以#号开头的行
-</code></pre><h1 id="man"><a href="#man" class="headerlink" title="man"></a>man</h1><pre><code>帮助命令 manual
-man ls 查看ls命令目录 同less模式，可以输入/查找相关选项
-man services 查看配置文件
-man 5 passwd 查看配置文件的帮助信息 1代表命令 ，5代表配置文件
-</code></pre><h1 id="help"><a href="#help" class="headerlink" title="help"></a>help</h1><pre><code>帮助命令
-查看内置命令或者shell 编程语法帮助
-</code></pre><hr>
-<h1 id="useradd"><a href="#useradd" class="headerlink" title="useradd"></a>useradd</h1><pre><code>添加用户
-useradd tanwei 添加用户tanwei
-passwd tanwei 给新用户设置密码
-</code></pre><h1 id="who"><a href="#who" class="headerlink" title="who"></a>who</h1><pre><code>查看当前系统登录信息
-tty 代表本地登录    pts 代表远程登录
-</code></pre><h1 id="w"><a href="#w" class="headerlink" title="w"></a>w</h1><pre><code>查看当前系统的登录详细信息和负载
-21：35：27 当前系统时间
-up 10:54 系统连续运行时间  同命令uptime
-2 users 当前登录了多少用户
-load average: 系统连续 1分钟之类 5分钟之类 15分钟之类  负载值
-IDLE 登录空闲时间
-JCPU 当前登录用执行的命令户占用cpu时间
-PCPU 当前登录用户执行命令累计占用cpu时间
-WHAT 当前用户执行了什么
-</code></pre><hr>
-<h1 id="gzip"><a href="#gzip" class="headerlink" title="gzip"></a>gzip</h1><pre><code>.gz压缩格式   只能压缩文件，并且不保留源文件
-gzip [文件名...]
-gunzip 或者gzip -d
-</code></pre><h1 id="tar"><a href="#tar" class="headerlink" title="tar"></a>tar</h1><pre><code>.tar.gz 压缩格式
- -c 打包
- -v 显示详细信息
- -f 指定文件名
- -z 压缩或解压
- -x 解包
- tar -zcvf app.tar.gz app 将目录app 压缩打包 并显示详细信息
- tar -zxvf app.tar.gz app 将目录app 解压缩 并显示详细信息
-</code></pre><h1 id="zip"><a href="#zip" class="headerlink" title="zip"></a>zip</h1><pre><code>-r 压缩目录
-unzip 解压缩文件
-</code></pre><h1 id="bz2"><a href="#bz2" class="headerlink" title=".bz2"></a>.bz2</h1><pre><code>bzip2压缩格式 之能压缩文件
--k 保留源文件
-tar -cjf app.tar.bz2 和tar 搭配使用能够压缩目录
-bunzip2 解压缩文件 -k 解压后保留源文件
-tar -xjf app.tar.bz2 和tar搭配解压文件
-</code></pre><h1 id="write"><a href="#write" class="headerlink" title="write"></a>write</h1><pre><code>write tanwei 给在线用户tanwei发送命令 Ctrl+D 保存结束
-</code></pre><h1 id="wall"><a href="#wall" class="headerlink" title="wall"></a>wall</h1><pre><code>(writeall)命令
-发送广播消息
-</code></pre><h1 id="ping"><a href="#ping" class="headerlink" title="ping"></a>ping</h1><pre><code>测试网络连通性
-</code></pre><h1 id="ifcofig"><a href="#ifcofig" class="headerlink" title="ifcofig"></a>ifcofig</h1><pre><code>(interface configure) 查看设设置网卡信息
-</code></pre><h1 id="mail"><a href="#mail" class="headerlink" title="mail"></a>mail</h1><pre><code>邮件发送命令
-</code></pre><h1 id="last"><a href="#last" class="headerlink" title="last"></a>last</h1><pre><code>统计系统用户所有登陆信息
-</code></pre><h1 id="traceroute"><a href="#traceroute" class="headerlink" title="traceroute"></a>traceroute</h1><pre><code>探测网站路由
-</code></pre><h1 id="netstat"><a href="#netstat" class="headerlink" title="netstat"></a>netstat</h1><pre><code>查询网络状态信息
-netstat -tlun 查询本机开启的端口
-netstat -an 查询本机开启的网络端口以及正在链接的网络程序
-netstat -rn 查看本机网关
-</code></pre><h1 id="setup"><a href="#setup" class="headerlink" title="setup"></a>setup</h1><pre><code>配置网络命令 有些系统需要先下载 yum install -y system-config-network-tui
-</code></pre><h1 id="mount"><a href="#mount" class="headerlink" title="mount"></a>mount</h1><pre><code>手动挂载cd
-mkdir /mnt/cdrom
-mount /dev/sr0 /mnt/cdrom 讲设备文件名 链接到挂载点
-umount /dev/sr0
-</code></pre>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;ls&quot;&gt;&lt;a href=&quot;#ls&quot; class=&quot;headerlink&quot; title=&quot;ls&quot;&gt;&lt;/a&gt;ls&lt;/h1&gt;&lt;pre&gt;&lt;code&gt;显示当前目录下的所有文件
-ls [OPTION]... [FILE]...
--a --all显示隐藏文件(linux隐藏文件
-    
-    </summary>
-    
-    
-      <category term="Linux" scheme="http://blog.vnicers.com/tags/Linux/"/>
     
   </entry>
   

@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>权限模型RBAC的使用 | Tanwei的个人技术博客 | 仰望大神不如退而求索</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="系统设计">
+    <meta name="description" content="介绍今天看了一篇文章说的是权限管理RBAC，这个缩略词感觉很高大上，然后细读之后发现就是我之前在项目中所使用的，差不多一样的套路。文章地址  RBAC权限模型——项目实战 整理一下之前负责的项目所使用的权限是如何处理的，具体的RBAC的原理可以看上面这篇文章，我这里简单说一下为什么这样处理。 如何设计权限第一个版本任何一个项目只要涉及到不同的用户使用就会使用权限控制。这里的权限控制就是指一个用户登">
+<meta name="keywords" content="系统设计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="权限模型RBAC的使用">
+<meta property="og:url" content="http://blog.vnicers.com/2016/03/12/权限模型RBAC的使用/index.html">
+<meta property="og:site_name" content="Tanwei的个人技术博客">
+<meta property="og:description" content="介绍今天看了一篇文章说的是权限管理RBAC，这个缩略词感觉很高大上，然后细读之后发现就是我之前在项目中所使用的，差不多一样的套路。文章地址  RBAC权限模型——项目实战 整理一下之前负责的项目所使用的权限是如何处理的，具体的RBAC的原理可以看上面这篇文章，我这里简单说一下为什么这样处理。 如何设计权限第一个版本任何一个项目只要涉及到不同的用户使用就会使用权限控制。这里的权限控制就是指一个用户登">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/818b7fe3gy1fijnnh412aj20j80e3dh9.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/818b7fe3gy1fijnp4r6r6j20og04lq37.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/818b7fe3gy1fijohd270hj20ld0g00u3.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/818b7fe3gy1fijpg89agcj20ll0fb75z.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/818b7fe3gy1fijq8upsvuj20t60k0go9.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/818b7fe3gy1fijqprzcl6j208g0bk74s.jpg">
+<meta property="og:updated_time" content="2017-08-14T17:07:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="权限模型RBAC的使用">
+<meta name="twitter:description" content="介绍今天看了一篇文章说的是权限管理RBAC，这个缩略词感觉很高大上，然后细读之后发现就是我之前在项目中所使用的，差不多一样的套路。文章地址  RBAC权限模型——项目实战 整理一下之前负责的项目所使用的权限是如何处理的，具体的RBAC的原理可以看上面这篇文章，我这里简单说一下为什么这样处理。 如何设计权限第一个版本任何一个项目只要涉及到不同的用户使用就会使用权限控制。这里的权限控制就是指一个用户登">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/818b7fe3gy1fijnnh412aj20j80e3dh9.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="Tanwei的个人技术博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.11">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Tanwei</h5>
+          <a href="mailto:vnicers@gmail.com" title="vnicers@gmail.com" class="mail">vnicers@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                专题
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.hxjx360.com" target="_blank" >
+                <i class="icon icon-lg icon-dollar"></i>
+                理财
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/vnice" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">权限模型RBAC的使用</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">权限模型RBAC的使用</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-03-11T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2016-03-12
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#介绍"><span class="post-toc-number">1.</span> <span class="post-toc-text">介绍</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#如何设计权限"><span class="post-toc-number">2.</span> <span class="post-toc-text">如何设计权限</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#第一个版本"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">第一个版本</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#第二个版本-RBAC0"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">第二个版本 RBAC0</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#第三个版本-RBAC1"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">第三个版本 RBAC1</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#RBAC2"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">RBAC2</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#RBAC3"><span class="post-toc-number">2.5.</span> <span class="post-toc-text">RBAC3</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-权限模型RBAC的使用"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">权限模型RBAC的使用</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-03-12 00:00:00" datetime="2016-03-11T16:00:00.000Z"  itemprop="datePublished">2016-03-12</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>今天看了一篇文章说的是权限管理RBAC，这个缩略词感觉很高大上，然后细读之后发现就是我之前在项目中所使用的，差不多一样的套路。<br>文章地址 <a href="http://blog.csdn.net/zwk626542417/article/details/46726491" target="_blank" rel="external"> RBAC权限模型——项目实战</a></p>
+<p>整理一下之前负责的项目所使用的权限是如何处理的，具体的RBAC的原理可以看上面这篇文章，我这里简单说一下为什么这样处理。</p>
+<h1 id="如何设计权限"><a href="#如何设计权限" class="headerlink" title="如何设计权限"></a>如何设计权限</h1><h2 id="第一个版本"><a href="#第一个版本" class="headerlink" title="第一个版本"></a>第一个版本</h2><p>任何一个项目只要涉及到不同的用户使用就会使用权限控制。这里的权限控制就是指一个用户登录系统之后拥有哪些可以使用的功能，哪些可以查看的数据。常见于一个系统之中，不同的角色的人登录系统之后，所看到的菜单是否一样，每个菜单打开之后是否都具有增删查改的权限。</p>
+<p>根据以上就出涉及到的几个相关的对象</p>
+<ol>
+<li>用户</li>
+<li>菜单</li>
+<li>操作(按钮,链接,api的调用,数据的查看)</li>
+</ol>
+<p>很容易设计出数据库的表结构</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://ws1.sinaimg.cn/large/818b7fe3gy1fijnnh412aj20j80e3dh9.jpg" alt="第一版，用户和权限之间应该有个中间表弄掉了" title="">
+                </div>
+                <div class="image-caption">第一版，用户和权限之间应该有个中间表弄掉了</div>
+            </figure>
+<p>这是最简单的设计，用户和菜单多对多 则需要一个中间表，总共四张表搞定。适合小系统。<br>这里解释一下permission表</p>
+<p><img src="https://ws1.sinaimg.cn/large/818b7fe3gy1fijnp4r6r6j20og04lq37.jpg" alt="示例数据"><br>其中 name表示权限的名称，field表示受控制的元素name,如果type是1,表示控制按钮的操作，前端页面会根据用户的权限是否显示该按钮，同时根据url字段后台也会控制相应的请求是否有权限。<br>如果type为0，则表示后端查询的数据要过滤掉field中所设置的字段。同时前端也要控制表格的列显示。这样前后端都可以控制住权限<br>所有的数据不设置则表示默认有权限。</p>
+<p>这样设计的目的能够从前端到后端统一控制</p>
+<p>前端草图</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://ws1.sinaimg.cn/large/818b7fe3gy1fijohd270hj20ld0g00u3.jpg" alt="添加菜单" title="">
+                </div>
+                <div class="image-caption">添加菜单</div>
+            </figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://ws1.sinaimg.cn/large/818b7fe3gy1fijpg89agcj20ll0fb75z.jpg" alt="添加用户" title="">
+                </div>
+                <div class="image-caption">添加用户</div>
+            </figure>
+<p>但是，随着用户后期的添加，每增加一个用户，就需要制定该用户的一系列菜单。简单也带来了相应的问题。所有需要角色表来处理</p>
+<h2 id="第二个版本-RBAC0"><a href="#第二个版本-RBAC0" class="headerlink" title="第二个版本 RBAC0"></a>第二个版本 RBAC0</h2><p>当添加了角色表后，用户和角色多对多，角色和菜单多对多，然后角色和权限多对多，因此会多出三张张中间表</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://ws1.sinaimg.cn/large/818b7fe3gy1fijq8upsvuj20t60k0go9.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>这个版本就已经达到了RBAC0的结构</p>
+<h2 id="第三个版本-RBAC1"><a href="#第三个版本-RBAC1" class="headerlink" title="第三个版本 RBAC1"></a>第三个版本 RBAC1</h2><p>在第二版中，基本上可以满足一般系统的需求，但是当角色过多的时候，会出现一个问题就是，用户赋予多个角色的时候，多个角色之间的权限如何管理。比如同时赋予分管领导的角色和公司领导的角色，那么公司领导的角色是大于分管领导的。拥有的权限完全包括分管领导的权限，<br>这个时候引入了RBAC1,</p>
+<blockquote>
+<p>角色间的继承关系可分为一般继承关系和受限继承关系。一般继承关系仅要求角色继承关系是一个绝对偏序关系，允许角色间的多继承。而受限继承关系则进一步要求角色继承关系是一个树结构</p>
+</blockquote>
+<p>这个版本在第二版的基础上改进新增了一张角色分级表，有了这个表，当用户拥有了多个角色之后，安装level的大小分级，处理拥有level越大的权限越大。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://ws1.sinaimg.cn/large/818b7fe3gy1fijqprzcl6j208g0bk74s.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>在随着系统的扩大之后，可以引入用户组的概念，但是我觉得没有这个必要，角色已经充当了用户组的概念，没必要多弄几张表搞这么复杂。</p>
+<h2 id="RBAC2"><a href="#RBAC2" class="headerlink" title="RBAC2"></a>RBAC2</h2><p>主要是指在授权阶段</p>
+<p>RBAC2，它是RBAC的约束模型，RBAC2也是建立的RBAC0的基础之上的，在RBAC0基础上假如了约束的概念，主要引入了静态职责分离SSD(Static Separation of Duty)和动态职责分离DSD(Dynamic Separation of Duty)。</p>
+<pre><code>SSD是用户和角色的指派阶段加入的，主要是对用户和角色有如下约束:
+a、互斥角色：同一个用户在两个互斥角色中只能选择一个
+b、基数约束：一个用户拥有的角色是有限的，一个角色拥有的许可也是有限的
+c、先决条件约束：用户想要获得高级角色，首先必须拥有低级角色
+
+DSD是会话和角色之间的约束，可以动态的约束用户拥有的角色，如一个用户可以拥有两个角色，但是运行时只能激活一个角色。
+</code></pre><h2 id="RBAC3"><a href="#RBAC3" class="headerlink" title="RBAC3"></a>RBAC3</h2><p>   RBAC3，它是RBAC1与RBAC2合集，所以RBAC3是既有角色分层又有约束的一种模型</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+
+        
+        原创文章，转载请注明： 转载Tanwei的技术博客,原文地址:<a href="/2016/03/12/权限模型RBAC的使用/" target="_blank" rel="external">http://blog.vnicers.com/2016/03/12/权限模型RBAC的使用/</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.vnicers.com">
+            <img src="/img/avatar.jpg" alt="Tanwei">
+            Tanwei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/系统设计/">系统设计</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.vnicers.com/2016/03/12/权限模型RBAC的使用/&title=《权限模型RBAC的使用》 — Tanwei的个人技术博客&pic=http://blog.vnicers.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.vnicers.com/2016/03/12/权限模型RBAC的使用/&title=《权限模型RBAC的使用》 — Tanwei的个人技术博客&source=暂时没有好描述自己的。。。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.vnicers.com/2016/03/12/权限模型RBAC的使用/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《权限模型RBAC的使用》 — Tanwei的个人技术博客&url=http://blog.vnicers.com/2016/03/12/权限模型RBAC的使用/&via=http://blog.vnicers.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.vnicers.com/2016/03/12/权限模型RBAC的使用/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2016/11/12/Mac 系统常用软件汇总/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Mac系统常用软件汇总</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2016/02/10/Apache Shiro 十分钟入门/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Apache Shiro 十分钟入门</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitment_thread"></div>
+    <link rel="stylesheet" href="//unpkg.com/gitment/style/default.css">
+    <script src="//unpkg.com/gitment/dist/gitment.browser.js"></script>
+    <script>
+        var gitment = new Gitment({
+            owner: 'vnice',
+            repo: 'vnice.github.io',
+            oauth: {
+                client_id: '62766e3f34a27536afe0',
+                client_secret: '1d9c1d04b0b892eedeffbbaac9c978b17fec0b4f',
+            },
+        })
+        gitment.render('comments')
+    </script>
+</section>
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Tanwei &copy; 2014 - 2017</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.vnicers.com/2016/03/12/权限模型RBAC的使用/&title=《权限模型RBAC的使用》 — Tanwei的个人技术博客&pic=http://blog.vnicers.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.vnicers.com/2016/03/12/权限模型RBAC的使用/&title=《权限模型RBAC的使用》 — Tanwei的个人技术博客&source=暂时没有好描述自己的。。。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.vnicers.com/2016/03/12/权限模型RBAC的使用/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《权限模型RBAC的使用》 — Tanwei的个人技术博客&url=http://blog.vnicers.com/2016/03/12/权限模型RBAC的使用/&via=http://blog.vnicers.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.vnicers.com/2016/03/12/权限模型RBAC的使用/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACNklEQVR42u3aW3bDMAgFwOx/0+kCUqsXSNpaGn/l+Pih8QdBwOMRH8+X4/X81fXJk6t3NQ8MDIzbMp7L4+oFvVdeXf/65HxtGBgY5zDyR+eBOImN6/PJ2jAwMDAmATFZ1voaDAwMjHela2tSEqD/LOBiYGDcilENlMnSk1CbMN68F8fAwLgho1om+83fH+lvYGBg3IrxLB69Ytk6RFaD7DfPxMDA2JqRB7h8ib0tbjXtw8DAOIfR21hWm5G9UFsY6cDAwDiAUS2r9cJ0rzCXNCcwMDDOYVRL//lWthcnk+dgYGCcwHjDiEOQIFbbAMnSL/fiGBgY2zGqrx8V7mN8ORnFwMA4gDGvX60Tu2S5yT/D5aowMDCOYZRvjredyUfJQ/wPLUwMDIztGPNW5aTEViil5fdiYGBsx0gC36Rh0BvFqBbgMDAw9mbkAXG+rOSZ8zQUAwNjV0a+fc0XN2mFVtNNDAyMvRnVkJoPQ1TblpNiHAYGxt6MagSrfoLJ/8C8tIeBgbETI0/meq3Nchsybn9etgcwMDA2ZVSDZnW0Ih8RayapGBgYxzAmRbHqCEV1a9qcFsHAwLg5ozcw0Svr95LOUVKIgYGxBaM3Z9U7Ux0aG82MYGBgbMeYjGetU8l8QdUxjmhmBAMDYztGdcOZF9omG+bko2NgYGD0WpLzgbNm9oqBgYGRBL7eUFccyj8YcDEwMP49I9nEJovIP0FvzAIDA+NMRjXv6hXR5kE8zwYxMDA2YnwBKXPRP9sbdyMAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.11"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.6.11" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
