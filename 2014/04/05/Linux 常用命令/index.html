@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>Linux 常用命令 | Tanwei的个人技术博客 | 仰望大神不如退而求索</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Linux">
+    <meta name="description" content="ls显示当前目录下的所有文件 ls [OPTION]... [FILE]... -a --all显示隐藏文件(linux隐藏文件都是.开头) -l --list 显示文件的详细信息(依次为文件权限,引用次数,所有者,所属组,文件大小,最后修改时间，文件名) ls -alh 显示所有文件详细信息，文件大小按照可读的格式显示出来 ls -ld 显示当前目录本身的详细信息 mkdirmake  dire">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux 常用命令">
+<meta property="og:url" content="http://blog.vnicers.com/2014/04/05/Linux 常用命令/index.html">
+<meta property="og:site_name" content="Tanwei的个人技术博客">
+<meta property="og:description" content="ls显示当前目录下的所有文件 ls [OPTION]... [FILE]... -a --all显示隐藏文件(linux隐藏文件都是.开头) -l --list 显示文件的详细信息(依次为文件权限,引用次数,所有者,所属组,文件大小,最后修改时间，文件名) ls -alh 显示所有文件详细信息，文件大小按照可读的格式显示出来 ls -ld 显示当前目录本身的详细信息 mkdirmake  dire">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-08-05T07:15:56.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux 常用命令">
+<meta name="twitter:description" content="ls显示当前目录下的所有文件 ls [OPTION]... [FILE]... -a --all显示隐藏文件(linux隐藏文件都是.开头) -l --list 显示文件的详细信息(依次为文件权限,引用次数,所有者,所属组,文件大小,最后修改时间，文件名) ls -alh 显示所有文件详细信息，文件大小按照可读的格式显示出来 ls -ld 显示当前目录本身的详细信息 mkdirmake  dire">
+    
+        <link rel="alternate" type="application/atom+xml" title="Tanwei的个人技术博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Tanwei</h5>
+          <a href="mailto:vnicers@gmail.com" title="vnicers@gmail.com" class="mail">vnicers@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                专题
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.hxjx360.com" target="_blank" >
+                <i class="icon icon-lg icon-dollar"></i>
+                理财
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/vnice" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Linux 常用命令</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Linux 常用命令</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-04-04T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-04-05
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#ls"><span class="post-toc-number">1.</span> <span class="post-toc-text">ls</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#mkdir"><span class="post-toc-number">2.</span> <span class="post-toc-text">mkdir</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#cd"><span class="post-toc-number">3.</span> <span class="post-toc-text">cd</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#pwd"><span class="post-toc-number">4.</span> <span class="post-toc-text">pwd</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#rmdir"><span class="post-toc-number">5.</span> <span class="post-toc-text">rmdir</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#cp"><span class="post-toc-number">6.</span> <span class="post-toc-text">cp</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#mv"><span class="post-toc-number">7.</span> <span class="post-toc-text">mv</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#rm"><span class="post-toc-number">8.</span> <span class="post-toc-text">rm</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#touch"><span class="post-toc-number">9.</span> <span class="post-toc-text">touch</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#cat"><span class="post-toc-number">10.</span> <span class="post-toc-text">cat</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#more"><span class="post-toc-number">11.</span> <span class="post-toc-text">more</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#less"><span class="post-toc-number">12.</span> <span class="post-toc-text">less</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#head"><span class="post-toc-number">13.</span> <span class="post-toc-text">head</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#tail"><span class="post-toc-number">14.</span> <span class="post-toc-text">tail</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#ln"><span class="post-toc-number">15.</span> <span class="post-toc-text">ln</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#chmod"><span class="post-toc-number">16.</span> <span class="post-toc-text">chmod</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#chown"><span class="post-toc-number">17.</span> <span class="post-toc-text">chown</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#chgrp"><span class="post-toc-number">18.</span> <span class="post-toc-text">chgrp</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#umask"><span class="post-toc-number">19.</span> <span class="post-toc-text">umask</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#find"><span class="post-toc-number">20.</span> <span class="post-toc-text">find</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#locate"><span class="post-toc-number">21.</span> <span class="post-toc-text">locate</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#which"><span class="post-toc-number">22.</span> <span class="post-toc-text">which</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#whereis"><span class="post-toc-number">23.</span> <span class="post-toc-text">whereis</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#grep"><span class="post-toc-number">24.</span> <span class="post-toc-text">grep</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#man"><span class="post-toc-number">25.</span> <span class="post-toc-text">man</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#help"><span class="post-toc-number">26.</span> <span class="post-toc-text">help</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#useradd"><span class="post-toc-number">27.</span> <span class="post-toc-text">useradd</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#who"><span class="post-toc-number">28.</span> <span class="post-toc-text">who</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#w"><span class="post-toc-number">29.</span> <span class="post-toc-text">w</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#gzip"><span class="post-toc-number">30.</span> <span class="post-toc-text">gzip</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#tar"><span class="post-toc-number">31.</span> <span class="post-toc-text">tar</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#zip"><span class="post-toc-number">32.</span> <span class="post-toc-text">zip</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#bz2"><span class="post-toc-number">33.</span> <span class="post-toc-text">.bz2</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#write"><span class="post-toc-number">34.</span> <span class="post-toc-text">write</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#wall"><span class="post-toc-number">35.</span> <span class="post-toc-text">wall</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#ping"><span class="post-toc-number">36.</span> <span class="post-toc-text">ping</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#ifcofig"><span class="post-toc-number">37.</span> <span class="post-toc-text">ifcofig</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#mail"><span class="post-toc-number">38.</span> <span class="post-toc-text">mail</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#last"><span class="post-toc-number">39.</span> <span class="post-toc-text">last</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#traceroute"><span class="post-toc-number">40.</span> <span class="post-toc-text">traceroute</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#netstat"><span class="post-toc-number">41.</span> <span class="post-toc-text">netstat</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#setup"><span class="post-toc-number">42.</span> <span class="post-toc-text">setup</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#mount"><span class="post-toc-number">43.</span> <span class="post-toc-text">mount</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-Linux 常用命令"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Linux 常用命令</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-04-05 00:00:00" datetime="2014-04-04T16:00:00.000Z"  itemprop="datePublished">2014-04-05</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h1><pre><code>显示当前目录下的所有文件
+ls [OPTION]... [FILE]...
+-a --all显示隐藏文件(linux隐藏文件都是.开头)
+-l --list 显示文件的详细信息(依次为文件权限,引用次数,所有者,所属组,文件大小,最后修改时间，文件名)
+ls -alh 显示所有文件详细信息，文件大小按照可读的格式显示出来
+ls -ld 显示当前目录本身的详细信息
+</code></pre><h1 id="mkdir"><a href="#mkdir" class="headerlink" title="mkdir"></a>mkdir</h1><pre><code>make  directories  创建目录
+mkdir -p [目录名称] 递归创建目录
+</code></pre><h1 id="cd"><a href="#cd" class="headerlink" title="cd"></a>cd</h1><pre><code>change directories 切换目录
+cd ~ 切换到根目录
+cd .. 切换到上级目录
+</code></pre><h1 id="pwd"><a href="#pwd" class="headerlink" title="pwd"></a>pwd</h1><pre><code>print working directories 显示当前目录
+</code></pre><h1 id="rmdir"><a href="#rmdir" class="headerlink" title="rmdir"></a>rmdir</h1><pre><code>remove empty directories 删除空目录
+</code></pre><h1 id="cp"><a href="#cp" class="headerlink" title="cp"></a>cp</h1><pre><code>copy 复制目录
+cp [源文件...] [目标文件]
+cp -r 复制目录
+cp -rp 复制目录保留属性
+</code></pre><h1 id="mv"><a href="#mv" class="headerlink" title="mv"></a>mv</h1><pre><code>move 剪切和改名
+mv[源文件或者目录...] [目标文件或者目录]
+</code></pre><h1 id="rm"><a href="#rm" class="headerlink" title="rm"></a>rm</h1><pre><code>remove 删除命令
+rm -r -f [文件或者目录]
+  ■ -r 删除目录
+  ■ -f 强制执行
+</code></pre><h1 id="touch"><a href="#touch" class="headerlink" title="touch"></a>touch</h1><pre><code>创建空文件
+touch [文件名称]
+</code></pre><h1 id="cat"><a href="#cat" class="headerlink" title="cat"></a>cat</h1><pre><code>查看文件 适合查看内容较少的文件
+cat -n 查看文件并显示行号
+</code></pre><h1 id="more"><a href="#more" class="headerlink" title="more"></a>more</h1><pre><code>分页查看文件
+more [文件名]
+空格或者f 翻页
+Enter 换行
+q或者Q 退出
+</code></pre><h1 id="less"><a href="#less" class="headerlink" title="less"></a>less</h1><pre><code>分页查看文件，可以选择往回翻页
+在翻页过程中可以 输入/xx 查找相关类容
+</code></pre><h1 id="head"><a href="#head" class="headerlink" title="head"></a>head</h1><pre><code>查看文件的前几行
+head -n 10 查看文件前10行
+</code></pre><h1 id="tail"><a href="#tail" class="headerlink" title="tail"></a>tail</h1><pre><code>查看文件的末尾几行
+tail -n 10 显示文件末尾10行
+tail -f 动态显示文件末尾内容
+</code></pre><h1 id="ln"><a href="#ln" class="headerlink" title="ln"></a>ln</h1><pre><code>link 创建链接文件
+ln -s [源文件] [目标文件] 创建软链接文件
+</code></pre><hr>
+<h1 id="chmod"><a href="#chmod" class="headerlink" title="chmod"></a>chmod</h1><pre><code>权限管理命令 更改目录或者文件的权限
+change the permissions of a file
+chmod [{ugoa}{+-=}{rwx}] [文件或者目录]
+chmod -R 777 使用数字表示权限 r=4,w=2,x=1, -R递归修改
+</code></pre><h1 id="chown"><a href="#chown" class="headerlink" title="chown"></a>chown</h1><pre><code>权限管理命令 chown 更改目录或者文件的所有者
+change file ownership
+chown [用户] [文件或者目录]
+</code></pre><h1 id="chgrp"><a href="#chgrp" class="headerlink" title="chgrp"></a>chgrp</h1><pre><code>权限管理命令 chgrp 更改文件或者目录的所属组
+chgrp [组的名称] [文件或者目录]
+</code></pre><h1 id="umask"><a href="#umask" class="headerlink" title="umask"></a>umask</h1><pre><code>权限管理命令 umask 显示新建文件的缺省权限
+umask -S 以rwx形式显示文件的缺省权限
+</code></pre><hr>
+<h1 id="find"><a href="#find" class="headerlink" title="find"></a>find</h1><pre><code>文件搜索命令
+find [搜索范围] [匹配条件]
+find /etc -name init 在 etc 目录下搜索 名称为init的文件
+find /etc -name *init* 在 etc 目录下模糊搜索名称带有init的文件
+find /etc -name init??? 在 etc 目录下搜索 名称为init后带有三个字符的文件？代表三个字符
+  -iname 不区分大小写
+  -size 根据文件大小来查找 +n 204800 代表大于100MB的文件 -n 小于多少的文件 根据数据块的大小来搜索
+    ■ 一个数据块=512字节=0.5k
+  -user 查找所有者的文件
+  -amin 访问时间 -cmin 文件属性 -mmin 文件内容 find /etc -mmin -5 表示查找5分钟之类被修改过得文件
+  -type 按照文件类型查找 f 文件 d 是目录 l 是软链接
+  -a -o 多个条件搜索是使用and 还是or
+  find /etc/ -name inittab -exec ls -l {} \; 查找文件并执行命令
+  find /home  -user dev -ok rm {} \; 查找用户dev下的文件找到后询问删除
+  find . -inum 31531 -exec rm {} \; 查找文件节点是31531的文件并删除
+</code></pre><h1 id="locate"><a href="#locate" class="headerlink" title="locate"></a>locate</h1><pre><code>文件快速搜索命令
+在新建文件之后需要updatedb 更新索引 -i不区分大小写
+</code></pre><h1 id="which"><a href="#which" class="headerlink" title="which"></a>which</h1><pre><code>命令搜索
+which rm 查找命令所在目录 并且列出是否有 别名
+</code></pre><h1 id="whereis"><a href="#whereis" class="headerlink" title="whereis"></a>whereis</h1><pre><code>命令搜索 以及帮助文档的位置
+</code></pre><h1 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h1><pre><code>文件内容搜索
+grep -iv [指定字符] [文件]
+-i 不区分大小写
+-v 排除指定字符 grep -v ^#  /ect/inittab  查找指定文件 忽略以#号开头的行
+</code></pre><h1 id="man"><a href="#man" class="headerlink" title="man"></a>man</h1><pre><code>帮助命令 manual
+man ls 查看ls命令目录 同less模式，可以输入/查找相关选项
+man services 查看配置文件
+man 5 passwd 查看配置文件的帮助信息 1代表命令 ，5代表配置文件
+</code></pre><h1 id="help"><a href="#help" class="headerlink" title="help"></a>help</h1><pre><code>帮助命令
+查看内置命令或者shell 编程语法帮助
+</code></pre><hr>
+<h1 id="useradd"><a href="#useradd" class="headerlink" title="useradd"></a>useradd</h1><pre><code>添加用户
+useradd tanwei 添加用户tanwei
+passwd tanwei 给新用户设置密码
+</code></pre><h1 id="who"><a href="#who" class="headerlink" title="who"></a>who</h1><pre><code>查看当前系统登录信息
+tty 代表本地登录    pts 代表远程登录
+</code></pre><h1 id="w"><a href="#w" class="headerlink" title="w"></a>w</h1><pre><code>查看当前系统的登录详细信息和负载
+21：35：27 当前系统时间
+up 10:54 系统连续运行时间  同命令uptime
+2 users 当前登录了多少用户
+load average: 系统连续 1分钟之类 5分钟之类 15分钟之类  负载值
+IDLE 登录空闲时间
+JCPU 当前登录用执行的命令户占用cpu时间
+PCPU 当前登录用户执行命令累计占用cpu时间
+WHAT 当前用户执行了什么
+</code></pre><hr>
+<h1 id="gzip"><a href="#gzip" class="headerlink" title="gzip"></a>gzip</h1><pre><code>.gz压缩格式   只能压缩文件，并且不保留源文件
+gzip [文件名...]
+gunzip 或者gzip -d
+</code></pre><h1 id="tar"><a href="#tar" class="headerlink" title="tar"></a>tar</h1><pre><code>.tar.gz 压缩格式
+ -c 打包
+ -v 显示详细信息
+ -f 指定文件名
+ -z 压缩或解压
+ -x 解包
+ tar -zcvf app.tar.gz app 将目录app 压缩打包 并显示详细信息
+ tar -zxvf app.tar.gz app 将目录app 解压缩 并显示详细信息
+</code></pre><h1 id="zip"><a href="#zip" class="headerlink" title="zip"></a>zip</h1><pre><code>-r 压缩目录
+unzip 解压缩文件
+</code></pre><h1 id="bz2"><a href="#bz2" class="headerlink" title=".bz2"></a>.bz2</h1><pre><code>bzip2压缩格式 之能压缩文件
+-k 保留源文件
+tar -cjf app.tar.bz2 和tar 搭配使用能够压缩目录
+bunzip2 解压缩文件 -k 解压后保留源文件
+tar -xjf app.tar.bz2 和tar搭配解压文件
+</code></pre><h1 id="write"><a href="#write" class="headerlink" title="write"></a>write</h1><pre><code>write tanwei 给在线用户tanwei发送命令 Ctrl+D 保存结束
+</code></pre><h1 id="wall"><a href="#wall" class="headerlink" title="wall"></a>wall</h1><pre><code>(writeall)命令
+发送广播消息
+</code></pre><h1 id="ping"><a href="#ping" class="headerlink" title="ping"></a>ping</h1><pre><code>测试网络连通性
+</code></pre><h1 id="ifcofig"><a href="#ifcofig" class="headerlink" title="ifcofig"></a>ifcofig</h1><pre><code>(interface configure) 查看设设置网卡信息
+</code></pre><h1 id="mail"><a href="#mail" class="headerlink" title="mail"></a>mail</h1><pre><code>邮件发送命令
+</code></pre><h1 id="last"><a href="#last" class="headerlink" title="last"></a>last</h1><pre><code>统计系统用户所有登陆信息
+</code></pre><h1 id="traceroute"><a href="#traceroute" class="headerlink" title="traceroute"></a>traceroute</h1><pre><code>探测网站路由
+</code></pre><h1 id="netstat"><a href="#netstat" class="headerlink" title="netstat"></a>netstat</h1><pre><code>查询网络状态信息
+netstat -tlun 查询本机开启的端口
+netstat -an 查询本机开启的网络端口以及正在链接的网络程序
+netstat -rn 查看本机网关
+</code></pre><h1 id="setup"><a href="#setup" class="headerlink" title="setup"></a>setup</h1><pre><code>配置网络命令 有些系统需要先下载 yum install -y system-config-network-tui
+</code></pre><h1 id="mount"><a href="#mount" class="headerlink" title="mount"></a>mount</h1><pre><code>手动挂载cd
+mkdir /mnt/cdrom
+mount /dev/sr0 /mnt/cdrom 讲设备文件名 链接到挂载点
+umount /dev/sr0
+</code></pre>
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+
+        
+        原创文章，转载请注明： 转载Tanwei的技术博客,原文地址:<a href="/2014/04/05/Linux 常用命令/" target="_blank" rel="external">http://blog.vnicers.com/2014/04/05/Linux 常用命令/</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.vnicers.com">
+            <img src="/img/avatar.jpg" alt="Tanwei">
+            Tanwei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.vnicers.com/2014/04/05/Linux 常用命令/&title=《Linux 常用命令》 — Tanwei的个人技术博客&pic=http://blog.vnicers.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.vnicers.com/2014/04/05/Linux 常用命令/&title=《Linux 常用命令》 — Tanwei的个人技术博客&source=暂时没有好描述自己的。。。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.vnicers.com/2014/04/05/Linux 常用命令/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Linux 常用命令》 — Tanwei的个人技术博客&url=http://blog.vnicers.com/2014/04/05/Linux 常用命令/&via=http://blog.vnicers.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.vnicers.com/2014/04/05/Linux 常用命令/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2014/04/06/VIM编辑器的基本用法/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">VIM编辑器的基本用法</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2014/04/01/Linux系统目录的作用/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Linux 系统目录的作用</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitment_thread"></div>
+    <link rel="stylesheet" href="//unpkg.com/gitment/style/default.css">
+    <script src="//unpkg.com/gitment/dist/gitment.browser.js"></script>
+    <script>
+        var gitment = new Gitment({
+            owner: 'vnice',
+            repo: 'vnice.github.io',
+            oauth: {
+                client_id: '62766e3f34a27536afe0',
+                client_secret: '1d9c1d04b0b892eedeffbbaac9c978b17fec0b4f',
+            },
+        })
+        gitment.render('comments')
+    </script>
+</section>
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Tanwei &copy; 2014 - 2017</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.vnicers.com/2014/04/05/Linux 常用命令/&title=《Linux 常用命令》 — Tanwei的个人技术博客&pic=http://blog.vnicers.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.vnicers.com/2014/04/05/Linux 常用命令/&title=《Linux 常用命令》 — Tanwei的个人技术博客&source=暂时没有好描述自己的。。。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.vnicers.com/2014/04/05/Linux 常用命令/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Linux 常用命令》 — Tanwei的个人技术博客&url=http://blog.vnicers.com/2014/04/05/Linux 常用命令/&via=http://blog.vnicers.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.vnicers.com/2014/04/05/Linux 常用命令/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLUlEQVR42u3a0W7CMAwFUP7/p7vXTajs2gmIuidPiDVtTicZO87jEY/jafz+Pr/+7MrnWY93DAwMjMsyjpejuqzeK3j9+fXaMDAw7sNIQmF10Wdzz5ZSDegYGBgYSRDsPT6fi4GBgbEScNfD5Vf8bmBgYFyKkRSxSVGaPzh/fZtrcQwMjAsy8tL085/f0t/AwMC4FOMojnxWtSVQvf+fWRgYGKMZeYDLk7NqYzIpbqMyGAMD4waMamlaDaN50tk8KIaBgTGakYTdZIu/t0nXazOUD4dhYGCMYCS3W2kJ7F0oBgbGfRiFowybjoutM053DTEwMEYzkqQtSf5Weo6FbbXeXiAGBsYgRt5W3FvcrrQHMDAwZjOqpWavubi38RntGmJgYIxmrIe8vHCttiKiuRgYGEMZvTTuiEcVk3zTPDOCgYFxWUb1UEWS0vUamb2XiIGBcQfG+uKqc5Ntvjw9xcDAmM3olZTVdLB6sCzfmMPAwLgDo7qsZKHV4jMJ2eXOBgYGxlBG9cGFB8QthOo1p0UsBgbGbRj59v2uhG+lwYmBgXEfRu/4RW+frxfoT7/BwMAYyjiKIz8M0Qu1Sfg+/T9gYGAMZeSjevCrvFkWp6r5fTAwMCYxqkG210hYTzQxMDAwdgW+/K+9X4CoMYCBgYERLK7aqszL1H+OhWFgYGDENXGvVs7v9vbUEAMD4ysZe8vRFXZvIw8DA2M2o1c6rhz/yhufvRQTAwNjEOMH9qeyUAP99psAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

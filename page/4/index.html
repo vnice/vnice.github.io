@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>Tanwei的个人技术博客 | 仰望大神不如退而求索</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="undefined">
+    <meta name="description" content="暂时没有好描述自己的。。。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Tanwei的个人技术博客">
+<meta property="og:url" content="http://blog.vnicers.com/page/4/index.html">
+<meta property="og:site_name" content="Tanwei的个人技术博客">
+<meta property="og:description" content="暂时没有好描述自己的。。。">
+<meta property="og:locale" content="zh-Hans">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Tanwei的个人技术博客">
+<meta name="twitter:description" content="暂时没有好描述自己的。。。">
+    
+        <link rel="alternate" type="application/atom+xml" title="Tanwei的个人技术博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Tanwei</h5>
+          <a href="mailto:vnicers@gmail.com" title="vnicers@gmail.com" class="mail">vnicers@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                专题
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.hxjx360.com" target="_blank" >
+                <i class="icon icon-lg icon-dollar"></i>
+                理财
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/vnice" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Tanwei的个人技术博客</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header index-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Tanwei的个人技术博客</h1>
+        <h5 class="subtitle">
+            
+                仰望大神不如退而求索
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+<div class="container body-wrap">
+
+    <ul class="post-list">
+    
+        <li class="post-list-item fade">
+            <article id="post-设计模式-策略模式"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2014-03-01 00:00:00" datetime="2014-02-28T16:00:00.000Z"  itemprop="datePublished">2014-03-01</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Head-First-设计模式/">Head First 设计模式</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2014/03/01/设计模式-策略模式/">策略模式</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        策略模式
+策略模式定义一系列算法，分别封装起来，让他们之间可以相互转换，策略模式可以让算法的变化独立于使用算法的客户。
+
+12345678910111213141516171819202122232425262728293031323334public abstract class Duck &#123;    private FlyBehavior flyBehavior;    priv...
+    
+
+        <a href="/2014/03/01/设计模式-策略模式/" class="post-more waves-effect waves-button">
+            Continue reading...
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-Spring JDBC 设计与实现"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2014-02-20 00:00:00" datetime="2014-02-19T16:00:00.000Z"  itemprop="datePublished">2014-02-20</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Spring-源码分析/">Spring 源码分析</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2014/02/20/Spring JDBC 设计与实现/">Spring JDBC 设计与实现</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        
+    
+
+        <a href="/2014/02/20/Spring JDBC 设计与实现/" class="post-more waves-effect waves-button">
+            Continue reading...
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/">Spring</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-DispatcherServlet 设计和原理 "
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2014-02-18 00:00:00" datetime="2014-02-17T16:00:00.000Z"  itemprop="datePublished">2014-02-18</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Spring-源码分析/">Spring 源码分析</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2014/02/18/DispatcherServlet 设计和原理 /">DispatcherServlet 设计和原理</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        在Spring MVC中 ,看到了在web.xml中 , 除了需要配置ContextLoaderListener之外 , 还要对 DispatcherServlet迸行配置作为一个Servlet,这个DispatcherServlet实现的是Sun的J2EE核 心模式中的前端控制器模式 (Front Control1er), 作为一个前端控制器 ,所有的Web诘求都需要通过它来处理 , 进行...
+    
+
+        <a href="/2014/02/18/DispatcherServlet 设计和原理 /" class="post-more waves-effect waves-button">
+            Continue reading...
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/">Spring</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-Spring MVC"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2014-02-15 00:00:00" datetime="2014-02-14T16:00:00.000Z"  itemprop="datePublished">2014-02-15</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Spring-源码分析/">Spring 源码分析</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2014/02/15/Spring MVC/">Spring MVC</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        概要
+Spring MVC 是建立在IoC容器的基础之上的。了解Spring MVC，首先要了解Spring IoC容器是如何在Web环境中被载入，并起作用的
+
+Spring IoC是一个独立的模块，它并不是直接在Web容器中发挥作用的，如果在Web环境中使用IoC容器，需要为IoC设计一个启动过程，将IoC容器载入，并在Web容器中建立起来，这个过程是和Web容器的启动过程是建立在一起的。...
+    
+
+        <a href="/2014/02/15/Spring MVC/" class="post-more waves-effect waves-button">
+            Continue reading...
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/">Spring</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-Spring AOP"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2014-02-15 00:00:00" datetime="2014-02-14T16:00:00.000Z"  itemprop="datePublished">2014-02-15</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Spring-源码分析/">Spring 源码分析</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2014/02/15/Spring AOP/">Spring AOP</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        
+AOP 是Spring框架的核心功能模块之一。AOP与IoC容器的结合使用，为应用开发或者Spring自身功能的扩展都提供了便利。Spring AOP的实现和其他特性的实现一样，除了可以使用Spring 本身提供的AOP实现之外，还封装了业界优秀的AOP解决方案AspectJ来供使用。
+
+Advice 通知Advice通知定义在连接点做什么，为切面增强提供织如接口。在Spring AOP ...
+    
+
+        <a href="/2014/02/15/Spring AOP/" class="post-more waves-effect waves-button">
+            Continue reading...
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/">Spring</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-在Bean操作IoC容器"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2014-02-13 00:00:00" datetime="2014-02-12T16:00:00.000Z"  itemprop="datePublished">2014-02-13</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2014/02/13/在Bean操作IoC容器/">在Bean中操作IoC容器</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        IoC容器管理的Bean一般不需要了解容器的状态和直接使用容器，为了和IoC容器api耦合降到最低。但是在某些情况下，是需要在Bean里面直接对IoC容器进行操作，这个时候，需要在Bean中设定对容器的感知。Spring IoC容器提供了该功能，它是通过特定的aware接口来完成的主要有以下这些:
+
+BeanNameAware 可以在Bean中得到它所在的IoC容器中的Bean的示例名称。
+...
+    
+
+        <a href="/2014/02/13/在Bean操作IoC容器/" class="post-more waves-effect waves-button">
+            Continue reading...
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/">Spring</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-Spring 依赖注入源码分析"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2014-02-13 00:00:00" datetime="2014-02-12T16:00:00.000Z"  itemprop="datePublished">2014-02-13</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Spring-源码分析/">Spring 源码分析</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2014/02/13/Spring 依赖注入源码分析/">Spring 依赖注入源码分析</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        getBean
+之前写的Spring IOC 容器这篇文章大致讲了一些IoC容器的初始化过程,主要是IoC容器中建立BeanDefinition的数据映射。但是还没涉及到IoC容器对Bean的依赖关系进行注入，接下来从源码角度分析一下IoC容器是怎样对Bean的依赖关系进行注入的。
+
+首先注意到依赖注入的过程是用户第一次向IoC容器获取Bean时触发的。也就是最基本的BeanFactory接...
+    
+
+        <a href="/2014/02/13/Spring 依赖注入源码分析/" class="post-more waves-effect waves-button">
+            Continue reading...
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/">Spring</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-Spring IOC 容器"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2014-02-04 00:00:00" datetime="2014-02-03T16:00:00.000Z"  itemprop="datePublished">2014-02-04</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2014/02/04/Spring IOC 容器/">Spring IOC 容器</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        IOC容器的设计与实现Spring IOC 容器中有两个主要的容器
+
+实现BeanFactory 接口的简单容器实现，只是实现了容器的基本功能，主要的几个方法如下
+其中最主要的是getBean方法，通过指定的名字对在容器中获取Bean
+containsBean判断容器中是否包含指定名字的bean
+isSingletion和isPrototype方法分别判断bean是否是单例或者多例的
+isT...
+    
+
+        <a href="/2014/02/04/Spring IOC 容器/" class="post-more waves-effect waves-button">
+            Continue reading...
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/">Spring</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-Spring 基本概念"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2014-02-01 00:00:00" datetime="2014-01-31T16:00:00.000Z"  itemprop="datePublished">2014-02-01</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2014/02/01/Spring 基本概念/">Spring 基本概念</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        用途使用Spring框架来简化开发，实现程序的解耦，以及使用Spring一些开箱既用的功能，以及对常用框架的一些分装
+其中解耦体现在对象的解耦和通用功能的解耦分别是IOC和AOP
+IOC 控制反转
+在不使用IOC容器的情况下，开发者需要自己new 对象，当业务变大之后，new 的对象也就变得非常多，对象之间的依赖关系也就变得很复杂，耦合度过高不好维护，不仅出现在对象和对象之间，也出现在模块与...
+    
+
+        <a href="/2014/02/01/Spring 基本概念/" class="post-more waves-effect waves-button">
+            Continue reading...
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/">Spring</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-存储管理"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2014-01-12 00:00:00" datetime="2014-01-11T16:00:00.000Z"  itemprop="datePublished">2014-01-12</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2014/01/12/存储管理/">存储管理</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        逻辑地址和绝对地址
+绝地地址：主存储器以字节为编址单位，容量为n的主存储器中，每个单元有唯一的编号，从0到n-1这个唯一的编号就是主存储器的物理地址。逻辑地址：在多道程序设计地址中，操作系统为了方便用户，就允许每个用户都认为自己的作业程序和数据都是存放在地址是0开始的连续地址空间中。这样用户程序中使用的地址就是逻辑地址。
+
+重定位(地址转换)
+ 为了保证作业的连续执行，必须根据分配给作业的主...
+    
+
+        <a href="/2014/01/12/存储管理/" class="post-more waves-effect waves-button">
+            Continue reading...
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/操作系统/">操作系统</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+    </ul>
+
+    
+<nav id="page-nav">
+    <div class="inner">
+    <a class="extend prev" rel="prev" href="/page/3/">上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/5/">下一页</a>
+    </div>
+</nav>
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Tanwei &copy; 2014 - 2017</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.vnicers.com/page/4/&title=Tanwei的个人技术博客&pic=http://blog.vnicers.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.vnicers.com/page/4/&title=Tanwei的个人技术博客&source=暂时没有好描述自己的。。。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.vnicers.com/page/4/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=Tanwei的个人技术博客&url=http://blog.vnicers.com/page/4/&via=http://blog.vnicers.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.vnicers.com/page/4/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABx0lEQVR42u3ay26DQAwFUP7/p9NtK0p6bTNDVJ1ZRXnAIQvLr+OIz+vbOb9zPvk1jxUHFxd3zE1ufEV5tc6ZW3h4XFzcjdz3geb9pfPvJ9f/w4aLi/uR3DzpqSZMuLi4/4M7KW9wcXE/n5sXKr3WxgO1Gi4u7oBbbW6ueL2kv4uLi9vi9hqdVVB1DHN5d1xc3C3cahmTP0CexFQTI1xc3NXc6mA1+TRprSYF1eX/iouLu4VbLUt6KcskufkRyHBxcRdzk/ZHb8Gi1/6otmtxcXFXcPMBST6IzdsoeUGFi4u7n5v/oDr8mDRQfvkmLi7udu5ksJoUS/my1+X1cXFxt3DnWw29pKfXdsHFxX2Wmwea3pA1L4GiQIaLi7uMO1m5qK5l9FZFcXFxn+XmTc+cnqRKkQQXF3c7txqYkvQop0fJFi4u7kbuhNUsY/K0phdlcXFxW9xJqzQfouTFVXlvCxcXdwG3t0iRD0UmpVQ1/OHi4t7LzROU/AGS5KYZKHFxcTdyly9UFQNfc/KDi4v7ELeXDE2KrsL6BS4u7kPcvA2ah8Jk1IqLi7ufe9cgpBrayk0TXFzcLdz8lnnxM2mh3vA34eLi9rlfU9u5aOE059wAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

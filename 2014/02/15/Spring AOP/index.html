@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>Spring AOP | Tanwei的个人技术博客 | 仰望大神不如退而求索</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Spring">
+    <meta name="description" content="AOP 是Spring框架的核心功能模块之一。AOP与IoC容器的结合使用，为应用开发或者Spring自身功能的扩展都提供了便利。Spring AOP的实现和其他特性的实现一样，除了可以使用Spring 本身提供的AOP实现之外，还封装了业界优秀的AOP解决方案AspectJ来供使用。  Advice 通知Advice通知定义在连接点做什么，为切面增强提供织如接口。在Spring AOP 中它主">
+<meta name="keywords" content="Spring">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring AOP">
+<meta property="og:url" content="http://blog.vnicers.com/2014/02/15/Spring AOP/index.html">
+<meta property="og:site_name" content="Tanwei的个人技术博客">
+<meta property="og:description" content="AOP 是Spring框架的核心功能模块之一。AOP与IoC容器的结合使用，为应用开发或者Spring自身功能的扩展都提供了便利。Spring AOP的实现和其他特性的实现一样，除了可以使用Spring 本身提供的AOP实现之外，还封装了业界优秀的AOP解决方案AspectJ来供使用。  Advice 通知Advice通知定义在连接点做什么，为切面增强提供织如接口。在Spring AOP 中它主">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://blog.vnicers.com/img/inline/pointcut.png">
+<meta property="og:image" content="http://blog.vnicers.com/img/inline/proxyfactorybean.png">
+<meta property="og:updated_time" content="2017-08-06T13:05:48.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring AOP">
+<meta name="twitter:description" content="AOP 是Spring框架的核心功能模块之一。AOP与IoC容器的结合使用，为应用开发或者Spring自身功能的扩展都提供了便利。Spring AOP的实现和其他特性的实现一样，除了可以使用Spring 本身提供的AOP实现之外，还封装了业界优秀的AOP解决方案AspectJ来供使用。  Advice 通知Advice通知定义在连接点做什么，为切面增强提供织如接口。在Spring AOP 中它主">
+<meta name="twitter:image" content="http://blog.vnicers.com/img/inline/pointcut.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Tanwei的个人技术博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Tanwei</h5>
+          <a href="mailto:vnicers@gmail.com" title="vnicers@gmail.com" class="mail">vnicers@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                专题
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.hxjx360.com" target="_blank" >
+                <i class="icon icon-lg icon-dollar"></i>
+                理财
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/vnice" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Spring AOP</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Spring AOP</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-02-14T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-02-15
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Spring-源码分析/">Spring 源码分析</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Advice-通知"><span class="post-toc-number">1.</span> <span class="post-toc-text">Advice 通知</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#BeforeAdvice"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">BeforeAdvice</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#AfterReturningAdvice"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">AfterReturningAdvice</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ThrowsAdvice"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">ThrowsAdvice</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Pointcut-切点"><span class="post-toc-number">2.</span> <span class="post-toc-text">Pointcut 切点</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Advisor"><span class="post-toc-number">3.</span> <span class="post-toc-text">Advisor</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#JVM-动态代理的特性"><span class="post-toc-number">4.</span> <span class="post-toc-text">JVM 动态代理的特性</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#设计原理"><span class="post-toc-number">5.</span> <span class="post-toc-text">设计原理</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-Spring AOP"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Spring AOP</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-02-15 00:00:00" datetime="2014-02-14T16:00:00.000Z"  itemprop="datePublished">2014-02-15</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Spring-源码分析/">Spring 源码分析</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>AOP 是Spring框架的核心功能模块之一。AOP与IoC容器的结合使用，为应用开发<br>或者Spring自身功能的扩展都提供了便利。Spring AOP的实现和其他特性的实现一样，除了<br>可以使用Spring 本身提供的AOP实现之外，还封装了业界优秀的AOP解决方案AspectJ来供使用。</p>
+</blockquote>
+<h1 id="Advice-通知"><a href="#Advice-通知" class="headerlink" title="Advice 通知"></a>Advice 通知</h1><p>Advice通知定义在连接点做什么，为切面增强提供织如接口。在Spring AOP 中它主要描述Spring AOP围绕方法<br>调用而注入的切面行为，在SpringAOP 实现使用了AOP联盟定义的同一接口org.aopalliance.aop.Advice，<br>通过这个接口，为AOP切面增强的织入功能做了更多的细化和扩展，比如提供了更具体的通知类型，如BeforeAdvice,<br>AfterAdvice,ThrowsAdvice.作为Spring AOP 定义的接口类，具体的切面增强可以通过这些接口集成到AOP框架中去发挥作用。</p>
+<h2 id="BeforeAdvice"><a href="#BeforeAdvice" class="headerlink" title="BeforeAdvice"></a>BeforeAdvice</h2><p>在<code>BeforeAdvice</code> 的继承关系关系中，定义了为待增强的目标方法设置 前置增强接口<code>MethodBeforeAdvice</code></p>
+<h2 id="AfterReturningAdvice"><a href="#AfterReturningAdvice" class="headerlink" title="AfterReturningAdvice"></a>AfterReturningAdvice</h2><p>在目标方法调用结束并成功返回的时候，会执行回调函数<code>afterReturning</code></p>
+<h2 id="ThrowsAdvice"><a href="#ThrowsAdvice" class="headerlink" title="ThrowsAdvice"></a>ThrowsAdvice</h2><p>在抛出异常时会回调<code>afterThrowing</code>方法</p>
+<h1 id="Pointcut-切点"><a href="#Pointcut-切点" class="headerlink" title="Pointcut 切点"></a>Pointcut 切点</h1><p>切点决定Advice通知应该作用于哪个连接点，也就是说通过Pointcut来定义需要增强的方法的集合<br>切点的类继承关系如下</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/inline/pointcut.png" alt="pointcut" title="">
+                </div>
+                <div class="image-caption">pointcut</div>
+            </figure>
+<h1 id="Advisor"><a href="#Advisor" class="headerlink" title="Advisor"></a>Advisor</h1><p>完成对目标方法的切面增强设计(Advice)和关注点的设计(Pointcut)以后，需要一个对象将他们结合起来，完成这个<br>作用的就是Advisor通知器，把Advice和Pointcut结合起来，这个结合为使用IoC容器配置AOP应用，或者说即开即用的AOP基础设施，提供了便利</p>
+<h1 id="JVM-动态代理的特性"><a href="#JVM-动态代理的特性" class="headerlink" title="JVM 动态代理的特性"></a>JVM 动态代理的特性</h1><p>在Spring AOP中，使用核心技术的是动态代理，而这种动态代理实际上是JDK的一个特性。通过JDK的动态代理，可以为任意<br>对象创建代理对象，对弈具体使用来说，这个特性是通过Java Reflection API 来完成的。</p>
+<h1 id="设计原理"><a href="#设计原理" class="headerlink" title="设计原理"></a>设计原理</h1><p>在Spring的AOP模块中，一个主要的部分是代理对象的生成，而对于Spring应用，可以看到，是通过配置和调用Spring的ProxyFactoryBean来完成这个任务的<br>在ProxyFactoryBean中封装了主要的代理对象的生成过程。在这个过程中可以使用JDK的Proxy或者是CGLIB</p>
+<p>在分析Spring AOP 的实现原理中，主要以ProxyFactoryBean的实现作为例子和实现的基本线索进行分析<br>这是因为ProxyFactoryBean是在Spring IoC环境中创建 AOP 应用的底层方法，也是最灵活的方法，Spring通过它<br>完成了对AOP使用封装。以ProxyFactoryBean实现为入口，逐层深入是学习理解Spring AOP 实现的学习路径</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/inline/proxyfactorybean.png" alt="AopProxy生成过程" title="">
+                </div>
+                <div class="image-caption">AopProxy生成过程</div>
+            </figure>
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+
+        
+        原创文章，转载请注明： 转载Tanwei的技术博客,原文地址:<a href="/2014/02/15/Spring AOP/" target="_blank" rel="external">http://blog.vnicers.com/2014/02/15/Spring AOP/</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.vnicers.com">
+            <img src="/img/avatar.jpg" alt="Tanwei">
+            Tanwei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/">Spring</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.vnicers.com/2014/02/15/Spring AOP/&title=《Spring AOP》 — Tanwei的个人技术博客&pic=http://blog.vnicers.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.vnicers.com/2014/02/15/Spring AOP/&title=《Spring AOP》 — Tanwei的个人技术博客&source=暂时没有好描述自己的。。。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.vnicers.com/2014/02/15/Spring AOP/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Spring AOP》 — Tanwei的个人技术博客&url=http://blog.vnicers.com/2014/02/15/Spring AOP/&via=http://blog.vnicers.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.vnicers.com/2014/02/15/Spring AOP/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2014/02/15/Spring MVC/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Spring MVC</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2014/02/13/在Bean操作IoC容器/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">在Bean中操作IoC容器</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitment_thread"></div>
+    <link rel="stylesheet" href="//unpkg.com/gitment/style/default.css">
+    <script src="//unpkg.com/gitment/dist/gitment.browser.js"></script>
+    <script>
+        var gitment = new Gitment({
+            owner: 'vnice',
+            repo: 'vnice.github.io',
+            oauth: {
+                client_id: '62766e3f34a27536afe0',
+                client_secret: '1d9c1d04b0b892eedeffbbaac9c978b17fec0b4f',
+            },
+        })
+        gitment.render('comments')
+    </script>
+</section>
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Tanwei &copy; 2014 - 2017</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.vnicers.com/2014/02/15/Spring AOP/&title=《Spring AOP》 — Tanwei的个人技术博客&pic=http://blog.vnicers.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.vnicers.com/2014/02/15/Spring AOP/&title=《Spring AOP》 — Tanwei的个人技术博客&source=暂时没有好描述自己的。。。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.vnicers.com/2014/02/15/Spring AOP/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Spring AOP》 — Tanwei的个人技术博客&url=http://blog.vnicers.com/2014/02/15/Spring AOP/&via=http://blog.vnicers.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.vnicers.com/2014/02/15/Spring AOP/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJElEQVR42u3aQY7jQAgF0Nz/0mlpVrNo2x9wRhP8ahUlsV3PCwQFr1e83n/W35+Pvjn69ejaozu8PrEwMDC+lvE+XXdtZc6+oGJgYDyAkQTZ6mPOqecxM98bBgYGRjXI9sJlEnwxMDAw8oBb/SZPMTEwMDDOGdXQWT3vqha3H6zFMTAwvpDRawz8m88f729gYGD894z3YCWpW/XorbkTDAyM1YzksL46flE9vKuWuFHYxcDAWMeoNhGrJW7yTW847PA/GBgY6xgT/aR5MMFcnBpiYGAsYuRlZJLeVRO73rN+wWBgYKxmzEeyqgXwZLDj4lkYGBhLGb2GYjVMJ/dPAu7hHjAwMB7AqA5sVYPmpJ2JgYGBcVdbMSll77rqsHzFwMBYyuglhfkIV164TqZVMTAwdjPyhK8XFuetzeR1YGBg7Gb0hrGqxec8ZYx2hYGBsZTxbq0qYB5qL14fBgbGakY+GHHXsVoesvPXh4GB8TTGJF2rHrFV25zNSTcMDIwVjPzx5bZisYUwGfXAwMB4DmN+inUejnv/LA9bYGBgrGMkx2eTcJxvtFdUY2Bg7GZMAmhvhKvacoheKwYGxmpGdUO9W1SvzdNBDAyM5zDyINjLPZMEsVfEYmBgPI3xuXbjvYH7ogrHwMDAaCGrYxzJpjEwMDAK/YSbCtH8cK05bIGBgbGCkYe/amJXDcd58YyBgfEcxl0BtMrutSpHjVUMDIzvY/wAVEJ10yRz8WgAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

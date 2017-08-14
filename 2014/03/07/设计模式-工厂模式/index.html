@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>工厂模式 | Tanwei的个人技术博客 | 仰望大神不如退而求索</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="设计模式">
+    <meta name="description" content="工厂模式 工厂方法模式定义了一个创建对象的接口，但由子类决定要实例化的类是哪一个。工厂方法让类把实例化推迟到子类  new对象的问题  当使用new 关键之创建一个对象的时候，你是在实例化一个具体的类，你使用的是实现，而不是接口。代码绑定着具体的类会导致代码更脆弱，更缺乏弹性。 例如如下代码,有一大堆不同的鸭子实现类时，但是必须等到运行时，才知道该实例化哪一个 12345678Duck duck;">
+<meta name="keywords" content="设计模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="工厂模式">
+<meta property="og:url" content="http://blog.vnicers.com/2014/03/07/设计模式-工厂模式/index.html">
+<meta property="og:site_name" content="Tanwei的个人技术博客">
+<meta property="og:description" content="工厂模式 工厂方法模式定义了一个创建对象的接口，但由子类决定要实例化的类是哪一个。工厂方法让类把实例化推迟到子类  new对象的问题  当使用new 关键之创建一个对象的时候，你是在实例化一个具体的类，你使用的是实现，而不是接口。代码绑定着具体的类会导致代码更脆弱，更缺乏弹性。 例如如下代码,有一大堆不同的鸭子实现类时，但是必须等到运行时，才知道该实例化哪一个 12345678Duck duck;">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/818b7fe3gy1fibknkawlvj20r70ae77q.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/818b7fe3gy1fibki86p2rj21780nqdmb.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/818b7fe3gy1fibkjlvun3j214y0h6783.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/818b7fe3gy1fibklivq00j20tt0nkdlt.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/818b7fe3gy1fibl0wwty3j20t40h478z.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/818b7fe3gy1fic6rm1mxkj20tb0nlwk1.jpg">
+<meta property="og:updated_time" content="2017-08-08T10:25:27.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="工厂模式">
+<meta name="twitter:description" content="工厂模式 工厂方法模式定义了一个创建对象的接口，但由子类决定要实例化的类是哪一个。工厂方法让类把实例化推迟到子类  new对象的问题  当使用new 关键之创建一个对象的时候，你是在实例化一个具体的类，你使用的是实现，而不是接口。代码绑定着具体的类会导致代码更脆弱，更缺乏弹性。 例如如下代码,有一大堆不同的鸭子实现类时，但是必须等到运行时，才知道该实例化哪一个 12345678Duck duck;">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/818b7fe3gy1fibknkawlvj20r70ae77q.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="Tanwei的个人技术博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Tanwei</h5>
+          <a href="mailto:vnicers@gmail.com" title="vnicers@gmail.com" class="mail">vnicers@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                专题
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.hxjx360.com" target="_blank" >
+                <i class="icon icon-lg icon-dollar"></i>
+                理财
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/vnice" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">工厂模式</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">工厂模式</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-03-06T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-03-07
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Head-First-设计模式/">Head First 设计模式</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#工厂模式"><span class="post-toc-number">1.</span> <span class="post-toc-text">工厂模式</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#new对象的问题"><span class="post-toc-number">2.</span> <span class="post-toc-text">new对象的问题</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#简单工厂"><span class="post-toc-number">3.</span> <span class="post-toc-text">简单工厂</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#工厂方法"><span class="post-toc-number">4.</span> <span class="post-toc-text">工厂方法</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#抽象工厂"><span class="post-toc-number">5.</span> <span class="post-toc-text">抽象工厂</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#原则的应用"><span class="post-toc-number">5.1.</span> <span class="post-toc-text">原则的应用</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#抽象工厂定义"><span class="post-toc-number">6.</span> <span class="post-toc-text">抽象工厂定义</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-设计模式-工厂模式"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">工厂模式</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-03-07 00:00:00" datetime="2014-03-06T16:00:00.000Z"  itemprop="datePublished">2014-03-07</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Head-First-设计模式/">Head First 设计模式</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h1><blockquote>
+<p>工厂方法模式定义了一个创建对象的接口，但由子类决定要实例化的类是哪一个。工厂方法让类把实例化推迟到子类</p>
+</blockquote>
+<h1 id="new对象的问题"><a href="#new对象的问题" class="headerlink" title="new对象的问题"></a>new对象的问题</h1><p>  当使用new 关键之创建一个对象的时候，你是在实例化一个具体的类，你使用的是实现，而不是接口。代码绑定着具体的类会导致代码更脆弱，更缺乏弹性。</p>
+<p>例如如下代码,有一大堆不同的鸭子实现类时，但是必须等到运行时，才知道该实例化哪一个</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Duck duck;</div><div class="line"><span class="keyword">if</span> (picnic) &#123;</div><div class="line">    duck = <span class="keyword">new</span> MallardDuck();</div><div class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (hunting) &#123;</div><div class="line">    duck = <span class="keyword">new</span> DecoyDuck();</div><div class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (inBathTub) &#123;</div><div class="line">    duck = <span class="keyword">new</span> RubberDuck();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>当看到这样的代码，一旦有变化或者扩展，就必须冲洗打卡这段代码进行检查和修改，通常修改这样的代码将造成部分系统更难维护和更新，而且也更容易犯错。<br>在技术上new 对象没有错，毕竟这是Java的基础部分，真正的的问题是我们的程序需要改变。针对接口编程，可以隔离掉以后系统可能发生的一大堆改变。如果代码是针对接口而写，那么通过多态，它可以与任何新类实现该接口，但是当代码使用大量的具体类时，就是自找麻烦，因为一旦加入具体的类，就必须改变代码，也就是说你的代码并非”对修改关闭”</p>
+<h1 id="简单工厂"><a href="#简单工厂" class="headerlink" title="简单工厂"></a>简单工厂</h1><p>简单工厂只负责创建对象，这个工厂可能不止服务于一个地方，以后对象类型如果有变动，只需修改简单工厂的逻辑就可以<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SimplePizzaFactory</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> Pizza <span class="title">createPizza</span><span class="params">(String type)</span></span>&#123;</div><div class="line">        Pizza pizza=<span class="keyword">null</span>;</div><div class="line">        <span class="keyword">if</span>(<span class="string">""</span>.equals(type))&#123;</div><div class="line">            pizza= <span class="keyword">new</span> CheesePizza();</div><div class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">"Clam"</span>.equals(type))&#123;</div><div class="line">            pizza=<span class="keyword">new</span> ClamPizza();</div><div class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">"Greek"</span>.equals(type))&#123;</div><div class="line">            pizza=<span class="keyword">new</span> GreekPizza();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> pizza;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>使用简单工厂，将new对象的操作移动到了简单工厂中，这里只传入订单类型来使用工厂创建对象<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SimplePizzaStore</span> </span>&#123;</div><div class="line">    SimplePizzaFactory simplePizzaFactory;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SimplePizzaStore</span><span class="params">(SimplePizzaFactory factory)</span></span>&#123;</div><div class="line">        <span class="keyword">this</span>.simplePizzaFactory=factory;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> Pizza <span class="title">orderPizza</span><span class="params">(String type)</span></span>&#123;</div><div class="line">        Pizza pizza=<span class="keyword">this</span>.simplePizzaFactory.createPizza(type);</div><div class="line">        <span class="keyword">return</span> pizza;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>简单工厂其实是一种常用的编程习惯，而不是一种设计模式。</p>
+<h1 id="工厂方法"><a href="#工厂方法" class="headerlink" title="工厂方法"></a>工厂方法</h1><p>使用简单工厂只能穿件简单工厂中一种模式的对象，现在我们想使用不同的工厂创建不同的对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractPizzaStore</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span>  Pizza <span class="title">orderPizza</span><span class="params">(String type)</span></span>&#123;</div><div class="line">        Pizza pizza=createPizza(type);</div><div class="line">        <span class="keyword">return</span> pizza;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> Pizza <span class="title">createPizza</span><span class="params">(String type)</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>将创建pizza对象的方法抽象到PizzaStore中，然后让具体的子类去实现不同的创建方式，同时，将orderPizza方法在本类中设置为final，这个方法因为比较固定， 防止子类覆盖掉该方法</p>
+<p>具体的pizza 店根据自己的需求创建不同风味的pizza<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ChinesePizzaStore</span> <span class="keyword">extends</span> <span class="title">AbstractPizzaStore</span> </span>&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> Pizza <span class="title">createPizza</span><span class="params">(String type)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (<span class="string">"chesses"</span>.equals(type)) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">new</span> ChineseStyleCheesePizza();</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">"clam"</span>.equals(type)) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">new</span> ChineseStyleClamPizza();</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">new</span> ChineseStyleCheesePizza();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>测试入口<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">      PizzStore pizzStore=<span class="keyword">new</span> ChinesePizzStore();</div><div class="line">      pizzStore.orderPizza(<span class="string">"cheese"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>工厂方法用来处理对象的创建，并将这样的行为封装在子类中，这样，客户程序中关于超类的代码就和子类对象创建代码解耦了<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fibknkawlvj20r70ae77q.jpg" alt="工厂方法中抽象方法原型" title="">
+                </div>
+                <div class="image-caption">工厂方法中抽象方法原型</div>
+            </figure></p>
+<p>所有工厂模式都用来封装对象的创建，工厂方法模式，通过让子类决定该创建什么样的对象，来达到将对象创建过程封装的目的，让我们来看看这些类图。<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fibki86p2rj21780nqdmb.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fibkjlvun3j214y0h6783.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fibklivq00j20tt0nkdlt.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<p>工厂方法模式能够封装具体类型的实例化，看看下面的类图，抽象的Creator提供了一个创建对象的方法接口，也称为”工厂方法”，在抽象的Creator中，任何其他实现的方法，都可以使用到这个工厂方法所制造出来的产品，但是只有子类真正实现这个工厂方法并穿件产品。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fibl0wwty3j20t40h478z.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h1 id="抽象工厂"><a href="#抽象工厂" class="headerlink" title="抽象工厂"></a>抽象工厂</h1><p>从上面的代码中可以看到，<code>PizzaStore</code>中依赖了具体的<code>Pizza</code>类。而设计原则中有一条<strong>要依赖抽象类，不要依赖具体的类</strong>，这也是<strong>依赖倒置原则(Dependency Inversion Principle)</strong>,这个原则应该告诉我们重写代码以便于我们依赖抽象类，而不是具体的类。对于高层次及低层次模块都应该如此。</p>
+<h2 id="原则的应用"><a href="#原则的应用" class="headerlink" title="原则的应用"></a>原则的应用</h2><p>非常依赖PizzStore的主要问题在于，它依赖每个披萨类型，因为它是在自己的orderPizza方法中。实例化这些具体类型。</p>
+<p>在为各种不同的PizzStore提供不同的原料时，代码如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">PizzaIngredientFactory</span> </span>&#123;</div><div class="line">    <span class="function">Dough <span class="title">createDough</span><span class="params">()</span></span>;</div><div class="line">    <span class="function">Sauce <span class="title">createSauce</span><span class="params">()</span></span>; </div><div class="line">    <span class="function">Cheese <span class="title">createCheese</span><span class="params">()</span></span>;</div><div class="line">    <span class="function">Clam <span class="title">createClam</span><span class="params">()</span></span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NYPizzaIngredientFactory</span> <span class="keyword">implements</span> <span class="title">PizzaIngredientFactory</span> </span>&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Dough <span class="title">createDough</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ThinCrustDough();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Sauce <span class="title">createSauce</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> MarinaraSauce();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Cheese <span class="title">createCheese</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ReggianoCheese();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Clam <span class="title">createClam</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> FreshClams();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CheesePizza</span> <span class="keyword">extends</span> <span class="title">AbstractPizza</span> </span>&#123;</div><div class="line">    PizzaIngredientFactory ingredientFactory;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CheesePizza</span><span class="params">(PizzaIngredientFactory factory)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.ingredientFactory = factory;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">prepare</span><span class="params">()</span> </span>&#123;</div><div class="line">        log.info(<span class="string">"Preparing ...."</span>);</div><div class="line">        <span class="keyword">super</span>.dough = <span class="keyword">this</span>.ingredientFactory.createDough();</div><div class="line">        <span class="keyword">super</span>.cheese = <span class="keyword">this</span>.ingredientFactory.createCheese();</div><div class="line">        <span class="keyword">super</span>.clam = <span class="keyword">this</span>.ingredientFactory.createClam();</div><div class="line">        <span class="keyword">super</span>.sauce = <span class="keyword">this</span>.ingredientFactory.createSauce();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NYPizzaStore</span> <span class="keyword">extends</span> <span class="title">AbstractPizzaStore</span> </span>&#123;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NYPizzaStore</span> <span class="keyword">extends</span> <span class="title">AbstractPizzaStore</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> Pizza <span class="title">createPizza</span><span class="params">(String item)</span> </span>&#123;</div><div class="line">        Pizza pizza=<span class="keyword">null</span>;</div><div class="line">        PizzaIngredientFactory ingredientFactory=<span class="keyword">new</span> NYPizzaIngredientFactory();</div><div class="line">        <span class="keyword">if</span> (item.equals(<span class="string">"cheese"</span>)) &#123;</div><div class="line">            pizza = <span class="keyword">new</span> CheesePizza(ingredientFactory);</div><div class="line">            pizza.setName(<span class="string">"New York Style Cheese Pizza"</span>);</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (item.equals(<span class="string">"clam"</span>)) &#123;</div><div class="line">            pizza = <span class="keyword">new</span> ClamPizza(ingredientFactory);</div><div class="line">            pizza.setName(<span class="string">"New York Style Clam Pizza"</span>);</div><div class="line">        &#125; </div><div class="line">        <span class="keyword">return</span> pizza;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们引入了新类型的工厂，也就是所谓的抽象工厂，来创建原料家族。通过抽象工厂所提供的接口，可以创建产品的家族，利用这个接口书写代码，我们的代码将从实际工厂解耦，以便在不同上下文中实现各式各样的工厂，制造出各种不同的产品。因为代码从实际的产品中解耦了，所以我们可以替换不同的工厂来取得不同的行为。<br>AbstractPizza 的代码利用相关的工厂生产原料。所生产的原料依赖所使用的工厂，Pizza类根本不关心这些原料。它只知道如何制作披萨。现在Pizza和区域原料之间被解耦。<br>下面是抽象工厂的类图关系<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fic6rm1mxkj20tb0nlwk1.jpg" alt="抽象工厂" title="">
+                </div>
+                <div class="image-caption">抽象工厂</div>
+            </figure></p>
+<h1 id="抽象工厂定义"><a href="#抽象工厂定义" class="headerlink" title="抽象工厂定义"></a>抽象工厂定义</h1><blockquote>
+<p> 抽象工厂提供了一个接口，用于创建相关领域或者依赖对象的家族，而不需要明确指定具体的类</p>
+</blockquote>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+
+        
+        原创文章，转载请注明： 转载Tanwei的技术博客,原文地址:<a href="/2014/03/07/设计模式-工厂模式/" target="_blank" rel="external">http://blog.vnicers.com/2014/03/07/设计模式-工厂模式/</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.vnicers.com">
+            <img src="/img/avatar.jpg" alt="Tanwei">
+            Tanwei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.vnicers.com/2014/03/07/设计模式-工厂模式/&title=《工厂模式》 — Tanwei的个人技术博客&pic=http://blog.vnicers.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.vnicers.com/2014/03/07/设计模式-工厂模式/&title=《工厂模式》 — Tanwei的个人技术博客&source=暂时没有好描述自己的。。。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.vnicers.com/2014/03/07/设计模式-工厂模式/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《工厂模式》 — Tanwei的个人技术博客&url=http://blog.vnicers.com/2014/03/07/设计模式-工厂模式/&via=http://blog.vnicers.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.vnicers.com/2014/03/07/设计模式-工厂模式/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2014/03/08/设计模式-单例模式/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">单例模式</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2014/03/05/设计模式-装饰器模式/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">装饰器模式</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitment_thread"></div>
+    <link rel="stylesheet" href="//unpkg.com/gitment/style/default.css">
+    <script src="//unpkg.com/gitment/dist/gitment.browser.js"></script>
+    <script>
+        var gitment = new Gitment({
+            owner: 'vnice',
+            repo: 'vnice.github.io',
+            oauth: {
+                client_id: '62766e3f34a27536afe0',
+                client_secret: '1d9c1d04b0b892eedeffbbaac9c978b17fec0b4f',
+            },
+        })
+        gitment.render('comments')
+    </script>
+</section>
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Tanwei &copy; 2014 - 2017</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.vnicers.com/2014/03/07/设计模式-工厂模式/&title=《工厂模式》 — Tanwei的个人技术博客&pic=http://blog.vnicers.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.vnicers.com/2014/03/07/设计模式-工厂模式/&title=《工厂模式》 — Tanwei的个人技术博客&source=暂时没有好描述自己的。。。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.vnicers.com/2014/03/07/设计模式-工厂模式/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《工厂模式》 — Tanwei的个人技术博客&url=http://blog.vnicers.com/2014/03/07/设计模式-工厂模式/&via=http://blog.vnicers.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.vnicers.com/2014/03/07/设计模式-工厂模式/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACI0lEQVR42u3aOXLDMBAEQP//03LsQPTMgnKZQCNSqUgRzWC1B76+4vUK1rvrk19u7xouDAyMxzKSzSXf509JMPneMDAwzmHkP518cw3Lw3SyNwwMDIycNAvc11vHwMDAWA+4yRavwf/ifwMDA+MhjJUg+Et5WSaXH6/FMTAwHsjIu+5///kj8w0MDIxHMV7lmjXuZ+lgsSsMDIytGXmAS0j5sLOlRqMFDAyMTRmzkNqG0euy9vroRgTDwMA4gJHfkDfu84baSqH7I+BiYGAczJgleW2XLB+CYmBgnMZoU7Q2H5uNAfKgj4GBcQ4jb5y14DbRvG2ciYGBsR0jD3ltoZsneflT3iIxMDA2ZeSX5gOAlSHBDe02DAyMTRn5eKB+QFuClqlqUYVjYGA8lnHX0Yd7j2K0DTgMDIy9GfemcW0BvD5aeJvhYmBgbMTIC9fZ0Yq8xZaPTovxAAYGxhaMfBOzBHE2NqgDOgYGxtaMNuC2heu9yWX0sjAwMDZlzNK+9t5ZgK7PjGBgYGzNaHvsbXidvZTieCsGBsYBjDxc3tWAWwnuxQwWAwPj4YxXuVYOUqyE8jq3xcDA2IjRlo6z4xHRIYkyKM8KYAwMjOcyZmPF/GFtrjps/2FgYBzAaAeNs4J2PdV7m5hiYGBglNesY+qRJwYGBsaoib/eDSuKYQwMjAMY+TBgpbk2SzGjazAwMLZm5KFwfeYwSxnbl4KBgbER4xtZC2qYuOi46wAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

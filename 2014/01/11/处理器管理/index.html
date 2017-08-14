@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>处理器管理 | Tanwei的个人技术博客 | 仰望大神不如退而求索</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="操作系统">
+    <meta name="description" content="进程控制块的主要结构                                                                                              进程控制块              多道程序设计 让多个计算问题同时装入一个计算机系统的主存储器并行执行，这种设计技术称为多道程序设计，这种计算机系统称为多道程序设计系统或简称多道系统  多">
+<meta name="keywords" content="操作系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="处理器管理">
+<meta property="og:url" content="http://blog.vnicers.com/2014/01/11/处理器管理/index.html">
+<meta property="og:site_name" content="Tanwei的个人技术博客">
+<meta property="og:description" content="进程控制块的主要结构                                                                                              进程控制块              多道程序设计 让多个计算问题同时装入一个计算机系统的主存储器并行执行，这种设计技术称为多道程序设计，这种计算机系统称为多道程序设计系统或简称多道系统  多">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://blog.vnicers.com/img/inline/进程控制块.png">
+<meta property="og:updated_time" content="2017-08-06T07:50:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="处理器管理">
+<meta name="twitter:description" content="进程控制块的主要结构                                                                                              进程控制块              多道程序设计 让多个计算问题同时装入一个计算机系统的主存储器并行执行，这种设计技术称为多道程序设计，这种计算机系统称为多道程序设计系统或简称多道系统  多">
+<meta name="twitter:image" content="http://blog.vnicers.com/img/inline/进程控制块.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Tanwei的个人技术博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Tanwei</h5>
+          <a href="mailto:vnicers@gmail.com" title="vnicers@gmail.com" class="mail">vnicers@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                专题
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.hxjx360.com" target="_blank" >
+                <i class="icon icon-lg icon-dollar"></i>
+                理财
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/vnice" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">处理器管理</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">处理器管理</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-01-10T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-01-11
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#进程控制块的主要结构"><span class="post-toc-number">1.</span> <span class="post-toc-text">进程控制块的主要结构</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#多道程序设计"><span class="post-toc-number">2.</span> <span class="post-toc-text">多道程序设计</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#多道程序设计怎样提高系统效率，使用多道程序一定会提高系统效率吗"><span class="post-toc-number">3.</span> <span class="post-toc-text">多道程序设计怎样提高系统效率，使用多道程序一定会提高系统效率吗</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#进程的基本状态和变化关系"><span class="post-toc-number">4.</span> <span class="post-toc-text">进程的基本状态和变化关系</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#进程队列基本概念"><span class="post-toc-number">5.</span> <span class="post-toc-text">进程队列基本概念</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#UNIX的进程组成，状态及转换"><span class="post-toc-number">6.</span> <span class="post-toc-text">UNIX的进程组成，状态及转换</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#线程的中断优先级和中断屏蔽"><span class="post-toc-number">7.</span> <span class="post-toc-text">线程的中断优先级和中断屏蔽</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#进程调度"><span class="post-toc-number">8.</span> <span class="post-toc-text">进程调度</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#进程调度算法的几个准则"><span class="post-toc-number">9.</span> <span class="post-toc-text">进程调度算法的几个准则</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#进程调度的常用算法"><span class="post-toc-number">10.</span> <span class="post-toc-text">进程调度的常用算法</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#进程的切换"><span class="post-toc-number">11.</span> <span class="post-toc-text">进程的切换</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-处理器管理"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">处理器管理</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-01-11 00:00:00" datetime="2014-01-10T16:00:00.000Z"  itemprop="datePublished">2014-01-11</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="进程控制块的主要结构"><a href="#进程控制块的主要结构" class="headerlink" title="进程控制块的主要结构"></a>进程控制块的主要结构</h1> <figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/inline/进程控制块.png" alt="进程控制块" title="">
+                </div>
+                <div class="image-caption">进程控制块</div>
+            </figure>
+<h1 id="多道程序设计"><a href="#多道程序设计" class="headerlink" title="多道程序设计"></a>多道程序设计</h1><blockquote>
+<p>让多个计算问题同时装入一个计算机系统的主存储器并行执行，这种设计技术称为多道程序设计，这种计算机系统称为多道程序设计系统或简称多道系统</p>
+</blockquote>
+<h1 id="多道程序设计怎样提高系统效率，使用多道程序一定会提高系统效率吗"><a href="#多道程序设计怎样提高系统效率，使用多道程序一定会提高系统效率吗" class="headerlink" title="多道程序设计怎样提高系统效率，使用多道程序一定会提高系统效率吗"></a>多道程序设计怎样提高系统效率，使用多道程序一定会提高系统效率吗</h1><blockquote>
+<p>通过增加并行执行的程序道数，减少处理器的空闲时间，提高处理器的使用率，从而提高单位时间内的算题量；</p>
+<p>利用和发挥硬件中各种资源的并行工作能力，使用多道程序不一定会提高系统效率，因为主存器的空间大小，限制了可同时装入的程序数量，其次外围设备的数量也是限制条件，第三多个资源同时使用同一个资源的情况时有发生，在产生系统竞争时，可能发生等待，有等待则会影响系统效率。</p>
+</blockquote>
+<h1 id="进程的基本状态和变化关系"><a href="#进程的基本状态和变化关系" class="headerlink" title="进程的基本状态和变化关系"></a>进程的基本状态和变化关系</h1><blockquote>
+<p>进程在执行的过程中不同的时刻的状态可以分为三种基本状态：</p>
+</blockquote>
+<pre><code>等待态：等待某个事件的完成，就绪态：等待系统分配处理器以便运行，运行态：占用处理器正在运行。
+</code></pre><p>   变化关系如下：</p>
+<pre><code>①运行态--&gt;等待态,等待外设，主存等资源分配或等待人工干预而引起
+②等待态--&gt;运行态，表示等待的条件已经满足，只要分配到处理器就可以运行
+③运行态--&gt;就绪态，不是由于自身原因，而是由外界原因使运行态的进程让出处理器，例如，时间片用完，有更高优先级的进程来抢占处理器。
+④就绪态--&gt;运行态，系统按照某种策略选中就绪队列中的一个进程占用处理器，此时就变成了运行态
+</code></pre><h1 id="进程队列基本概念"><a href="#进程队列基本概念" class="headerlink" title="进程队列基本概念"></a>进程队列基本概念</h1><blockquote>
+<p>在多道程序设计的系统中往往会同时创建多个进程，在单处理器情况下，每次只能让一个进程运行，其他的进程处于就绪状态或者等待状态。为了便于管理，经常把处在相同状态的进程链在一起，称为进程队列</p>
+</blockquote>
+<h1 id="UNIX的进程组成，状态及转换"><a href="#UNIX的进程组成，状态及转换" class="headerlink" title="UNIX的进程组成，状态及转换"></a>UNIX的进程组成，状态及转换</h1><blockquote>
+<p> 在UNIX系统中进程由三部分组成：进程控制块，正文段，数据段。UNIX进程在执行过程中由于各种原因使其状态不断发生变化，且当内存空间不够时，可以把一些进程换出到磁盘上，需要时又可以把进程换进内存，进程的状态有运行态，就绪态，睡眠态，创建态，僵死状态。</p>
+</blockquote>
+<h1 id="线程的中断优先级和中断屏蔽"><a href="#线程的中断优先级和中断屏蔽" class="headerlink" title="线程的中断优先级和中断屏蔽"></a>线程的中断优先级和中断屏蔽</h1><blockquote>
+<p>中断优先级是硬件设计时确定的。中断装置按照预定的顺序来响应同时出现的中断事件，这个预定的事件称为中断优先级，中断优先级是按照中断事件的重要性和紧迫程度来确定的，是由硬件设计时确定下来的，一般情况下，优先级由高到低的顺序依次为：硬件故障中断，自愿中断，程序性中断，外部中断和输入输出中断。<br>  中断屏蔽的作用，当中断装置响应了某个中断后，中断处理程序在处理中断时，中断装置可能去响应另一个中断事件，=。因此会出现优先级低的中断事件打断优先级高的中断事件，，使得中断事件的处理顺序与响应顺序不一致，而且会形成多重嵌套处理，使多现场保护，程序返回等工作变得复杂。，中断屏蔽技术是为了解决上述问题而提出的在一个中断处理程序没有结束之前不响应其他中断事件。于是当中断装置检查到有中断事件后，还要查看当前PSW的中断屏蔽标志，如果没有屏蔽标志则响应该中断，否则暂时不响应该中断，待屏蔽标志消除后再响应，自愿中断是不能屏蔽的。</p>
+</blockquote>
+<h1 id="进程调度"><a href="#进程调度" class="headerlink" title="进程调度"></a>进程调度</h1><blockquote>
+<p> 按照选定的进程调度算法从就绪队列中选择一个进程，让它占用处理器。</p>
+</blockquote>
+<h1 id="进程调度算法的几个准则"><a href="#进程调度算法的几个准则" class="headerlink" title="进程调度算法的几个准则"></a>进程调度算法的几个准则</h1><blockquote>
+<p> 提高处理器的使用率，增大吞吐量，减少等待时间，缩短响应时间</p>
+</blockquote>
+<h1 id="进程调度的常用算法"><a href="#进程调度的常用算法" class="headerlink" title="进程调度的常用算法"></a>进程调度的常用算法</h1><blockquote>
+<p> 先来先服务，最高优先级，时间片轮询，和分级调度算法。</p>
+</blockquote>
+<pre><code>①先来先服务算法，该算法按照进程进入就绪队列的先后次序来选择可以占用该处理器进程
+②最高优先级调度算法，对每个进程确定一个优先级，该算法总是让优先级高的进程先使用处理器。对具有相同优先级的进程，再采用先来先服务的算法分配处理器。系统常以任务的紧迫性和系统效率等因素确定进程的优先级，进程的优先级可以固定，也可以随进程的执行过程而发生变化。
+③时间片轮询调度发，把规定的进程一次占用处理器的最长时间称为时间片。时间片轮转调度算法让就绪进程按照就绪的先后次序排成队列，每次总选择该队列的第一个进程占用处理器，但规定只能使用一个时间片，如果该进程尚未完成则放到就绪队列尾，各个进程就这样轮转运行，时间片轮转算法常用于分时操作系统。
+④分级调度算法，由系统设置多个就绪队列，每个就绪队列中的进程按照时间片轮训占用处理器。这就是分级调度算法。
+</code></pre><h1 id="进程的切换"><a href="#进程的切换" class="headerlink" title="进程的切换"></a>进程的切换</h1><blockquote>
+<p>进程调度从就绪队列中另选一个进程占用处理器，使一个进程让出处理器，由另一个进程占用处理器的过程称为进程切换。</p>
+</blockquote>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+
+        
+        原创文章，转载请注明： 转载Tanwei的技术博客,原文地址:<a href="/2014/01/11/处理器管理/" target="_blank" rel="external">http://blog.vnicers.com/2014/01/11/处理器管理/</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.vnicers.com">
+            <img src="/img/avatar.jpg" alt="Tanwei">
+            Tanwei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/操作系统/">操作系统</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.vnicers.com/2014/01/11/处理器管理/&title=《处理器管理》 — Tanwei的个人技术博客&pic=http://blog.vnicers.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.vnicers.com/2014/01/11/处理器管理/&title=《处理器管理》 — Tanwei的个人技术博客&source=暂时没有好描述自己的。。。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.vnicers.com/2014/01/11/处理器管理/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《处理器管理》 — Tanwei的个人技术博客&url=http://blog.vnicers.com/2014/01/11/处理器管理/&via=http://blog.vnicers.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.vnicers.com/2014/01/11/处理器管理/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2014/01/12/存储管理/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">存储管理</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2014/01/09/计算机系统结构/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">计算机系统结构</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitment_thread"></div>
+    <link rel="stylesheet" href="//unpkg.com/gitment/style/default.css">
+    <script src="//unpkg.com/gitment/dist/gitment.browser.js"></script>
+    <script>
+        var gitment = new Gitment({
+            owner: 'vnice',
+            repo: 'vnice.github.io',
+            oauth: {
+                client_id: '62766e3f34a27536afe0',
+                client_secret: '1d9c1d04b0b892eedeffbbaac9c978b17fec0b4f',
+            },
+        })
+        gitment.render('comments')
+    </script>
+</section>
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Tanwei &copy; 2014 - 2017</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.vnicers.com/2014/01/11/处理器管理/&title=《处理器管理》 — Tanwei的个人技术博客&pic=http://blog.vnicers.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.vnicers.com/2014/01/11/处理器管理/&title=《处理器管理》 — Tanwei的个人技术博客&source=暂时没有好描述自己的。。。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.vnicers.com/2014/01/11/处理器管理/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《处理器管理》 — Tanwei的个人技术博客&url=http://blog.vnicers.com/2014/01/11/处理器管理/&via=http://blog.vnicers.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.vnicers.com/2014/01/11/处理器管理/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJklEQVR42u3ay3KDMAwF0Pz/T9N1p4VcSaRT7OMVk1KHk4XQw69XvI6T9fOvZ/df73y2z80LAwPjsYzjcvXuuX7Q6vX192JgYOzDSELh5HHzHc72efPMGBgYGMVEcB64MTAwMCaM/JMkmCafYGBgYEyCYBJMq221j9fiGBgYD2TkXfe/v/7IfAMDA+NRjKO4qsExD6/Vkvjbf2FgYCzNyANcL+3rjRaqz4OBgbEDo5cUJq23TzTgbs5tMTAwHsL4iH7QjEuGBG/eGxgYGAsxrsvU6sCg2iyb74aBgbEDYx7s8pZcUuhWD21gYGDsxphvmhS9c/yr7MPAwHg2Y3LEodd6u/6Z8gT0lwwXAwNjUUY+quwF5fzIaW8gioGBsQMjt+af9Bpto8CNgYGxDaNXalZHlXmhWxg2YGBgLM2YtMB6Q83qoLR8ZgQDA2M5Rn7YIi9QJ5V0NdAX+nkYGBjLMarlZZIm5rBqyMbAwFibUd26erSi2vqvBnoMDIzdGJPrXkjtHao4vR8DA2NjRq+JXzjfMWi6jSI6BgbGAxlJ6ZinhqPQ2ZtRYmBgLMo4imueGiZxslwwY2BgLM3IVz50nBwXmxTPGBgYazMmA4Bq0XvXMY7y2wMDA2MJxl1tuCQoT94Ab2pxDAwMjGLrv3eQolmmYmBgYNz6xdWUMfmBMDAwdmBUE7ikfTYPzc1JLAYGxnKMXoiMgmAxQOdtuNvSRwwMjP/O+AKYfKh2x3JYBgAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

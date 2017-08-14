@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>Java多线程对象的共享 | Tanwei的个人技术博客 | 仰望大神不如退而求索</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="多线程">
+    <meta name="description" content="同步代码块和同步方法可以确保以原子的方式执行操作，同时另外一个重要的作用是内存可见性，我们不仅希望防止某个线程正在使用对象的状态，而另一个线程在同时修改这个状态，而且还希望确保一个线程修改了对象状态后，其他线程能够看到发生的状态变化。 可见性通常我们无法确保执行读操作的线程能够适时的看到其他线程写入的值，为了确保多个线程之间对内存的写入操作的可见性必须使用同步机制。 重排序在没有同步的情况下，编译">
+<meta name="keywords" content="多线程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java多线程对象的共享">
+<meta property="og:url" content="http://blog.vnicers.com/2014/05/18/Java多线程对象的共享/index.html">
+<meta property="og:site_name" content="Tanwei的个人技术博客">
+<meta property="og:description" content="同步代码块和同步方法可以确保以原子的方式执行操作，同时另外一个重要的作用是内存可见性，我们不仅希望防止某个线程正在使用对象的状态，而另一个线程在同时修改这个状态，而且还希望确保一个线程修改了对象状态后，其他线程能够看到发生的状态变化。 可见性通常我们无法确保执行读操作的线程能够适时的看到其他线程写入的值，为了确保多个线程之间对内存的写入操作的可见性必须使用同步机制。 重排序在没有同步的情况下，编译">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/818b7fe3gy1fihz8uw9wij20yq0sctcb.jpg">
+<meta property="og:updated_time" content="2017-08-13T06:54:27.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java多线程对象的共享">
+<meta name="twitter:description" content="同步代码块和同步方法可以确保以原子的方式执行操作，同时另外一个重要的作用是内存可见性，我们不仅希望防止某个线程正在使用对象的状态，而另一个线程在同时修改这个状态，而且还希望确保一个线程修改了对象状态后，其他线程能够看到发生的状态变化。 可见性通常我们无法确保执行读操作的线程能够适时的看到其他线程写入的值，为了确保多个线程之间对内存的写入操作的可见性必须使用同步机制。 重排序在没有同步的情况下，编译">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/818b7fe3gy1fihz8uw9wij20yq0sctcb.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="Tanwei的个人技术博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Tanwei</h5>
+          <a href="mailto:vnicers@gmail.com" title="vnicers@gmail.com" class="mail">vnicers@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                专题
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.hxjx360.com" target="_blank" >
+                <i class="icon icon-lg icon-dollar"></i>
+                理财
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/vnice" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Java多线程对象的共享</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Java多线程对象的共享</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-05-17T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-05-18
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Java并发编程/">Java并发编程</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#可见性"><span class="post-toc-number">1.</span> <span class="post-toc-text">可见性</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#重排序"><span class="post-toc-number">2.</span> <span class="post-toc-text">重排序</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#枷锁与可见性"><span class="post-toc-number">3.</span> <span class="post-toc-text">枷锁与可见性</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Volatile-变量"><span class="post-toc-number">4.</span> <span class="post-toc-text">Volatile 变量</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#ThreadLocal"><span class="post-toc-number">5.</span> <span class="post-toc-text">ThreadLocal</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#安全的共享对象策略"><span class="post-toc-number">6.</span> <span class="post-toc-text">安全的共享对象策略</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-Java多线程对象的共享"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Java多线程对象的共享</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-05-18 00:00:00" datetime="2014-05-17T16:00:00.000Z"  itemprop="datePublished">2014-05-18</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Java并发编程/">Java并发编程</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>同步代码块和同步方法可以确保以原子的方式执行操作，同时另外一个重要的作用是内存可见性，我们不仅希望防止某个线程正在使用对象的状态，而另一个线程在同时修改这个状态，而且还希望确保一个线程修改了对象状态后，其他线程能够看到发生的状态变化。</p>
+<h1 id="可见性"><a href="#可见性" class="headerlink" title="可见性"></a>可见性</h1><p>通常我们无法确保执行读操作的线程能够适时的看到其他线程写入的值，为了确保多个线程之间对内存的写入操作的可见性必须使用同步机制。</p>
+<h1 id="重排序"><a href="#重排序" class="headerlink" title="重排序"></a>重排序</h1><p>在没有同步的情况下，编译器，处理器，以及运行时等都可能对操作的执行顺序进行一些意想不到的调整，在缺乏足够同步的多线程程序中，要想对内存操作的执行顺序进行判断，几乎无法得到正确的结论</p>
+<h1 id="枷锁与可见性"><a href="#枷锁与可见性" class="headerlink" title="枷锁与可见性"></a>枷锁与可见性</h1><p>java内置锁可以用于确保某个线程以一种可预见的方式来查看另外一个线程的执行结果，当线程A执行某个同步代码块时，线程B随后进入由同一个锁保护的同步代码块，在这种情况下可以保证，在锁被释放之前，A看到的变量值在B获得锁后同样可以由B看到。换句话说，当线程B执行由锁保护的同步代码块时，可以看到线程A之前在同一个同步代码块中的所有操作结果。如果没有同步，那么就无法实现上述保证<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fihz8uw9wij20yq0sctcb.jpg" alt="同步的可见性保证" title="">
+                </div>
+                <div class="image-caption">同步的可见性保证</div>
+            </figure></p>
+<p>加锁的含义不仅仅局限于互斥行为，还包括内存的可见性。为了确保所有线程都能得到共享变量的最小值，所有执行读操作或者写操作都必须在同一个锁上同步。</p>
+<h1 id="Volatile-变量"><a href="#Volatile-变量" class="headerlink" title="Volatile 变量"></a>Volatile 变量</h1><p>Java语言提供了一种稍弱的同步机制，即Volatile变量。用来确保将变量的更新操作通知到其他线程。当把变量声明成volatile类型后，编译器与运行时都会注意到这个变量是共享的，因此不会将该变量上的操作与其他内存上的操作一起重排序。volatile变量不会被缓存在寄存器或者其他处理器不可见的地方。因此在读取volatile变量总会返回最新的写入的值。<br>在访问volatile变量不会执行加锁的操作，因此也不会使执行线程阻塞，因此可以将volatile变量看作是一种比synchronized关键字更轻量级的同步机制（synchronized关键字在内存可见性上的作用比volatile变量更强）<br>从内存可见性的角度来看，写入volatile变量相当于退出同步代码块，而读取volatile变量相当于进入同步代码块。但是并不建议过度依赖volatile变量的可见性，它通常比使用锁更脆弱，也难以理解。仅当volatile变量能够简化代码的实现以及对同步策略的验证时，才该使用它们。<br>通常volatile变量用作某个操作完成，发生中断或者状态的标志。</p>
+<h1 id="ThreadLocal"><a href="#ThreadLocal" class="headerlink" title="ThreadLocal"></a>ThreadLocal</h1><p>ThreadLocal是维持线程封闭性的一种更规范的方法。这个类能使线程中的某个值与保存值的对象关联起来。ThreadLocal提供了get与set等访问接口或方法。这些方法为每个使用该变量的线程都存有一份独立的副本。因此get总是返回由当前执行线程在调用set时设置的最新值</p>
+<h1 id="安全的共享对象策略"><a href="#安全的共享对象策略" class="headerlink" title="安全的共享对象策略"></a>安全的共享对象策略</h1><p>在并发程序中使用和共享对象时，可以使用一些实用的策略，包括：</p>
+<p>   <strong>线程封闭</strong> 线程封闭的对象只能由一个线程拥有，对象被封闭在该线程中，并且只能由这个线程修改<br>   <strong>只读共享</strong> 在没有额外同步的情况下，共享的只读对象可以由多个线程并发访问，任何线程都不能修改它，共享的只读变量包括不可变对象，和事实不可变对象。<br>   <strong>线程安全共享</strong> 线程安全的对象在其内部实现同步，因此多个线程可以通过对象的公有接口来进行访问而不需要进一步的同步。<br>   <strong>保护对象</strong> 被保护的对象只能通过持有特定的锁来访问，保护对象包括封装在其他线程安全对象中的对象，以及已发布的并且由某个特定的锁保护的对象。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+
+        
+        原创文章，转载请注明： 转载Tanwei的技术博客,原文地址:<a href="/2014/05/18/Java多线程对象的共享/" target="_blank" rel="external">http://blog.vnicers.com/2014/05/18/Java多线程对象的共享/</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.vnicers.com">
+            <img src="/img/avatar.jpg" alt="Tanwei">
+            Tanwei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/多线程/">多线程</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.vnicers.com/2014/05/18/Java多线程对象的共享/&title=《Java多线程对象的共享》 — Tanwei的个人技术博客&pic=http://blog.vnicers.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.vnicers.com/2014/05/18/Java多线程对象的共享/&title=《Java多线程对象的共享》 — Tanwei的个人技术博客&source=暂时没有好描述自己的。。。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.vnicers.com/2014/05/18/Java多线程对象的共享/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Java多线程对象的共享》 — Tanwei的个人技术博客&url=http://blog.vnicers.com/2014/05/18/Java多线程对象的共享/&via=http://blog.vnicers.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.vnicers.com/2014/05/18/Java多线程对象的共享/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2014/05/24/Linux使用systemd添加系统启动项目/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Linux使用systemd添加系统启动项目</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2014/05/12/Java多线程安全性/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Java多线程安全性</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitment_thread"></div>
+    <link rel="stylesheet" href="//unpkg.com/gitment/style/default.css">
+    <script src="//unpkg.com/gitment/dist/gitment.browser.js"></script>
+    <script>
+        var gitment = new Gitment({
+            owner: 'vnice',
+            repo: 'vnice.github.io',
+            oauth: {
+                client_id: '62766e3f34a27536afe0',
+                client_secret: '1d9c1d04b0b892eedeffbbaac9c978b17fec0b4f',
+            },
+        })
+        gitment.render('comments')
+    </script>
+</section>
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Tanwei &copy; 2014 - 2017</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.vnicers.com/2014/05/18/Java多线程对象的共享/&title=《Java多线程对象的共享》 — Tanwei的个人技术博客&pic=http://blog.vnicers.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.vnicers.com/2014/05/18/Java多线程对象的共享/&title=《Java多线程对象的共享》 — Tanwei的个人技术博客&source=暂时没有好描述自己的。。。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.vnicers.com/2014/05/18/Java多线程对象的共享/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Java多线程对象的共享》 — Tanwei的个人技术博客&url=http://blog.vnicers.com/2014/05/18/Java多线程对象的共享/&via=http://blog.vnicers.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.vnicers.com/2014/05/18/Java多线程对象的共享/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACr0lEQVR42u3awWojMRAE0Pz/T2dh2cNCiF3VLdkJvDkZexjrySDJ1f3xEV+ff6//X8/e+frMr9fjez5uXHh4eHijoT/+stk7j2HJp8kUP5kCPDw8vGu82eM263MLfnzPt+/j4eHhvZW3Obs+HmL+fDw8PLzfyEuCg9lhGg8PD+938dpFPA8jZlFCO4YDWQseHh5ezNssyu96fb2+h4eHh7eOD/Ki/iySOBt2/HsaHh4e3gVeMtDZJvE4pNg3H+TfgoeHh3ePlx+mk00iCSba1qv2+Xh4eHj3ePsi06xUtgk+hmEuHh4e3po3K3Qlw9qExcn0RaUyPDw8vAu8U1tCHtTmg5sdzQ93bOHh4eGNlvJTbVXt5pGX3L79efDw8PBeyJsVnPJWg7YwNjy+4+Hh4V3gtcv9fnG/MYlPnoOHh4d3lJcX7280p7aNBW0TLR4eHt5reG3zUxslJBFwQo1e4+Hh4V3g5SFp8rhNC8KwISA/ZOPh4eFd4LWH13bz2LQOtNEGHh4e3mt4my1hdmc7NbPtBA8PD+81vPbovMfnnw4P33h4eHiHeHtGEr/mx+JTDQfD7AQPDw9vdLUNBMlQ2hLX2VgEDw8P7wYv+jNfBr55U0IbZ7TbDB4eHt49Xv7QPBqYtVLlG0M0lXh4eHhHee0i3p7Tk3i3baXKJwUPDw/vNbz8wN1OwT5QrtsU8PDw8C7wZv/Z2zvbktisYPbkp8LDw8M7xPssr2Q68tiiDZHrtjA8PDy8C7z9kXfTpJVjZmPAw8PDu8drS02bSGJTqYv+GWzyYDw8PLySN4tW2wasdtHPw4gnnRF4eHh4b+LlBbM2YpiVtZJQGA8PD++n8fbtVu1k1VsRHh4e3jVeHka0dfm2pWAf4OLh4eHd5p0qgG22h7ZSN4x08fDw8La8P5yjAye89de9AAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

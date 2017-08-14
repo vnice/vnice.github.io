@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>局域网技术 | Tanwei的个人技术博客 | 仰望大神不如退而求索</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="网络">
+    <meta name="description" content="什么是局域网,局域网有哪些特点 局域网是将较小地理区域的各种数据通信设备链接在一起的通信网络 特点： 覆盖的地理位置范围较小 数据传输的效率较高 具有较低的延迟和误码率 局域网的经营权和管理权归某个单位所有 便于安装和维护以及扩展 方便共享 提高了系统的可靠性和，可用性     局域网有哪些分类 从媒体访问角度分为 共享介质局域网和交换局域网  从传输介质上分为有线局域网和无线局域网   MAC">
+<meta name="keywords" content="网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="局域网技术">
+<meta property="og:url" content="http://blog.vnicers.com/2014/01/04/04，局域网技术/index.html">
+<meta property="og:site_name" content="Tanwei的个人技术博客">
+<meta property="og:description" content="什么是局域网,局域网有哪些特点 局域网是将较小地理区域的各种数据通信设备链接在一起的通信网络 特点： 覆盖的地理位置范围较小 数据传输的效率较高 具有较低的延迟和误码率 局域网的经营权和管理权归某个单位所有 便于安装和维护以及扩展 方便共享 提高了系统的可靠性和，可用性     局域网有哪些分类 从媒体访问角度分为 共享介质局域网和交换局域网  从传输介质上分为有线局域网和无线局域网   MAC">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-08-04T11:22:01.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="局域网技术">
+<meta name="twitter:description" content="什么是局域网,局域网有哪些特点 局域网是将较小地理区域的各种数据通信设备链接在一起的通信网络 特点： 覆盖的地理位置范围较小 数据传输的效率较高 具有较低的延迟和误码率 局域网的经营权和管理权归某个单位所有 便于安装和维护以及扩展 方便共享 提高了系统的可靠性和，可用性     局域网有哪些分类 从媒体访问角度分为 共享介质局域网和交换局域网  从传输介质上分为有线局域网和无线局域网   MAC">
+    
+        <link rel="alternate" type="application/atom+xml" title="Tanwei的个人技术博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Tanwei</h5>
+          <a href="mailto:vnicers@gmail.com" title="vnicers@gmail.com" class="mail">vnicers@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                专题
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.hxjx360.com" target="_blank" >
+                <i class="icon icon-lg icon-dollar"></i>
+                理财
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/vnice" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">局域网技术</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">局域网技术</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-01-03T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-01-04
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+<article id="post-04，局域网技术"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">局域网技术</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-01-04 00:00:00" datetime="2014-01-03T16:00:00.000Z"  itemprop="datePublished">2014-01-04</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <ol>
+<li>什么是局域网,局域网有哪些特点<ul>
+<li>局域网是将较小地理区域的各种数据通信设备链接在一起的通信网络</li>
+<li>特点：<ul>
+<li>覆盖的地理位置范围较小</li>
+<li>数据传输的效率较高</li>
+<li>具有较低的延迟和误码率</li>
+<li>局域网的经营权和管理权归某个单位所有</li>
+<li>便于安装和维护以及扩展</li>
+<li>方便共享</li>
+<li>提高了系统的可靠性和，可用性</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>局域网有哪些分类<ul>
+<li>从媒体访问角度分为 共享介质局域网和交换局域网 </li>
+<li>从传输介质上分为有线局域网和无线局域网</li>
+</ul>
+</li>
+<li>MAC和LLC层各自完成数据链路层的哪些功能<ul>
+<li>MAC :主要制定用于管理和分配信道的协议规范</li>
+<li>LLC :在MAC层提供的介质访问控制和物理层提供的比特服务基础上将不可靠的信道处理成可靠的信道</li>
+</ul>
+</li>
+<li>常用的介质访问控制方法有哪些<ul>
+<li>带有冲突检测的载波监听多路访问</li>
+<li>令牌环</li>
+<li>令牌总线</li>
+</ul>
+</li>
+<li>简述载波监听多路访问/冲突检测法（CSMA/CD）的工作原理<ul>
+<li>采用随机访问和竞争技术，将所有的设备链接到一条物理信道上，它的发送流程采用先听后发，边听边发，冲突停止，随机延迟后重发</li>
+</ul>
+</li>
+<li>简述令牌访问控制（Token-Ring）的工作原理<ul>
+<li>在令牌环中，节点通过环接口，连接成物理环型，当环工作正常是，令牌总是沿着物理环单向逐站传送，传送节点和节点在换中的顺序相同</li>
+</ul>
+</li>
+<li>简述令牌总线访问控制（Token-Bus）的工作原理<ul>
+<li>任何一个节点在取得令牌后才能使用共享总线发送数据</li>
+</ul>
+</li>
+<li>以太网有哪几种组网方式，各有什么特点<ul>
+<li>传统以太网，特点是传输速率为10Mb/s,共享介质，同轴电缆，总线型网络拓扑</li>
+<li>快速以太网，特点是传输速率为100Mb/s，结构简单，实用，成本低，易于普及</li>
+<li>千兆以太网，特点是传输速率为1000Mb/s，简易型，网络可靠</li>
+<li>万兆以太网，特点是传输速率为10000Mb/s</li>
+<li>以上组网方式都是单一集线器结构</li>
+</ul>
+</li>
+<li><p>为什么需要虚拟局域网，有哪几种实现方式，各自的工作原理是什么</p>
+<ul>
+<li>虚拟局域网打破了地理位置的制约，在不改动网络物理连接的情况下可以将工作站和工作子网移动，工作站组成逻辑工作组或虚拟子网，提供系统的运作性能，均衡网络流量，合理运用硬件和信息资源，同时也减轻了网络管理和维护工作。<ul>
+<li>实现方式：<ol>
+<li>静态VLAN <ul>
+<li>将以太网网交换机上的一些端口划分成一个VLAN,这些端口一直保持这种配置关系知道人工再次改变它</li>
+</ul>
+</li>
+<li>动态VLAN <ul>
+<li>交换机上的VLAN端口是动态分配的，以MAC地址为基础分配VLAN,网络管理员可以进行配置以指定哪些MAC地址的计算机属于某一个VLAN,不管这些计算机连接到那个交换机的端口。只要mac地址不变，，它仍将属于原VLAN的成员</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>虚拟局域网有哪些优点</p>
+<ul>
+<li>减少网络管理开销</li>
+<li>控制广播活动</li>
+<li>提供较好的网络安全性</li>
+<li>利用现有的集线器节省开支</li>
+</ul>
+</li>
+</ol>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+
+        
+        原创文章，转载请注明： 转载Tanwei的技术博客,原文地址:<a href="/2014/01/04/04，局域网技术/" target="_blank" rel="external">http://blog.vnicers.com/2014/01/04/04，局域网技术/</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.vnicers.com">
+            <img src="/img/avatar.jpg" alt="Tanwei">
+            Tanwei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网络/">网络</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.vnicers.com/2014/01/04/04，局域网技术/&title=《局域网技术》 — Tanwei的个人技术博客&pic=http://blog.vnicers.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.vnicers.com/2014/01/04/04，局域网技术/&title=《局域网技术》 — Tanwei的个人技术博客&source=暂时没有好描述自己的。。。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.vnicers.com/2014/01/04/04，局域网技术/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《局域网技术》 — Tanwei的个人技术博客&url=http://blog.vnicers.com/2014/01/04/04，局域网技术/&via=http://blog.vnicers.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.vnicers.com/2014/01/04/04，局域网技术/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2014/01/05/06，Internet技术/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Internet技术</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2014/01/04/05，广域网技术/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">广域网技术</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitment_thread"></div>
+    <link rel="stylesheet" href="//unpkg.com/gitment/style/default.css">
+    <script src="//unpkg.com/gitment/dist/gitment.browser.js"></script>
+    <script>
+        var gitment = new Gitment({
+            owner: 'vnice',
+            repo: 'vnice.github.io',
+            oauth: {
+                client_id: '62766e3f34a27536afe0',
+                client_secret: '1d9c1d04b0b892eedeffbbaac9c978b17fec0b4f',
+            },
+        })
+        gitment.render('comments')
+    </script>
+</section>
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Tanwei &copy; 2014 - 2017</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.vnicers.com/2014/01/04/04，局域网技术/&title=《局域网技术》 — Tanwei的个人技术博客&pic=http://blog.vnicers.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.vnicers.com/2014/01/04/04，局域网技术/&title=《局域网技术》 — Tanwei的个人技术博客&source=暂时没有好描述自己的。。。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.vnicers.com/2014/01/04/04，局域网技术/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《局域网技术》 — Tanwei的个人技术博客&url=http://blog.vnicers.com/2014/01/04/04，局域网技术/&via=http://blog.vnicers.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.vnicers.com/2014/01/04/04，局域网技术/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKklEQVR42u3aS27DMAwFwNz/0i7QVYEi9iPpFLU0WgWBY2u8YMTP6xWv43v9/nx+/c91fs27b25eGBgYj2Ucp+vd1t898vy3E9jFq8HAwNiAkQTZ5PEJIHlB+d4wMDAwkuNgAqiGVAwMDIxJwJ18nzwRAwMDY5LEzgttvaPhzbk4BgbGAxmTxsCnP/9RfwMDA+MfM47imgfo/JrCrjAwMJZmJIezfBP50S25TzWtxcDAWJtRJc1bnvlYWDNlxcDAWJSRtyHz5DZ/BdUnXvx7YGBgLMfIRx/yR/bS2kmBDwMDY1VGdSQrCa/z2J+/IAwMjB0YvUS02hKYjF/cUEHEwMB4OKM3BJZsJc8uewH94n8DAwNjOUZeY+8dCueHzot7YmBgbMmYHOOq4XjSLsXAwNiBkZe38gcn4TtvEhReCgYGxqKMSeJaKNOPg3XhaIiBgbEcI9lQoatQhM0HwjAwMPZh9Ia3jnhNRigKw2QYGBgbMD43wtVrNjRzcQwMjOUY1eJXUjibHCWr5TkMDIx9GEkYvesgmNw5D7VRJxYDA+PhjF6IrDYve0fAaoDGwMBYlTEJptUrq6lvfmTEwMBYm/G5QDlpc+YDFhgYGPsweklpr81ZbUUUGg8YGBgbMKpFt/MgWL3yhtExDAwMjGLaOU9x8/tgYGBg9AYmeuWwBHbRHsDAwFiaUQ2O1QJ9PpCRJ8avPE5jYGA8nNFLIHtl/WqwzkMwBgbGoowv+haJh+1nJqQAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

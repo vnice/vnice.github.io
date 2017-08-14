@@ -1,0 +1,1076 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Tanwei的个人技术博客</title>
+  <subtitle>仰望大神不如退而求索</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://blog.vnicers.com/"/>
+  <updated>2017-08-13T07:57:57.000Z</updated>
+  <id>http://blog.vnicers.com/</id>
+  
+  <author>
+    <name>Tanwei</name>
+    <email>vnicers@163.com</email>
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>阿里云服务器的使用</title>
+    <link href="http://blog.vnicers.com/2017/08/07/%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BD%BF%E7%94%A8/"/>
+    <id>http://blog.vnicers.com/2017/08/07/阿里云服务器使用/</id>
+    <published>2017-08-06T16:00:00.000Z</published>
+    <updated>2017-08-13T07:57:57.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="VPS"><a href="#VPS" class="headerlink" title="VPS"></a>VPS</h1><p>之前一直使用的<a href="https://www.digitalocean.com/" target="_blank" rel="external">digitalocean</a> ,国外的一个云主机提供商，但是离我最近的节点是新加坡节点，有时候延迟慢的受不了，所以换了阿里云使用。<br>用过一段时间后，发现效果很不错，最近的香港节点的使用和只用真机的感觉差不多。而且第一次使用还有优惠每月30块，或者每年330.因为之前还有DigitalOcean还在用，所以直接就买了一个月的，现在到期了，续费发现价格涨了好多一月要110，很是后悔之前没有买一年的。不过我新注册了一个账号还是可以参加活动的</p>
+<p>阿里云的<a href="https://www.aliyun.com/chinaglobal/promotion/overseaall2017?utm_medium=text&amp;utm_source=bdbrand&amp;utm_campaign=banner&amp;utm_content=se_658763" target="_blank" rel="external">活动地址</a><br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fiddqbrbzkj20rb0p544g.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>强力推荐</p>
+<blockquote>
+<p>如果你觉得阿里云不好的话，之前写过一篇文章讲的是在DigitalOcean VPS上搭建科学上网的，大家可以参考参考,文章地址<br>  <a href="https://vnice.github.io/2017/07/02/%E4%BD%BF%E7%94%A8DigitalOcean%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1/" target="_blank" rel="external">使用DigitalOcean搭建科学上网服务</a><br>  同样你也可以在阿里云里面购买海外主机，比如香港的最合适，前几天阿里的售后打电话过来，我特意问了关于在阿里云海外主机上搭建翻墙相关的软件，他们是什么态度，- -，售后说现在这些阿里内部没有限制，完全看国家政策。国家现在只是限制了VPN，还没有限制私人VPS。所以在阿里云上搭建翻墙软件，暂时来说还是可以用的。</p>
+</blockquote>
+<p>最近我买的一个月的阿里云主机已经到期了，所以用新账号买了一个一年。</p>
+<h1 id="阿里云的使用"><a href="#阿里云的使用" class="headerlink" title="阿里云的使用"></a>阿里云的使用</h1><p>阿里云的使用很简单，主要看你用来做什么，它提供的控制台功能非常多。我主要使用的是它的云服务器ECS，在上面搭建科学上网，下载一下新东西。</p>
+<h1 id="端口的开放"><a href="#端口的开放" class="headerlink" title="端口的开放"></a>端口的开放</h1><p> 这里要说一下，默认你申请的云主机只开发了22端口和3389端口，如果你自己要在主机里面搭建一些服务的话，除了在系统中的防火墙开放端口以外，还需要在控制台的安全组规则中开发。<br> 它在主页你登陆的时候也有下面的提示</p>
+<pre><code>&gt; 安全组未设置任何自定义放行规则，会导致无法访问实例端口，若需访问请添加安全组规则放行对应的端口。
+</code></pre><p> <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fidee9xsxfj21gv0f2gp7.jpg" alt=""></p>
+<p> 这里大家根据自己的需要开放端口。注意服务器本身也需要开放防火墙端口，例如CentOS7 之前的文章有说，参考文章 <a href="https://vnice.github.io/2017/06/05/Centos7%20%E9%98%B2%E7%81%AB%E5%A2%99%E5%BC%80%E6%94%BE%E7%AB%AF%E5%8F%A3/" target="_blank" rel="external">Centos7防火墙端口开放</a></p>
+<h1 id="域名的申请"><a href="#域名的申请" class="headerlink" title="域名的申请"></a>域名的申请</h1><p> 如果你还没有属于自己的域名，可以在阿里云的万网中申请注册域名。很简单。这里说一下注意点，申请的域名一定要实名认证，否则域名将无法解析，如下图<br> <figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fidel7xs43j20ne0hkwhw.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<h1 id="网站备案"><a href="#网站备案" class="headerlink" title="网站备案"></a>网站备案</h1><p>   如果你的服务器想长期经营则一定要备案，还有如果是个人，但是服务器在海外或者香港这些地方的话不用备案，也没有办法备案，不影响使用。但是域名一定要实名认证。</p>
+<h1 id="账号间的镜像迁移"><a href="#账号间的镜像迁移" class="headerlink" title="账号间的镜像迁移"></a>账号间的镜像迁移</h1><p>  如果你有多个阿里云账号，想将其中的一台迁移到另一个账号中的话，可以参考一下下面我的做法。因为之前用账号买了一个月的30块钱的服务器要到期了，续费的话又很贵，后来新注册了一个账号参加上面的活动够来的330一年的云主机，但是以前一个月的主机上安装了很多东西，又不想重复的弄，所以你需要迁移你的旧的主机到新的主机上面来。</p>
+<h2 id="源机器创建自定义镜像"><a href="#源机器创建自定义镜像" class="headerlink" title="源机器创建自定义镜像"></a>源机器创建自定义镜像</h2><p>  <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fidfqjohluj21w40oa443.jpg" alt="创建自定义镜像"></p>
+<h2 id="在镜像列表中共享镜像"><a href="#在镜像列表中共享镜像" class="headerlink" title="在镜像列表中共享镜像"></a>在镜像列表中共享镜像</h2><p>  <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fidfsd18wxj21wi0xutiy.jpg" alt="共享镜像"></p>
+<h2 id="选择共享给哪个账号"><a href="#选择共享给哪个账号" class="headerlink" title="选择共享给哪个账号"></a>选择共享给哪个账号</h2><p>  <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fidfv2tbpvj213e0lyq5t.jpg" alt="共享给其他账号"><br>  注意这里填写的是你另外一个新账号的UID,这个id在你的账号资料中有的如下图<br>  <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fidfx04sawj21g20f6q77.jpg" alt="查看账号ID"></p>
+<h2 id="在新账号中查看共享的镜像"><a href="#在新账号中查看共享的镜像" class="headerlink" title="在新账号中查看共享的镜像"></a>在新账号中查看共享的镜像</h2><p>  上面共享成功后，这里可以查看到共享的镜像<br>  <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fidfyp9kjbj21gs0i4n0u.jpg" alt=""></p>
+<h2 id="在新账号中更换系统盘"><a href="#在新账号中更换系统盘" class="headerlink" title="在新账号中更换系统盘"></a>在新账号中更换系统盘</h2><p>  先停止新账号中的实例，然后更换系统盘<br>  <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fidgn5vrwkj21gf0ky0y5.jpg" alt="跟换系统盘"></p>
+<h2 id="选择批量更改"><a href="#选择批量更改" class="headerlink" title="选择批量更改"></a>选择批量更改</h2><p>  <img src="http://ww1.sinaimg.cn/mw690/818b7fe3gy1fidgp3w5buj21g607a3zv.jpg" alt=""></p>
+<h2 id="选择共享镜像"><a href="#选择共享镜像" class="headerlink" title="选择共享镜像"></a>选择共享镜像</h2><p>  这里选择旧账号共享给你的镜像快照，重新设置密码，或者创建后设置也可以。然后确定即可<br>  <img src="http://ww1.sinaimg.cn/mw690/818b7fe3gy1fidgqrq7jlj20q00gb40d.jpg" alt=""></p>
+<h2 id="系统盘更换成功"><a href="#系统盘更换成功" class="headerlink" title="系统盘更换成功"></a>系统盘更换成功</h2><p>  在更换前需要手机验证码验证<br>  <img src="http://ww1.sinaimg.cn/mw690/818b7fe3gy1fidgskfm73j20hf05umxj.jpg" alt=""></p>
+<h2 id="等待系统重新启动"><a href="#等待系统重新启动" class="headerlink" title="等待系统重新启动"></a>等待系统重新启动</h2><p>  验证机器上的软件和服务器都是否完整。</p>
+<h1 id="域名的迁移"><a href="#域名的迁移" class="headerlink" title="域名的迁移"></a>域名的迁移</h1><p> 之前在旧的账号上绑定的域名也需要迁移到新的账号上然后设置新的ip地址<br> <figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fidgz7r0w8j21vs0xan3m.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<p> <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fidh1axgqdj21hk0b0gn0.jpg" alt=""></p>
+<h2 id="重新设置域名解析"><a href="#重新设置域名解析" class="headerlink" title="重新设置域名解析"></a>重新设置域名解析</h2> <figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fidh3ebhevj20vt0cbq59.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p> <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fidhhyfcybj20zw0httdh.jpg" alt=""><br> 将子域名，邮箱域名和主域名全部替换成新的服务器ip地址。</p>
+<p> 等待DNS 缓存刷新完后。验证域名是否已经指向新的服务器ip地址、</p>
+<h1 id="迁移工作完成"><a href="#迁移工作完成" class="headerlink" title="迁移工作完成"></a>迁移工作完成</h1><p> 停掉旧的账号上面的云服务器。开始使用新账号上的服务器。验证各项服务功能是否正常。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;VPS&quot;&gt;&lt;a href=&quot;#VPS&quot; class=&quot;headerlink&quot; title=&quot;VPS&quot;&gt;&lt;/a&gt;VPS&lt;/h1&gt;&lt;p&gt;之前一直使用的&lt;a href=&quot;https://www.digitalocean.com/&quot; target=&quot;_blank&quot; rel
+    
+    </summary>
+    
+    
+      <category term="其它" scheme="http://blog.vnicers.com/tags/%E5%85%B6%E5%AE%83/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Dubbo重新维护</title>
+    <link href="http://blog.vnicers.com/2017/08/05/Dubbo%E9%87%8D%E6%96%B0%E7%BB%B4%E6%8A%A4/"/>
+    <id>http://blog.vnicers.com/2017/08/05/Dubbo重新维护/</id>
+    <published>2017-08-04T16:00:00.000Z</published>
+    <updated>2017-08-08T10:39:03.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>今天从群里得到消息说Dubbo又重新维护了，然后去<a href="http://dubbo.io/" target="_blank" rel="external">官网</a>看了一下，<br>确实是得到官方重新维护了，但是还不了解最新的规划放向</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fichp2hqukj21yq0voajy.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>看了下github上的issue<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fichwjf03jj213w0y2q8v.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>面临的问题还是有很多的，但是应付一般的企业需求应该是足够了。<br>之前公司里面用过阿里的烂尾项目，踩了很多坑。所以现在还是慎重选择国内的开源框架。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;今天从群里得到消息说Dubbo又重新维护了，然后去&lt;a href=&quot;http://dubbo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;官网&lt;/a&gt;看了一下，&lt;br&gt;确实是得到官方重新维护了，但是还不了解最新的规划放向&lt;/p&gt;
+&lt;figure 
+    
+    </summary>
+    
+    
+      <category term="分布式" scheme="http://blog.vnicers.com/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>离职感悟</title>
+    <link href="http://blog.vnicers.com/2017/08/04/%E7%A6%BB%E8%81%8C%E6%84%9F%E6%82%9F/"/>
+    <id>http://blog.vnicers.com/2017/08/04/离职感悟/</id>
+    <published>2017-08-03T16:00:00.000Z</published>
+    <updated>2017-08-06T07:50:34.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="离职感悟"><a href="#离职感悟" class="headerlink" title="离职感悟"></a>离职感悟</h1><p>离职之前没有过多的犹豫，向领导表达了自己的意思。领导和我也沟通了一会，让我再考虑考虑，我想我考虑太久了，当初到这里没打算做多久，但是一晃就4年过去了。我这人不太适应换环境，但是个人发展还是要紧，<br>这里给我的平台太小了，以业务为主，技术人员的价值在这边发挥不出来，程序员都有一个改变世界的梦想。我想换个环境趁着年轻还能奋斗。<br>这四年在这边参与的项目有不少，基本上数据中心组大大小小的项目都摸过一遍，从当初刚毕业进来，组里就差不多5个人，3个经理，3个开发人员。现在差不多有35个人了。如果不是上次聚餐点了4桌菜还真不知道队伍越来越强大了。</p>
+<h1 id="工作交接"><a href="#工作交接" class="headerlink" title="工作交接"></a>工作交接</h1><p>接下来就是工作交接了，之前负责的几个系统给大家全部做了一个完整的培训，DSP系统现在开发的人越来越多了。想起去年一个人开发的时候从前端到后端，现在全部交给你们了，感觉像把自己的孩子交给你们一样，加油。<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/inline/lz.jpeg" alt="交接系统" title="">
+                </div>
+                <div class="image-caption">交接系统</div>
+            </figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;离职感悟&quot;&gt;&lt;a href=&quot;#离职感悟&quot; class=&quot;headerlink&quot; title=&quot;离职感悟&quot;&gt;&lt;/a&gt;离职感悟&lt;/h1&gt;&lt;p&gt;离职之前没有过多的犹豫，向领导表达了自己的意思。领导和我也沟通了一会，让我再考虑考虑，我想我考虑太久了，当初到这里没打算做多
+    
+    </summary>
+    
+    
+      <category term="其他" scheme="http://blog.vnicers.com/tags/%E5%85%B6%E4%BB%96/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>关于此博客</title>
+    <link href="http://blog.vnicers.com/2017/07/27/%E5%85%B3%E4%BA%8E%E6%AD%A4%E5%8D%9A%E5%AE%A2/"/>
+    <id>http://blog.vnicers.com/2017/07/27/关于此博客/</id>
+    <published>2017-07-26T21:51:27.000Z</published>
+    <updated>2017-08-07T13:12:23.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="搭建原因"><a href="#搭建原因" class="headerlink" title="搭建原因"></a>搭建原因</h1><p>之前博客是东写一下，西写一下，到处都有，像什么<a href="http://www.csdn.net/" target="_blank" rel="external">csdn</a>，<a href="https://segmentfault.com/" target="_blank" rel="external">segmentfault</a>，<a href="https://www.jianshu.com/" target="_blank" rel="external">简书</a>,什么都有，有的是记一下遇到的问题的解决方案，有的是转载一下别人，后面再也没有关注过，<br>都只是零零散散的记录一些东西。没时间打理，现在终于换到自己搭建的Blog了。后面会花一段时间陆续会把之前的blog转移过来。</p>
+<h1 id="博客框架的选择"><a href="#博客框架的选择" class="headerlink" title="博客框架的选择"></a>博客框架的选择</h1><p>刚开始是想从头到尾一个人写博客框架的，但是后来想想，这也得花大把的精力来维护，所以在网上找了找开源的。从之前关注的一些开发者的博客看到一些界面挺好看的<br>比如<a href="http://www.ityouknow.com/" target="_blank" rel="external">纯洁的微笑的博客</a>,上次特意问他本人用的博客框架，用的<a href="https://github.com/DONGChuan/Yummy-Jekyll" target="_blank" rel="external">Yummy-Jekyll</a>的主题，我也折腾了一番，但是看到github上好像有一年作者没有更新了，所以放弃用Yummy-Jekyll了。后来在网上搜索了一下现在流行的应该是<a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>。然后就选择它了。所用的主题是<a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank" rel="external">indigo</a>，还是比较钟意<code>material-design</code>风格的。</p>
+<h1 id="搭建"><a href="#搭建" class="headerlink" title="搭建"></a>搭建</h1><p>搭建的步骤这里我就不细说了。上面的github上都有说。主要是先使用<code>node</code>安装hexo，然后配置hexo，配置<code>github</code>，然后下载主题<code>indigo</code>,按照它的配置文档一步步来操作就OK了。这说下我之前碰到的一个坑。因为之前一直用linux系统，然后我这个人呢，基本上什么框架都想用最新的，在安装<code>nodejs</code>的时候用的最新版，然后发布博客始终报错，具体的是因为一个node 的依赖在 node v8里面已经弃用了。然后坑了自己大半天，不过我从来不介意碰到问题。有问题解决掉它，虽然当了回小白鼠，但是问题还是被我解决了。</p>
+<h1 id="评论系统"><a href="#评论系统" class="headerlink" title="评论系统"></a>评论系统</h1><p>评论系统之前选择的是indigo配置中的disqus，但是用过一段时间后发现有时候评论组件不会加载出来，而且登陆评论的账号可能需要翻墙才可以，后来看到支持了 <a href="https://github.com/imsun/gitment" target="_blank" rel="external">gitment</a>,一个基于github issue的评论组件，真心佩服开发这个组件个哥们，很好的利用了github 的功能，又不用担心自己运营的问题。所以推荐大家都用gitment评论组件。一个字赞<br>效果如下：<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fibgtyva4qj21920o677k.jpg" alt="Gitment" title="">
+                </div>
+                <div class="image-caption">Gitment</div>
+            </figure><br>注意，这里自己每发表一篇博客记得先自己初始化评论组件，不然没有初始化的文章别人是不能评论的。</p>
+<h1 id="文章中的图片渲染"><a href="#文章中的图片渲染" class="headerlink" title="文章中的图片渲染"></a>文章中的图片渲染</h1><p>刚开始写的文章使用的本地图片，将图片的相对路径放到hexo主题文件夹下，然后生成发布之后就可以，但是在自己写过程中是看不到当前图片的，在网上找到了新浪微博图床使用很简单，需要chrome 应用商店下载 新浪微博图床，然后将图片扔到插件上去就可以了，如下<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fibglyyt41j218g0ukjy6.jpg" alt="新浪微博图床" title="">
+                </div>
+                <div class="image-caption">新浪微博图床</div>
+            </figure><br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://ww1.sinaimg.cn/mw690/818b7fe3gy1fibgqyf9b3j21to0watn7.jpg" alt="上传记录" title="">
+                </div>
+                <div class="image-caption">上传记录</div>
+            </figure><br>同时支持http和https的，直接生产markdown图片链接。而且不用担心文件丢失，是不是很方便呢</p>
+<h1 id="遇到的坑"><a href="#遇到的坑" class="headerlink" title="遇到的坑"></a>遇到的坑</h1><p>因为hexo写博客都是使用的makedown ，然后我直接在WebStrorm中用了一个markdown插件来写，但是好几次发现，自己写的东西渲染不成功，感觉什么都没写一样，有一次还碰到关了软件，几个文件的内容都不见了。连WebStrorm的文件的LocalHistpry历史记录都没有，jetbrains的东西有时候也都不靠谱啊。害我重新写,然后我重新换了一个markdown插件就再也没有出现过这鬼问题了。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;搭建原因&quot;&gt;&lt;a href=&quot;#搭建原因&quot; class=&quot;headerlink&quot; title=&quot;搭建原因&quot;&gt;&lt;/a&gt;搭建原因&lt;/h1&gt;&lt;p&gt;之前博客是东写一下，西写一下，到处都有，像什么&lt;a href=&quot;http://www.csdn.net/&quot; target=&quot;
+    
+    </summary>
+    
+    
+      <category term="其他" scheme="http://blog.vnicers.com/tags/%E5%85%B6%E4%BB%96/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux 集群软件安装</title>
+    <link href="http://blog.vnicers.com/2017/07/05/Linux%20%E9%9B%86%E7%BE%A4%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/"/>
+    <id>http://blog.vnicers.com/2017/07/05/Linux 集群软件安装/</id>
+    <published>2017-07-04T16:00:00.000Z</published>
+    <updated>2017-08-09T15:28:37.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><blockquote>
+<p>之前公司需要将某个系统部署切换到Linux 上部署多台，当时是两台Oracle Linux ，软件的安装让我来负责，刚开始就是一台一台的弄，感觉有点傻，还好是两台，如果是集群，那不得累死人。所以趁休息这个机会在家捣鼓一下，如果使用一台机器同时控制多台机器部署软件。</p>
+</blockquote>
+<p>下面我直接使用MAC 机器下的5台CentOS7 来测试，内存还算给力。这5台机器全部是Centos7 mini 版安装。使用第5台机器来控制剩下的4台同时安装软件。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fidmmq8et6j21hb0tzwno.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h1 id="寻找工具"><a href="#寻找工具" class="headerlink" title="寻找工具"></a>寻找工具</h1><p>在经过一番Google和知乎上搜索知乎，别人推荐使用pssh 工具来安装。pssh 意思是 parallel ssh program 一个python编写可以在多台服务器上执行命令的工具，同时支持拷贝文件，是同类工具中很出色的，类似<a href="http://kumu-linux.github.io/blog/2013/06/19/pdsh/" target="_blank" rel="external">pdsh</a>使用方法 。为方便操作，使用前请在各个服务器上配置好密钥认证访问。项目地址: <a href="https://code.google.com/p/parallel-ssh/" target="_blank" rel="external">parallel-ssh</a> (代码托管在google code 需要翻墙)</p>
+<h2 id="下载pssh"><a href="#下载pssh" class="headerlink" title="下载pssh"></a>下载pssh</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">wget http://parallel-ssh.googlecode.com/files/pssh-2.3.1.tar.gz</div><div class="line">tar zxvf pssh-2.3.1.tar.gz</div><div class="line"><span class="built_in">cd</span> pssh-2.3.1/</div><div class="line">python setup.py install</div></pre></td></tr></table></figure>
+<p>python 在centos mini版本中已经存在。所以不需要安装python</p>
+<p>首先保证这5台机器网络是通的。<br>在操作的机器上新建立一个host.txt文件里面存放其他需要安装软件的机器配置如下。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fidpjgvuwzj20fl06374q.jpg" alt="host.txt" title="">
+                </div>
+                <div class="image-caption">host.txt</div>
+            </figure>
+<h2 id="执行命令测试，所有命令如下"><a href="#执行命令测试，所有命令如下" class="headerlink" title="执行命令测试，所有命令如下"></a>执行命令测试，所有命令如下</h2><pre><code>-h 执行命令的远程主机列表,文件内容格式[user@]host[:port]
+如 test@172.16.10.10:229
+-H 执行命令主机，主机格式 user@ip:port
+-l 远程机器的用户名
+-p 一次最大允许多少连接
+-P 执行时输出执行信息
+-o 输出内容重定向到一个文件
+-e 执行错误重定向到一个文件
+-t 设置命令执行超时时间
+-A 提示输入密码并且把密码传递给ssh(如果私钥也有密码也用这个参数)
+-O 设置ssh一些选项
+-x 设置ssh额外的一些参数，可以多个，不同参数间空格分开
+-X 同-x,但是只能设置一个参数
+-i 显示标准输出和标准错误在每台host执行完毕后
+</code></pre><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pssh -P -A -i -h host.txt -e error  uptime</div></pre></td></tr></table></figure>
+<p>执行上面的命令会报错 Exited with error code 255 这是因为pssh的一个<a href="https://code.google.com/archive/p/parallel-ssh/issues/80" target="_blank" rel="external">bug</a><br>没有传递接收秘钥的信息给命令执行者，所以后面根本没办法执行命令。你可以先手动ssh单独一台机器接受ssh fingerprint 再看看效果，如下图 </p>
+<p>  <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fidqq8nceyj20pw0h9q7o.jpg" alt=""></p>
+<p>  我先手动ssh 连接到了10.211.55.10这台机器，接受了fingerprint yes,然后执行了命令，其他没接受的全部抱错，但是这台机uptime命令执行成功，如果机器数量较小的话，可以先手动ssh 连接一下。<br>  如果机器数量众多，可以安装keychina工具<a href="https://unix.stackexchange.com/questions/128974/parallel-ssh-with-passphrase-protected-ssh-key" target="_blank" rel="external">参考这篇文章</a><br>  然后我这边没有试验，因为CentOS 7环境中的keychina工具在rpm中无法直接下载。需要手动build一个，太麻烦了。</p>
+<p>  下图显示在四台机器中执行w命令<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fidrgzj09ij20hf0dtdk7.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<h2 id="测试安装软件"><a href="#测试安装软件" class="headerlink" title="测试安装软件"></a>测试安装软件</h2><pre><code>发现一个很扯淡的问题。凡是遇到需要手动接收yes/no的地方全部处理失败
+</code></pre><p>   <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fidrycw4zyj206y06y0so.jpg" alt=""></p>
+<p>   不过同时执行一些普通命令还是有效的。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;需求&quot;&gt;&lt;a href=&quot;#需求&quot; class=&quot;headerlink&quot; title=&quot;需求&quot;&gt;&lt;/a&gt;需求&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;之前公司需要将某个系统部署切换到Linux 上部署多台，当时是两台Oracle Linux ，软件的安装让我来负责
+    
+    </summary>
+    
+    
+      <category term="Linux" scheme="http://blog.vnicers.com/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用DigitalOcean搭建科学上网服务</title>
+    <link href="http://blog.vnicers.com/2017/07/02/%E4%BD%BF%E7%94%A8DigitalOcean%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1/"/>
+    <id>http://blog.vnicers.com/2017/07/02/使用DigitalOcean搭建科学上网服务/</id>
+    <published>2017-07-01T16:00:00.000Z</published>
+    <updated>2017-08-09T05:10:45.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="注册"><a href="#注册" class="headerlink" title="注册"></a>注册</h1><p>  首先在<a href="https://www.digitalocean.com/" target="_blank" rel="external">DigitalOcean</a>官网使用邮箱注册账号</p>
+<p>  <img src="http://upload-images.jianshu.io/upload_images/6722369-7d00549614a9ae27.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="使用邮箱注册"></p>
+<h1 id="绑定信息"><a href="#绑定信息" class="headerlink" title="绑定信息"></a>绑定信息</h1><p>在注册成功后需要绑定信用卡或者Paypal支付账号。这里只是绑定一个信息，并不是需要真正支付，后面每个月会有订单发给你支付。<br>，这里推荐大家使用Paypal，没有可以先注册一个，因为信用卡可能是直接扣美金，如果你的信用卡不支持的话扣款会失败。<br>  <img src="http://upload-images.jianshu.io/upload_images/6722369-8c4c5a9ed5260f17.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="信用卡或者Paypal绑定"></p>
+<h1 id="创建VPS"><a href="#创建VPS" class="headerlink" title="创建VPS"></a>创建VPS</h1><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/6722369-bf5571d6627ac246.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="创建VPS" title="">
+                </div>
+                <div class="image-caption">创建VPS</div>
+            </figure>
+<p>这里创建vps就是DigitalOcean中所说的创建一个水滴</p>
+<h1 id="选择服务器和配置"><a href="#选择服务器和配置" class="headerlink" title="选择服务器和配置"></a>选择服务器和配置</h1><p>这里大家根据自己的情况，熟悉哪种操作系统，或者使用的内存。我这里选择的CentOS和最便宜的配置，对于当做SS服务器足够了，然后选择的是新加坡节点，之前测试过因为这个地方离自己最近，延迟相对来说小一点。选择好后直接create</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/6722369-3f868e67b5235d92.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="选择服务器和配置" title="">
+                </div>
+                <div class="image-caption">选择服务器和配置</div>
+            </figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/6722369-d66e79d2bcfa6df5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="创建中" title="">
+                </div>
+                <div class="image-caption">创建中</div>
+            </figure>
+<h1 id="设置账号和密码"><a href="#设置账号和密码" class="headerlink" title="设置账号和密码"></a>设置账号和密码</h1><p>创建完成后使用提供的console ssh登录 设置管理员账号和密码，新的密码会发送到你注册的邮箱中，是很长的一串随机数</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/6722369-23d88e8ec9137017.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="重置密码" title="">
+                </div>
+                <div class="image-caption">重置密码</div>
+            </figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/6722369-4ed2db3e56437f3d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="登陆服务器" title="">
+                </div>
+                <div class="image-caption">登陆服务器</div>
+            </figure>
+<p>登录完成后会提示你修改密码。先输入刚刚邮件发送给你的随机密码，然后输入自己想设置的密码，设置完成后，vps就可以用啦。</p>
+<h1 id="登录服务器重置密码"><a href="#登录服务器重置密码" class="headerlink" title="登录服务器重置密码"></a>登录服务器重置密码</h1><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/6722369-3b186fe673d4d1e1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h1 id="搭建科学上网服务"><a href="#搭建科学上网服务" class="headerlink" title="搭建科学上网服务"></a>搭建科学上网服务</h1><p>下面开始搭建shadowsock 服务器，这里直接别人写好的<a href="https://teddysun.com/392.html" target="_blank" rel="external">shadowsock-go</a>一键安装脚本,可以参考，也有其他安装方式。<br>具体步骤就直接安装<a href="https://teddysun.com/392.html" target="_blank" rel="external">https://teddysun.com/392.html</a> 上面来了<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/6722369-d2794fae462ba111.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="SS服务器搭建完成" title="">
+                </div>
+                <div class="image-caption">SS服务器搭建完成</div>
+            </figure></p>
+<p>默认按照上面开启的ss server 只有一个账号可以用，就是8989端口。其实可以配置多个账号，可以参考上面的说明，这里注意一下<br>开多个账号，你的端口也需要开通，例如Centos 7 需要开通 下面的8989 9001 9002 9003 9004 端口。具体根据你选择的操作系统来操作。</p>
+<h1 id="SS-开通多个账号"><a href="#SS-开通多个账号" class="headerlink" title="SS 开通多个账号"></a>SS 开通多个账号</h1><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/6722369-b40d02ee963dd859.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="多个账号" title="">
+                </div>
+                <div class="image-caption">多个账号</div>
+            </figure>
+<h1 id="下载客户端"><a href="#下载客户端" class="headerlink" title="下载客户端"></a>下载客户端</h1><p>客户端的使用 在<a href="https://github.com/shadowsocks?page=1" target="_blank" rel="external">shadowsocks github</a>仓库里面有各种客户端，大家可以按照说明使用</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;注册&quot;&gt;&lt;a href=&quot;#注册&quot; class=&quot;headerlink&quot; title=&quot;注册&quot;&gt;&lt;/a&gt;注册&lt;/h1&gt;&lt;p&gt;  首先在&lt;a href=&quot;https://www.digitalocean.com/&quot; target=&quot;_blank&quot; rel=&quot;exte
+    
+    </summary>
+    
+    
+      <category term="其它" scheme="http://blog.vnicers.com/tags/%E5%85%B6%E5%AE%83/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Centos7防火墙开放端口</title>
+    <link href="http://blog.vnicers.com/2017/06/05/Centos7%20%E9%98%B2%E7%81%AB%E5%A2%99%E5%BC%80%E6%94%BE%E7%AB%AF%E5%8F%A3/"/>
+    <id>http://blog.vnicers.com/2017/06/05/Centos7 防火墙开放端口/</id>
+    <published>2017-06-04T16:00:00.000Z</published>
+    <updated>2017-08-09T04:46:22.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>CentOS升级到7之后，发现无法使用iptables控制Linuxs的端口，google之后发现Centos 7使用firewalld代替了原来的iptables。下面记录如何使用firewalld开放Linux端口：</p>
+<p>开启端口</p>
+<p>firewall-cmd –zone=public –add-port=80/tcp –permanent</p>
+<p>命令含义：</p>
+<p>–zone #作用域</p>
+<p>–add-port=80/tcp  #添加端口，格式为：端口/通讯协议</p>
+<p>–permanent  #永久生效，没有此参数重启后失效</p>
+<p>重启防火墙</p>
+<p>firewall-cmd –reload</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;CentOS升级到7之后，发现无法使用iptables控制Linuxs的端口，google之后发现Centos 7使用firewalld代替了原来的iptables。下面记录如何使用firewalld开放Linux端口：&lt;/p&gt;
+&lt;p&gt;开启端口&lt;/p&gt;
+&lt;p&gt;firewal
+    
+    </summary>
+    
+    
+      <category term="Linux" scheme="http://blog.vnicers.com/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>分布式基本理论</title>
+    <link href="http://blog.vnicers.com/2017/01/02/%E5%88%86%E5%B8%83%E5%BC%8F%E5%9F%BA%E6%9C%AC%E7%90%86%E8%AE%BA/"/>
+    <id>http://blog.vnicers.com/2017/01/02/分布式基本理论/</id>
+    <published>2017-01-01T16:00:00.000Z</published>
+    <updated>2017-08-12T10:04:23.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h1><blockquote>
+<p>这段时间开始需要接触分布式相关的东西，改造公司的几个传统集中式项目，又要临时抱佛脚补补基础了。</p>
+</blockquote>
+<h1 id="书籍"><a href="#书籍" class="headerlink" title="书籍"></a>书籍</h1><p> 从网上只找到国内阿里中间件出版的一本书《从Paxos到ZooKepper分布式一致性原理与实践》<br> <figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fidw47d9fij20lc0si7rs.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br> 如果习惯了国外的一些动物书，什么权威指南之类的，看这本书封面的画风，很容易让人忽略掉它其中实际的内容</p>
+<p> 以下是书中的一些概念。</p>
+<h1 id="集中式的特点"><a href="#集中式的特点" class="headerlink" title="集中式的特点"></a>集中式的特点</h1><p> 所谓的集中式系统就是指由一台或多台主计算机组成中心节点, 数据集中存储干这个中 心节点中, 并且整个系统的所有业务单元都集中部署在这个中心节点上, 系统的所有功 能均由其集中处理。 也就是说, 在集中式系统中, 每个终端或客户端机器仅仅负责数据 的录人和输出, 而数据的存储与控制处理完全交由主机来完成。 集中式系统最大的特点就是部署结构简单。 由干集中式系统往往基于底层性能卓越的大 型主机, 因此无须考虑如何对服务进行多个节点的部署, 也就不用考虑多个节点之间的 分布式协作问题。</p>
+<h1 id="分布式的特点"><a href="#分布式的特点" class="headerlink" title="分布式的特点"></a>分布式的特点</h1><h2 id="分布性"><a href="#分布性" class="headerlink" title="分布性"></a>分布性</h2><p>   分布式系统中的多台计算机都会在空间上随意分布，同时，机器的分布情况也会随时变动。</p>
+<h2 id="对等性"><a href="#对等性" class="headerlink" title="对等性"></a>对等性</h2><p>   分布式系统中的计算机没有主/从之分, 既没有控制整个系统的主机, 也没有被控制的从机, 组成分布式系统的所有计算机节点都是对等的。 副本 (Replica) 是分布 式系统最常见的概念之一, 指的是分布式系统对数据和服务提供的一种冗余方式。 在常见的分布式系统中, 为了对外提供高可用的服务, 我们往往会对数据和服务进行副本处理。 数据副本是指在不同的节点上持久化同一份数据, 当某一个节点上存 储的数据丢失时, 可以从副本上读取到该数据, 这是解决分布式系统数据丢失问题 最为有效的手段。 另一类副本是服务副本, 指多个节点提供同样的服务, 每个节点都有能力接收来自外部的请求并进行相应的处理。</p>
+<h2 id="并发性"><a href="#并发性" class="headerlink" title="并发性"></a>并发性</h2><p>   在一个计算机网络中, 程序运行过程中的并发性操作是非常常见的行为, 例如同一个分布 式系统中的多个节点, 可能会并发地操作一些共享的资源, 诸如数据库或分布式存 储等, 如何准确并高效地协调分布式并发操作也成为了分布式系统架构与设计中最 大的挑战之一。</p>
+<h2 id="缺乏全局时钟"><a href="#缺乏全局时钟" class="headerlink" title="缺乏全局时钟"></a>缺乏全局时钟</h2><p>   一个典型的分布式系统是由一系列在空间上随 意分布的多个进程组成的, 具有明显的分布性, 这些进程之间通过交换消息来进行 相互通信。 因此, 在分布式系统中, 很难定义两个事件究竟谁先谁后, 原因就是因 为分布式系统缺乏一个全局的时钟序列控制。</p>
+<h2 id="故障总会发生"><a href="#故障总会发生" class="headerlink" title="故障总会发生"></a>故障总会发生</h2><p>   组成分布式系统的所有计算机, 都有可能发生任何形式的故障。 一个被大量工程实 践所检验过的黄金定理是: 任何在设计阶段考虑到的异常情况, 一定会在系统实际 运行中发生, 并且, 在系统实际运行过程中还会遇到很多在设计时未能考虑到的异 常故障。 所以, 除非需求指标允许, 在系统设计时不能放过任何异常情况。</p>
+<h1 id="分布式环境的各种问题"><a href="#分布式环境的各种问题" class="headerlink" title="分布式环境的各种问题"></a>分布式环境的各种问题</h1><h2 id="通信异常"><a href="#通信异常" class="headerlink" title="通信异常"></a>通信异常</h2><p>   从集中式向分布式演变的过程中, 必然引人了网络因素, 而由于网络本身的不可靠性, 因此也引入了额外的问题。 分布式系统需要在各个节点之间进行网络通信, 因此每次网 络通信都会伴随着网络不可用的风险, 网络光纤、 路由器或是 DNS 等硬件设备或是系 统不可用都会导致最终分布式系统无法顺利完成一次网络通信。 另外, 即使分布式系统 各节点之间的网络通信能够正常进行, 其延时也会远大于单机操作。 通常我们认为在现 代计算机体系结构中, 单机内存访问的延时在纳秒数量级 (通常是 10nS 左右), 而正常 的一次网络通信的延迟在 0-1~1mS 左右 (相当于内存访问延时的 l05~l06 倍), 如此巨 大的延时差别, 也会影响消息的收发的过程, 因此消息丢失和消息延迟变得非常普遍。</p>
+<h2 id="网络分区"><a href="#网络分区" class="headerlink" title="网络分区"></a>网络分区</h2><p>   当网络由于发生异常情况, 导致分布式系统中部分节点之间的网络延时不断增大, 最终 导致组成分布式系统的所有节点中, 只有部分节点之间能够迸行正常通信, 而另一些节 点则不能一一我们将这个现象称为网络分区, 就是俗称的 “脑裂”。 当网络分区出现时, 分布式系统会出现局部小集群, 在极端情况下, 这些局部小集群会独立完成原本需要整 个分布式系统才能完成的功能, 包括对数据的事务处理, 这就对分布式一致性提出了非常大的挑战</p>
+<h2 id="三态"><a href="#三态" class="headerlink" title="三态"></a>三态</h2><p>   从上面的介绍中,我们已经了解到了在分布式环境下,网络可能会出现各式各样的问题, 因此分布式系统的每一次请求与响应, 存在特有的“三态”概念, 即成功、失败与超时。 在传统的单机系统中, 应用程序在调用一个函数之后, 能够得到一个非常明确的响应: 成功或失败。 而在分布式系统中, 由干网络是不可靠的, 虽然在绝大部分情况下, 网络 通信也能够接收到成功或失败的响应, 但是当网络出现异常的情况下, 就可能会出现超 时现象, 通常有以下两种情况:</p>
+<ul>
+<li>由于网络原因, 该请求 (消息) 并没有被成功地发送到接收方, 而是在发送过程 就发生了消息丢失现象。</li>
+<li><p>该请求 (消息) 成功的被接收方接收后, 并迸行了处理, 但是在将响应反馈给发 送方的过程中, 发生了消息丢失现象。</p>
+<p>当出现这样的超时现象时，网络通信的发起方是无法确定当前请求是否被正确成功处理的。</p>
+<h2 id="节点故障"><a href="#节点故障" class="headerlink" title="节点故障"></a>节点故障</h2><p>节点故障则是分布式环境下另一个比较常见的问题, 指的是组成分布式系统的服务器节点出现的宕机或 “僵死” 现象。 通常根据经验来说, 每个节点都有可能会出现故障, 并且每天都在发生。</p>
+</li>
+</ul>
+<h1 id="分布式系统事物处理的挑战"><a href="#分布式系统事物处理的挑战" class="headerlink" title="分布式系统事物处理的挑战"></a>分布式系统事物处理的挑战</h1><h2 id="ACID理论"><a href="#ACID理论" class="headerlink" title="ACID理论"></a>ACID理论</h2><p>   事务 (Transaction) 是由一系列对系统中数据进行访问与更新的操作所组成的一个程序 执行逻辑单元 (Unit), 狭义上的事务特指数据库事务。 一方面, 当多个应用程序并发访 问数据库时, 事务可以在这些应用程序之间提供一个隔离方法, 以防止彼此的操作互相 干扰。 另一方面, 事务为数据库操作序列提供了一个从失败中恢复到正常状态的方法, 同时提供了数据库即使在异常状态下仍能保持数据一致性的方法。事物就有四个特征，分别是原子性(Atomicity)，一致性(Consistency),隔离性(Isolation)和持久性(Durablity) ,简称为事物的ACID特性</p>
+<h3 id="原则性"><a href="#原则性" class="headerlink" title="原则性"></a>原则性</h3><p>   事物的原子性指的是事物必须是一个原子操作的操作序列单元，事物中包含的各项操作在一此执行过程中，只运行出现以下两种状态，全部执行成功，全部不执行。任何一项操作失败都将导致整个事物失败，同时其他已经被执行的操作都将被撤销并且回滚，只有所有的操作全部成功，整个事物才算是成功完成的。</p>
+<h3 id="一致性"><a href="#一致性" class="headerlink" title="一致性"></a>一致性</h3><p>   事务的一致性是指事务的执行不能破坏数据库数据的完整性和一致性, 一个事务在执行 之前和执行之后, 数据库都必须处干一致性状态。 也就是说, 事务执行的结果必须是使数据库从一个一致性状态转变到另一个一致性状态, 因此当数据库只包含成功事务提交 的结果时, 就能说数据库处干一致性状态。 而如果数据库系统在运行过程中发生故障, 有些事务尚未完成就被迫中断, 这些未完成的事务对数据库所做的修改有一部分已写人 物理数据库, 这时数据库就处于一种不正确的状态, 或者说是不一致的状态。</p>
+<h3 id="隔离性"><a href="#隔离性" class="headerlink" title="隔离性"></a>隔离性</h3><p>   事务的隔离性是指在井发环境中, 并发的事务是相互隔离的, 一个事务的执行不能被其 他事务干扰。 也就是说, 不同的事务并发操纵相同的数据时, 每个事务都有各自完整的 数据空间, 即一个事务内部的操作及使用的数据对其他并发事务是隔离的, 并发执行的 各个事务之间不能互相干扰。</p>
+<h3 id="持久性"><a href="#持久性" class="headerlink" title="持久性"></a>持久性</h3><p>   事务的持久性也被称为永久性, 是指一个事务一旦提交, 它对数据库中对应数据的状态变更就应该是永久性的。 换句话说, 一旦某个事务成功结束, 那么它对数据库所做的更 新就必须被永久保存下来一即便发生系统崩溃或机器宕机等故障, 只要数据库能够重新启动, 那么一定能够将其恢复到事务成功结束时的状态。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;前提&quot;&gt;&lt;a href=&quot;#前提&quot; class=&quot;headerlink&quot; title=&quot;前提&quot;&gt;&lt;/a&gt;前提&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;这段时间开始需要接触分布式相关的东西，改造公司的几个传统集中式项目，又要临时抱佛脚补补基础了。&lt;/p&gt;
+&lt;/blo
+    
+    </summary>
+    
+    
+      <category term="分布式" scheme="http://blog.vnicers.com/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Mac系统中Redis服务的开机启动</title>
+    <link href="http://blog.vnicers.com/2016/12/12/Mac%E7%B3%BB%E7%BB%9F%E4%B8%ADRedis%E7%9A%84%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8/"/>
+    <id>http://blog.vnicers.com/2016/12/12/Mac系统中Redis的开机启动/</id>
+    <published>2016-12-11T16:00:00.000Z</published>
+    <updated>2017-08-10T07:26:32.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h1><pre><code>今天在Mac系统上安装了Redis，来做一些程序的测试,但是重新开机后，Redis服务需要手动启动，Linux可以制作启动服务，Mac是否也可以呢
+</code></pre><h1 id="launchd"><a href="#launchd" class="headerlink" title="launchd"></a>launchd</h1><p>  这里有一篇文章<a href="https://www.ulumen.com/launchd-tool-of-os-x-you-should-know-about/" target="_blank" rel="external">launchd — 你应该了解的 OS X 工具</a>已经说的很清楚，就是我要找的东西</p>
+<pre><code>launchd 是苹果公司开发的一个开源的进程管理器，从 Mac OS X 10.4 Tiger 开始，苹果就使用 launchd 来管理系统的守护进程、程序、脚本、定时任务及 OS X 系统环境
+</code></pre><h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><p>  首先下载Redis软件，在Make install 之后编写 redis.plist文件，plist文件其实就是一个xml文件。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line">    <span class="meta">&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">plist</span> <span class="attr">version</span>=<span class="string">"1.0"</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">dict</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">key</span>&gt;</span>KeepAlive<span class="tag">&lt;/<span class="name">key</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">true</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">key</span>&gt;</span>Label<span class="tag">&lt;/<span class="name">key</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">string</span>&gt;</span>local.autorun.redis<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">key</span>&gt;</span>ProgramArguments<span class="tag">&lt;/<span class="name">key</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">array</span>&gt;</span></div><div class="line">            <span class="comment">&lt;!--这里的目录根据自己的情况来创建--&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">string</span>&gt;</span>/usr/local/bin/redis-server<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div><div class="line">          <span class="comment">&lt;!--这里的目录根据自己的情况来创建--&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">string</span>&gt;</span>/usr/local/var/redis/redis.conf<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">array</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">key</span>&gt;</span>RunAtLoad<span class="tag">&lt;/<span class="name">key</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">true</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">key</span>&gt;</span>UserName<span class="tag">&lt;/<span class="name">key</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">string</span>&gt;</span>tanwei<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">key</span>&gt;</span>WorkingDirectory<span class="tag">&lt;/<span class="name">key</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">string</span>&gt;</span>/usr/local/var<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">key</span>&gt;</span>StandardErrorPath<span class="tag">&lt;/<span class="name">key</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">string</span>&gt;</span>/usr/local/var/log/redis.log<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">key</span>&gt;</span>StandardOutPath<span class="tag">&lt;/<span class="name">key</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">string</span>&gt;</span>/usr/local/var/log/redis.log<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">dict</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">plist</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>执行命令,plist文件路径根据自己的情况放置。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">launchctl load /usr/<span class="built_in">local</span>/var/redis/redis.plist</div></pre></td></tr></table></figure></p>
+<h1 id="重启系统验证Redis是否启动"><a href="#重启系统验证Redis是否启动" class="headerlink" title="重启系统验证Redis是否启动"></a>重启系统验证Redis是否启动</h1>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;场景&quot;&gt;&lt;a href=&quot;#场景&quot; class=&quot;headerlink&quot; title=&quot;场景&quot;&gt;&lt;/a&gt;场景&lt;/h1&gt;&lt;pre&gt;&lt;code&gt;今天在Mac系统上安装了Redis，来做一些程序的测试,但是重新开机后，Redis服务需要手动启动，Linux可以制作启动服
+    
+    </summary>
+    
+    
+      <category term="Mac" scheme="http://blog.vnicers.com/tags/Mac/"/>
+    
+      <category term="Redis" scheme="http://blog.vnicers.com/tags/Redis/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Mac系统常用软件汇总</title>
+    <link href="http://blog.vnicers.com/2016/11/12/Mac%20%E7%B3%BB%E7%BB%9F%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E6%B1%87%E6%80%BB/"/>
+    <id>http://blog.vnicers.com/2016/11/12/Mac 系统常用软件汇总/</id>
+    <published>2016-11-11T16:00:00.000Z</published>
+    <updated>2017-08-07T13:45:22.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="开发者工具"><a href="#开发者工具" class="headerlink" title="开发者工具"></a>开发者工具</h1><p>   <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fibh9hd0ttj206u06w754.jpg" alt="IDEA Java 开发神器"></p>
+<p>   <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fibha6oq3ij206i06274u.jpg" alt="Android 开发神器"></p>
+<p>   <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fibh6174xlj209o07e0ty.jpg" alt="WebStorm 前端开发神器"></p>
+<p>   <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fibh7wfp87j2070062js9.jpg" alt="PyCharm CE Python开发神器"></p>
+<p>   <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fibhakszc0j207206ejs6.jpg" alt="C/C++ 开发神器"></p>
+<p>   以上都是出自 jetbrain 公司的产品</p>
+<p>   <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fibh6hct8oj2070064t98.jpg" alt="Sublime Text 轻量级文本编辑器"></p>
+<p>   最新版的，等了好久</p>
+<p>   <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fibhbzhe3ej206s068t98.jpg" alt="Eclipse 开发工具"></p>
+<p>   说实话用了IDEA，就没怎么用Eclipse了</p>
+<p>   <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fibhdey5gpj208406cdgz.jpg" alt="Byond Compare 代码对比工具"></p>
+<p>   <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fibhdxrczdj20720663yy.jpg" alt="TeamViewer 远程桌面连接工具"></p>
+<p>   <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fibhr85manj206i05ugmi.jpg" alt="科学上网工具"></p>
+<p>   <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fibhrj80y6j206u05o75g.jpg" alt="Http网络检查工具"></p>
+<p>   <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fibhsv8db8j208206igmr.jpg" alt="虚拟机软件"></p>
+<p>   <img src="http://ww1.sinaimg.cn/mw690/818b7fe3gy1fibhu9ap5wj205e066mxu.jpg" alt="股票行情软件"></p>
+<p>   <img src="http://ww1.sinaimg.cn/mw690/818b7fe3gy1fibhtqoavkj21q00m6kg7.jpg" alt="其他"></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;开发者工具&quot;&gt;&lt;a href=&quot;#开发者工具&quot; class=&quot;headerlink&quot; title=&quot;开发者工具&quot;&gt;&lt;/a&gt;开发者工具&lt;/h1&gt;&lt;p&gt;   &lt;img src=&quot;http://ww1.sinaimg.cn/large/818b7fe3gy1fibh9h
+    
+    </summary>
+    
+    
+      <category term="Mac" scheme="http://blog.vnicers.com/tags/Mac/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>FreeMarker十分钟入门</title>
+    <link href="http://blog.vnicers.com/2016/01/11/FreeMarker%E5%8D%81%E5%88%86%E9%92%9F%E5%85%A5%E9%97%A8/"/>
+    <id>http://blog.vnicers.com/2016/01/11/FreeMarker十分钟入门/</id>
+    <published>2016-01-10T16:00:00.000Z</published>
+    <updated>2017-08-13T15:05:31.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>在要学习一门新技术直接，一般如何开始入手，达到什么程度叫入门，达到什么程度较学会，达到什么程度叫精通。<br>学习计算机相关的知识，需要我们时刻保持一颗学习的心态。这里打算写一下我的学习过程，叫做《十分钟入门系列》<br>当然十分钟并不能保证你完全入门，但是我们更重要的是学习方法。这里第一篇入门系列是以FreeMarker为开篇，因为最近项目中需要用到，而且以前只是听说，所以要用到才会学习，如果你学了，一时半会用不到，那样也很快会忘记。</p>
+<h1 id="如何学习"><a href="#如何学习" class="headerlink" title="如何学习"></a>如何学习</h1><p>直接Google FreeMarker 关键字，为什么不用百度，这个做开发的都知道，百度上的技术文章烂得跟啥一样的。前排一律，文不对题。不适合技术人员寻找资料，如果没办法Google，再怎么着也得用Bing搜索，百度我觉得只是时候查下身边相关的资料，技术文章Google才是归属。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fii5n5zc3jj218o0wo47k.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>搜索到的结果是前两条是FreeMarker的官网，第三条是国内的CSDN用户写的博客，说明访问量还是挺多的。但是日期是2012年，肯能比较旧了。所以直接略过，学习一手的东西，直接进第一条官网的就OK</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fii5qdkcj1j21yw10sk8u.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>打开FreeMarker官网，直入主题，什么是Apache FreeMarker，看下左侧的目录包括 下载，maven坐标，文档包括手册，java api ，甚至还有中文手册。工具包含编辑器和插件在线模板测试，下面就是组织。<br>看到这些信息，基本是入门到上手没啥问题了。</p>
+<h1 id="What-is-Apache-FreeMarker"><a href="#What-is-Apache-FreeMarker" class="headerlink" title="What is Apache FreeMarker ?"></a>What is Apache FreeMarker ?</h1><p>读完它的介绍和一副实例图，基本知道FreeMarker是干嘛的了，然后在看完整个介绍后从中获取的信息</p>
+<ol>
+<li>FreeMarker是一个模板引擎，这里应该想到它和Velocity是同一类东西。</li>
+<li>可以用来生成文本，包括html,邮件，配置文件，源代码等。这里可以知道，一些框架前端现在直接用的FreeMarker来替代jsp，在邮件中实现复杂的html页面将内容动态的替换到指定位置，甚至代码生成器类似的东西也可以用它来做。</li>
+<li>使用FreeMarker模板特有的简单的模板语言FTL,你只需要准备好数据，和模板，然后塞到FreeMarker中，他就可以按照你的模板显示出来。</li>
+<li>遵循MVC设计模式，非常适合动态网页的显示，将页面和java代码分离，设计师可以不用面对嵌套在页面中的逻辑，可以直接修改页面而不用重新编译代码。这里应该想到它和JSP有什么异同，从下面的分析中寻找答案</li>
+<li>不仅可以在web中使用，也可以在非Web环境使用。</li>
+<li>从声明中可以看出FreeMarker项目已经交给Apache开源组织管理，现在还是孵化阶段，后面对孵化阶段做了一个解释。</li>
+<li>特性一 :条件语句，循环，赋值，字符串，和算数运算以及格式化，宏，以及函数，包含其他模板，转义以及其他。</li>
+<li>特性二 :没有任何依赖，各种输出样式，可以从任何地方加载模板。</li>
+<li>特性三 :国际化</li>
+<li>特性四 :XML处理功能</li>
+<li>特性五 :通用数据模型</li>
+</ol>
+<p>从上面的特性可以知道，FreeMarker支持的功能应该比JSP和Velocity更强大不少。</p>
+<h1 id="Download-from-Maven"><a href="#Download-from-Maven" class="headerlink" title="Download from Maven"></a>Download from Maven</h1><p>在了解完FreeMarker的基本信息之后，可以从Maven中央仓库中下载它的最新版本来玩一下。最新的是2.3版本<br>新建一个Web项目测试</p>
+<h1 id="Getting-Started"><a href="#Getting-Started" class="headerlink" title="Getting Started"></a>Getting Started</h1><p>  编写模板文件<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Welcome!<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Welcome $&#123;user&#125;!<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>Our latest product:</div><div class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"$&#123;latestProduct.url&#125;"</span>&gt;</span>$&#123;latestProduct.name&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span>!</div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>如果直接访问该文件，模板中的变量会原样输出到界面上。</p>
+<h2 id="数据模型介绍"><a href="#数据模型介绍" class="headerlink" title="数据模型介绍"></a>数据模型介绍</h2><p>数据模型基本结构就是一个对象树，结构和json比较类似。访问方式则和javascript比较类似，子节点的数据类型有字符串，数字，日期/时间 ，布尔值</p>
+<h2 id="模板介绍"><a href="#模板介绍" class="headerlink" title="模板介绍"></a>模板介绍</h2><p> ${…} ftl变量:会被括号中的表达式实际值替换</p>
+<p> &lt;#…&gt; ftl标签:也可以称作指令，不会被输出</p>
+<p> &lt;@…&gt; ftl自定义标签</p>
+<p> &lt;#–…–&gt;  ftl注释，不会被输出</p>
+<p> 除了以上几个标签其他的任何形式的标签都不会被FreeMarker处理，都会直接输出。</p>
+<h3 id="几个基本的指令"><a href="#几个基本的指令" class="headerlink" title="几个基本的指令"></a>几个基本的指令</h3><h4 id="if-elseif-else-指令"><a href="#if-elseif-else-指令" class="headerlink" title="if elseif else 指令"></a>if elseif else 指令</h4><pre><code>&lt;#if animals.python.price &lt; animals.elephant.price&gt;
+  Pythons are cheaper than elephants today.
+&lt;#elseif animals.elephant.price &lt; animals.python.price&gt;
+  Elephants are cheaper than pythons today.
+&lt;#else&gt;
+  Elephants and pythons cost the same today.
+&lt;/#if&gt;
+
+当表达式为true时，会输出包含的内容 当==左右两边的数据类型不匹配时会报错。
+如果表达式是boolean类型，可以使用如下输出
+&lt;#if animals.python.protected&gt;
+  Pythons are protected animals!
+&lt;/#if&gt;
+</code></pre><h4 id="list-指令"><a href="#list-指令" class="headerlink" title="list 指令"></a>list 指令</h4><pre><code>&lt;table border=1&gt;
+  &lt;#list animals as animal&gt;
+    &lt;tr&gt;&lt;td&gt;${animal.name}&lt;td&gt;${animal.price} Euros
+  &lt;/#list&gt;
+&lt;/table&gt;
+animals是数据模型中的集合 animal是循环出的单个对象，循环体中可以使用ftl变量
+
+如果list是空的，那么上面的会输出一个&lt;table border=1&gt;&lt;/table&gt;。可以使用将list指令拆成两部分来避免，如下
+
+&lt;#list animals&gt;
+    &lt;table border=1&gt;
+        &lt;#items as animal&gt;
+            &lt;tr&gt;&lt;td&gt;${animal.name}&lt;td&gt;${animal.price} Euros
+        &lt;/#items&gt;
+    &lt;/table&gt;
+&lt;#list&gt;
+如果animals是空，则里面的所有都不会输出。
+</code></pre><h4 id="sep指令"><a href="#sep指令" class="headerlink" title="sep指令"></a>sep指令</h4><pre><code>&lt;p&gt;Fruits: &lt;#list misc.fruits as fruit&gt;${fruit}&lt;#sep&gt;, &lt;/#list&gt;
+可以按照逗号拼接每个item，最后一个则忽略。
+</code></pre><h4 id="include指令"><a href="#include指令" class="headerlink" title="include指令"></a>include指令</h4><p>   include指令类似于jsp里面的静态include</p>
+<h3 id="内置插件"><a href="#内置插件" class="headerlink" title="内置插件"></a>内置插件</h3><pre><code>user?upper_case 将user变量的值转为大写
+
+animal.name?cap_first 值转成首字母大写
+
+user?length 获取内容长度
+
+animals?size 获取集合大小
+
+在循环 &lt;#list animals as animal&gt; 标签里面:
+
+    animal?index 获取item的索引从0开始
+
+    animal?counter 获取item所在位置从1开始
+
+    animal?item_parity 返回基数行或者偶数行字符 &quot;odd&quot; or &quot;even&quot;
+
+带有参数的插件
+
+animal.protected?string(&quot;Y&quot;, &quot;N&quot;) 根据表达式的boolean值 返回字符Y或者N
+
+animal?item_cycle(&apos;lightRow&apos;, &apos;darkRow&apos;) 根据基偶行返回知道的字符
+
+fruits?join(&quot;, &quot;): 将集合展开安装指定的字符拼接
+
+user?starts_with(&quot;J&quot;) 判断表达式的值是否是指定的参数开头，返回true或者false
+
+内置插件可以链式调用
+</code></pre><h3 id="空值处理"><a href="#空值处理" class="headerlink" title="空值处理"></a>空值处理</h3><p> 在Freemarker中一个不存在的变量和该变量值为null是一个意思</p>
+<p> 为变量指定默认值，当user对象值不存在或为null时，将会用默认值”visitor”代替<br> <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Welcome $&#123;user!"visitor"&#125;!<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p> 使用表达式??预先判断变量值是否存在然后再渲染</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">#if</span> <span class="attr">user</span>??&gt;</span><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Welcome $&#123;user&#125;!<span class="tag">&lt;/<span class="name">h1</span>&gt;</span><span class="tag">&lt;/<span class="name">#if</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="特殊字符处理"><a href="#特殊字符处理" class="headerlink" title="特殊字符处理"></a>特殊字符处理</h3><p>默认FreeMarker会自动转义所有以$ {…}打印的值，所有的以ftlh和ftlx为扩展名的freemarker模板都会自动关联到HTML和XML输出格式</p>
+<p>如果想故意输出特殊字符，则可以使用${value?no_esc}</p>
+<h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><h4 id="标识符"><a href="#标识符" class="headerlink" title="标识符"></a>标识符</h4><pre><code>字符串，数字，布尔值，日期(日期/时间/日期时间)
+</code></pre><h4 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h4><pre><code>哈希(对象)，序列(可以使用索引访问)，集合(有限的序列，不能使用索引访问)
+</code></pre><h4 id="方法和函数"><a href="#方法和函数" class="headerlink" title="方法和函数"></a>方法和函数</h4><pre><code>${avg(3,5)} 获取平均数
+</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在要学习一门新技术直接，一般如何开始入手，达到什么程度叫入门，达到什么程度较学会，达到什么程度叫精通。&lt;br&gt;学习计算机相关的知识，需要我们时刻保持一颗学习的心态。这里打算写一下我的学习过程，叫做《十分钟入门系列》&lt;br&gt;当然十分钟并不能保证你完全入门，但是我们更重要的是学
+    
+    </summary>
+    
+      <category term="十分钟入门系列" scheme="http://blog.vnicers.com/categories/%E5%8D%81%E5%88%86%E9%92%9F%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97/"/>
+    
+    
+      <category term="开源组件" scheme="http://blog.vnicers.com/tags/%E5%BC%80%E6%BA%90%E7%BB%84%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Mac系统使用常见问题汇总</title>
+    <link href="http://blog.vnicers.com/2015/11/12/Mac%E7%B3%BB%E7%BB%9F%E4%BD%BF%E7%94%A8%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB/"/>
+    <id>http://blog.vnicers.com/2015/11/12/Mac系统使用常见问题汇总/</id>
+    <published>2015-11-11T16:00:00.000Z</published>
+    <updated>2017-08-05T07:41:02.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Mac-卸载rEFInd"><a href="#Mac-卸载rEFInd" class="headerlink" title="Mac 卸载rEFInd"></a>Mac 卸载rEFInd</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">执行检查命令</div><div class="line"></div><div class="line">diskutil list | grep EFI | awk <span class="string">'&#123;print $6&#125;'</span></div><div class="line">如果显示如下：</div><div class="line">disk0s1</div><div class="line"></div><div class="line">执行卸载命令</div><div class="line"></div><div class="line">sudo mkdir /Volumes/efi</div><div class="line">sudo mount -t msdos /dev/disk0s1 /Volumes/efi</div><div class="line">sudo rm -rfP /Volumes/efi/EFI/refind</div><div class="line">sudo bless --setBoot --mount /</div><div class="line">重新启动即可</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;Mac-卸载rEFInd&quot;&gt;&lt;a href=&quot;#Mac-卸载rEFInd&quot; class=&quot;headerlink&quot; title=&quot;Mac 卸载rEFInd&quot;&gt;&lt;/a&gt;Mac 卸载rEFInd&lt;/h1&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;t
+    
+    </summary>
+    
+    
+      <category term="Mac" scheme="http://blog.vnicers.com/tags/Mac/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Redis 注意知识点整理</title>
+    <link href="http://blog.vnicers.com/2015/06/01/Redis%20%E6%B3%A8%E6%84%8F%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/"/>
+    <id>http://blog.vnicers.com/2015/06/01/Redis 注意知识点整理/</id>
+    <published>2015-05-31T16:00:00.000Z</published>
+    <updated>2017-08-12T12:12:50.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Redis 默认支持16个数据库，可以通过配置参数databases来修改这一数字，客户端与Redis建立链接后会自动选择0号数据库，可以select 命令更换数据库 <code>select 1</code></p>
+<p>Redis 不支持自定义数据库的名字，以编号命名，也不支持为每个数据库设置不同的访问密码。多个数据库之间并不是完全隔离，<code>FLUSHALL</code>命令可以清空一个Redis实例中所有数据库中的数据，Redis中的数据库更像是一种命名空间，而不适合存储不同应用的数据。不同的应用应该使用不同的Redis实例存储。由于Redis非常轻量级，一个空的Redis实例占用内存1mb空间。</p>
+<p><code>keys</code> 命令需要遍历Redis中的所有键，当键的数量较多时会影响性能，不建议在生成环境中使用。</p>
+<p><code>DEL</code> 命令的参数不支持通配符号，可以结合Linux的管道和xargs命令实现删除所有复合规则的键。<code>redis-cli keys &quot;user:*&quot; | xargs redis-cli del</code> 或者<code>redis del redis-cli keys &quot;user:*&quot;</code></p>
+<p>一个字符串类型的键允许存储的最大容量为512MB，字符串类型是其他四中基本类型的基础 </p>
+<p>Redis 的数据类型同样不支持数据类型嵌套</p>
+<p>列表类型的内部是使用双向链表，搭配使用lpush和lpop或者rpop和rpush可以当做栈来使用。如果当成队列则搭配使用lpush和rpop或者rpush和lpop</p>
+<p>Redis 保证一个事物中的所有命令要么执行，要么不执行，如果在发送exec命令前，客户端断了线，则Redis会清空事物队列。事物中的所有命令都不会执行。而一旦客户端发送了exec命令，所有的命令都会执行。即使客户端断线也没关系。因为Redis中记录了所有要执行的命令</p>
+<p>Redis 事物在2.6.5版本之后 如果多个命令中有<strong>语法错误</strong>，则会忽略所有的命令，正确的命令也不会执行。在2.6.5版本之前会执行正确的命令，如果是<strong>运行错误</strong>比如使用不同类型的命令操作其他类型。这种错误在实际执行之前Redis是无法发现的。所以出现错误后，其他命令会正常执行</p>
+<p>Redis 没有事物回滚的功能，需要自己手动收拾摊子</p>
+<p>Redis 使用Watch 命令防止竞态条件</p>
+<p>Watch 命令的作用只是当被监控的键值被修改后阻止之后的一个事物执行，而不能保证其他客户端不修改这个键值，所以需要在exec失败后重新执行整个函数</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Redis 默认支持16个数据库，可以通过配置参数databases来修改这一数字，客户端与Redis建立链接后会自动选择0号数据库，可以select 命令更换数据库 &lt;code&gt;select 1&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Redis 不支持自定义数据库的名字，以编号命名
+    
+    </summary>
+    
+    
+      <category term="Redis" scheme="http://blog.vnicers.com/tags/Redis/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux 使用常见问题汇总</title>
+    <link href="http://blog.vnicers.com/2014/06/05/Linux%20%E4%BD%BF%E7%94%A8%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB/"/>
+    <id>http://blog.vnicers.com/2014/06/05/Linux 使用常见问题汇总/</id>
+    <published>2014-06-04T16:00:00.000Z</published>
+    <updated>2017-08-05T07:41:02.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="后台运行程序将日志输出到指定文件"><a href="#后台运行程序将日志输出到指定文件" class="headerlink" title="后台运行程序将日志输出到指定文件"></a>后台运行程序将日志输出到指定文件</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nohup ./IntelliJIDEALicenseServer_linux_amd64 &gt; ~/var/logs/idealicense.log 2&gt;&amp;1 &amp;</div></pre></td></tr></table></figure>
+<h1 id="apt-install-Unmet-dependencies"><a href="#apt-install-Unmet-dependencies" class="headerlink" title="apt install Unmet dependencies"></a>apt install Unmet dependencies</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt --fix-broken install</div></pre></td></tr></table></figure>
+<h1 id="CentOS-7-x86-64-新建用户-图形化界面密码正确但是不能登陆的问题"><a href="#CentOS-7-x86-64-新建用户-图形化界面密码正确但是不能登陆的问题" class="headerlink" title="CentOS 7 x86_64 新建用户 图形化界面密码正确但是不能登陆的问题"></a>CentOS 7 x86_64 新建用户 图形化界面密码正确但是不能登陆的问题</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">root@chenghy ~]<span class="comment"># vi /etc/pam.d/login</span></div><div class="line"><span class="comment">#将如下行：</span></div><div class="line">session required /lib/security/pam_limits.so</div><div class="line"><span class="comment">#修改成：</span></div><div class="line">session required /lib64/security/pam_limits.so</div></pre></td></tr></table></figure>
+<blockquote>
+<p>如果没有该行则添加 然后重启，故障排除,貌似这种现象只发现在x86_64服务器中。</p>
+</blockquote>
+<h1 id="CentOS-设置JAVA环境变量之后java和javac-版本不一致的问题​"><a href="#CentOS-设置JAVA环境变量之后java和javac-版本不一致的问题​" class="headerlink" title="CentOS 设置JAVA环境变量之后java和javac 版本不一致的问题​"></a>CentOS 设置JAVA环境变量之后java和javac 版本不一致的问题​</h1><blockquote>
+<p>centOS 7 默认安装后自带了jdk 1.8.0_65 的open jdk<br>不想使用这个版本 然后自己添加了一个jdk 1.8.0_121 版本<br>在/etc/profile 中设置了JAVA_HOME 和CLASSPATH<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">export</span> JAVA_HOME=/root/develop/java/jdk-1.8.0_121</div><div class="line"><span class="built_in">export</span> PATH=<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$PATH</span></div><div class="line"><span class="built_in">export</span> CLASSPATH=.:<span class="variable">$JAVA_HOME</span>/lib/dt.jar:<span class="variable">$JAVA_HOME</span>/lib/tools.jar</div><div class="line"><span class="built_in">source</span> /etc/profile</div></pre></td></tr></table></figure></p>
+</blockquote>
+<p>执行 java -version 显示的任然是open jdk 1.8.0_65<br>执行命令 whereis java<br>显示 java:/usr/bin/java  而不是我们root/develop/下的java<br>备份 /usr/bin/java  mv /usr/bin/java /usr/bin/open-jdk.1.8.0_65<br>将我们自己的jdk软链接到/usr/bin/java<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ln -s <span class="variable">$JAVA_HOME</span>/bin/java /usr/bin/java</div></pre></td></tr></table></figure></p>
+<p>验证 java -version  javac -version  版本一致OK</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;后台运行程序将日志输出到指定文件&quot;&gt;&lt;a href=&quot;#后台运行程序将日志输出到指定文件&quot; class=&quot;headerlink&quot; title=&quot;后台运行程序将日志输出到指定文件&quot;&gt;&lt;/a&gt;后台运行程序将日志输出到指定文件&lt;/h1&gt;&lt;figure class=&quot;hi
+    
+    </summary>
+    
+    
+      <category term="Linux" scheme="http://blog.vnicers.com/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux使用systemd添加系统启动项目</title>
+    <link href="http://blog.vnicers.com/2014/05/24/Linux%E4%BD%BF%E7%94%A8systemd%E6%B7%BB%E5%8A%A0%E7%B3%BB%E7%BB%9F%E5%90%AF%E5%8A%A8%E9%A1%B9%E7%9B%AE/"/>
+    <id>http://blog.vnicers.com/2014/05/24/Linux使用systemd添加系统启动项目/</id>
+    <published>2014-05-23T16:00:00.000Z</published>
+    <updated>2017-08-05T07:47:19.000Z</updated>
+    
+    <content type="html"><![CDATA[<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">/etc/systemd/system/nexus.service</div><div class="line"></div><div class="line">This example is a script that uses systemd to run the repository manager service. Create a file called nexus.service. Add the following contents, <span class="keyword">then</span> save the file <span class="keyword">in</span> the /etc/systemd/system/ directory.</div><div class="line"></div><div class="line">[Unit]</div><div class="line">Description=nexus service</div><div class="line">After=network.target</div><div class="line"></div><div class="line">[Service]</div><div class="line">Type=forking</div><div class="line">ExecStart=/opt/nexus/bin/nexus start</div><div class="line">ExecStop=/opt/nexus/bin/nexus stop</div><div class="line">User=nexus</div><div class="line">Restart=on-abort</div><div class="line"></div><div class="line">[Install]</div><div class="line">WantedBy=multi-user.target</div><div class="line">Activate the service with the following commands:</div><div class="line"></div><div class="line">sudo systemctl daemon-reload</div><div class="line">sudo systemctl <span class="built_in">enable</span> nexus.service</div><div class="line">sudo systemctl start nexus.service</div><div class="line">After starting the service <span class="keyword">for</span> any Linux-based operating systems, verify that the service started successfully.</div><div class="line"></div><div class="line">tail -f /opt/sonatype-work/nexus3/<span class="built_in">log</span>/nexus.log</div><div class="line"></div><div class="line">check status</div><div class="line">sudo systemctl status nexus</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div
+    
+    </summary>
+    
+    
+      <category term="Linux" scheme="http://blog.vnicers.com/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java多线程对象的共享</title>
+    <link href="http://blog.vnicers.com/2014/05/18/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%85%B1%E4%BA%AB/"/>
+    <id>http://blog.vnicers.com/2014/05/18/Java多线程对象的共享/</id>
+    <published>2014-05-17T16:00:00.000Z</published>
+    <updated>2017-08-13T06:54:27.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>同步代码块和同步方法可以确保以原子的方式执行操作，同时另外一个重要的作用是内存可见性，我们不仅希望防止某个线程正在使用对象的状态，而另一个线程在同时修改这个状态，而且还希望确保一个线程修改了对象状态后，其他线程能够看到发生的状态变化。</p>
+<h1 id="可见性"><a href="#可见性" class="headerlink" title="可见性"></a>可见性</h1><p>通常我们无法确保执行读操作的线程能够适时的看到其他线程写入的值，为了确保多个线程之间对内存的写入操作的可见性必须使用同步机制。</p>
+<h1 id="重排序"><a href="#重排序" class="headerlink" title="重排序"></a>重排序</h1><p>在没有同步的情况下，编译器，处理器，以及运行时等都可能对操作的执行顺序进行一些意想不到的调整，在缺乏足够同步的多线程程序中，要想对内存操作的执行顺序进行判断，几乎无法得到正确的结论</p>
+<h1 id="枷锁与可见性"><a href="#枷锁与可见性" class="headerlink" title="枷锁与可见性"></a>枷锁与可见性</h1><p>java内置锁可以用于确保某个线程以一种可预见的方式来查看另外一个线程的执行结果，当线程A执行某个同步代码块时，线程B随后进入由同一个锁保护的同步代码块，在这种情况下可以保证，在锁被释放之前，A看到的变量值在B获得锁后同样可以由B看到。换句话说，当线程B执行由锁保护的同步代码块时，可以看到线程A之前在同一个同步代码块中的所有操作结果。如果没有同步，那么就无法实现上述保证<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fihz8uw9wij20yq0sctcb.jpg" alt="同步的可见性保证" title="">
+                </div>
+                <div class="image-caption">同步的可见性保证</div>
+            </figure></p>
+<p>加锁的含义不仅仅局限于互斥行为，还包括内存的可见性。为了确保所有线程都能得到共享变量的最小值，所有执行读操作或者写操作都必须在同一个锁上同步。</p>
+<h1 id="Volatile-变量"><a href="#Volatile-变量" class="headerlink" title="Volatile 变量"></a>Volatile 变量</h1><p>Java语言提供了一种稍弱的同步机制，即Volatile变量。用来确保将变量的更新操作通知到其他线程。当把变量声明成volatile类型后，编译器与运行时都会注意到这个变量是共享的，因此不会将该变量上的操作与其他内存上的操作一起重排序。volatile变量不会被缓存在寄存器或者其他处理器不可见的地方。因此在读取volatile变量总会返回最新的写入的值。<br>在访问volatile变量不会执行加锁的操作，因此也不会使执行线程阻塞，因此可以将volatile变量看作是一种比synchronized关键字更轻量级的同步机制（synchronized关键字在内存可见性上的作用比volatile变量更强）<br>从内存可见性的角度来看，写入volatile变量相当于退出同步代码块，而读取volatile变量相当于进入同步代码块。但是并不建议过度依赖volatile变量的可见性，它通常比使用锁更脆弱，也难以理解。仅当volatile变量能够简化代码的实现以及对同步策略的验证时，才该使用它们。<br>通常volatile变量用作某个操作完成，发生中断或者状态的标志。</p>
+<h1 id="ThreadLocal"><a href="#ThreadLocal" class="headerlink" title="ThreadLocal"></a>ThreadLocal</h1><p>ThreadLocal是维持线程封闭性的一种更规范的方法。这个类能使线程中的某个值与保存值的对象关联起来。ThreadLocal提供了get与set等访问接口或方法。这些方法为每个使用该变量的线程都存有一份独立的副本。因此get总是返回由当前执行线程在调用set时设置的最新值</p>
+<h1 id="安全的共享对象策略"><a href="#安全的共享对象策略" class="headerlink" title="安全的共享对象策略"></a>安全的共享对象策略</h1><p>在并发程序中使用和共享对象时，可以使用一些实用的策略，包括：</p>
+<p>   <strong>线程封闭</strong> 线程封闭的对象只能由一个线程拥有，对象被封闭在该线程中，并且只能由这个线程修改<br>   <strong>只读共享</strong> 在没有额外同步的情况下，共享的只读对象可以由多个线程并发访问，任何线程都不能修改它，共享的只读变量包括不可变对象，和事实不可变对象。<br>   <strong>线程安全共享</strong> 线程安全的对象在其内部实现同步，因此多个线程可以通过对象的公有接口来进行访问而不需要进一步的同步。<br>   <strong>保护对象</strong> 被保护的对象只能通过持有特定的锁来访问，保护对象包括封装在其他线程安全对象中的对象，以及已发布的并且由某个特定的锁保护的对象。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;同步代码块和同步方法可以确保以原子的方式执行操作，同时另外一个重要的作用是内存可见性，我们不仅希望防止某个线程正在使用对象的状态，而另一个线程在同时修改这个状态，而且还希望确保一个线程修改了对象状态后，其他线程能够看到发生的状态变化。&lt;/p&gt;
+&lt;h1 id=&quot;可见性&quot;&gt;&lt;a
+    
+    </summary>
+    
+      <category term="Java并发编程" scheme="http://blog.vnicers.com/categories/Java%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/"/>
+    
+    
+      <category term="多线程" scheme="http://blog.vnicers.com/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java多线程安全性</title>
+    <link href="http://blog.vnicers.com/2014/05/12/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E6%80%A7/"/>
+    <id>http://blog.vnicers.com/2014/05/12/Java多线程安全性/</id>
+    <published>2014-05-11T16:00:00.000Z</published>
+    <updated>2017-08-13T03:48:30.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>一个对象是否需要线程安全，取决于它是否被多个线程访问，这指的是在程序中访问对象的方式，而不是对象要实现的功能，要使得对象是线程安全的，必须采用同步机制来协同对象可变状态的访问。</p>
+<p>当多个线程访问某个状态变量并且其中一个线程执行写入操作的时候，必须采用同步机制来协同这些线程对变量的访问。Java中主要的同步机制是<code>synchronized</code>,它提供了一种独占的枷锁方式。同步这类还包括volatile类型变量，显示锁，以及原子变量</p>
+<p>  如果多线程访问同一个可变的状态变量时没有使用合适的同步，那么程序就会出现错误。三种解决方式</p>
+<ol>
+<li>不在线程间共享该状态变量</li>
+<li>将状态变量修改为不可变变量</li>
+<li>在访问状态变量时使用同步</li>
+</ol>
+<p>线程安全类的定义：</p>
+<pre><code>当多个线程访问某个类时，不管运行时环境采用何种调度方式或者这些线程将如何交替执行，并且在主调代码中不需要任何额外的同步或协调，这个类都能表现出正确的行为，那么就称为这个类是线程安全的类                       
+
+无状态的对象一定是线程安全的
+</code></pre><h1 id="竞态条件"><a href="#竞态条件" class="headerlink" title="竞态条件"></a>竞态条件</h1><p>   当某个计算的正确性取决于多个线程的交替执行时序时了那么就会发生竞态条件、就是一个线程需要判断一个变量的状态，然后根据这个变量的状态来执行某个操作，在执行这个操作之前，这个变量的状态可能会被其他线程修改。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@NotThreadSafe</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LazyInitRace</span> </span>&#123;  </div><div class="line">    <span class="keyword">private</span> ExpensiveObject instance=<span class="keyword">null</span>;  </div><div class="line">      </div><div class="line">    <span class="function"><span class="keyword">public</span> ExpensiveObject <span class="title">getInstance</span><span class="params">()</span></span>&#123;  </div><div class="line">        <span class="keyword">if</span>(instance==<span class="keyword">null</span>)&#123;  </div><div class="line">            instance=<span class="keyword">new</span> ExpensiveObject();  </div><div class="line">        &#125;  </div><div class="line">        <span class="keyword">return</span> instance;  </div><div class="line">    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在上面懒汉式单例对象创建的代码中， 在LazyInitRace 中包含了一个竞态条件，它可能会破坏这个类的正确性。假定线程A和线程B 同时执行getInstance 方法。A 看到instance 为空，因此A创建一个新的ExpensiveObject实例。B 同样需要判断instance 是否为空。此时的instance是否为空，要取决于不可预测的时序，包括线程的调度方式，以及A 需要花多长时间来初始化ExpensiveObject并设置instance。如果当B检查时，instance为空，那么在两次调用getInstance 时可能会得到不同的对象</p>
+<h1 id="原子操作"><a href="#原子操作" class="headerlink" title="原子操作"></a>原子操作</h1><p>要避免竞态条件文件，就必须在某个线程修改该变量时，通过某种方式防止其他线程使用这个变量，从而确保其他线程只能修改操作完成之前或之后读取修改状态，而不是在修改过程中</p>
+<p>假定有两个操作A和B,如果从执行A的线程来看，当另外一个线程执行B时，要么将B全部执行完，要么全部不执行B,那么A和B的执行对彼此来说都不原子的。原子操作是指，对于访问同一个状态的所有操作包括该操作本身来说，这个操作是一个以原子方式执行的操作。</p>
+<p>在实际情况中，应尽可能的使用现有的线程安全对象，来管理类的状态，与非线程安全的对象相比，判断线程安全对象的可能状态以及其状态的转换情况，要更为容易，从而也更容易维护和验证线程的安全性。</p>
+<p>要保持状态的一致性，就需要在单个原子操作中更新所有相关状态变量</p>
+<h1 id="锁机制"><a href="#锁机制" class="headerlink" title="锁机制"></a>锁机制</h1><p>java 提供了一种内置的锁机制来支持原子性，同步代码块（Synchronized Block）同步代码块包含两部分：一个是作为锁的对象引用，一个是作为由这个锁保护的代码块，在方法声明中使用synchronized修饰的方法是一种横跨整个方法体的同步代码块，其中该同步代码块的锁就是就是方法调用所在的对象。静态的synchronized方法以Class 对象作为锁</p>
+<p>每个Java对象都可以用作一个实现同步的锁，这些锁称为内置锁或者监视器锁，线程在进入同步代码块之前会自动获得锁，并且在退出同步代码块之前自动释放锁，而无论是通过正常的控制路径退出，还是通过从代码块中抛出异常退出，获得内置锁的唯一途径就是进入由这个锁保护的同步代码块或方法</p>
+<p>Java内置的锁相当于一种互斥的锁，这就意味着最多只有一个线程能够持有这种锁，当线程A尝试获取一个由线程B持有的锁的时候，线程A必须等到或者阻塞，知道线程B释放这个锁，如果B线程永远不释放，那么讲A将永远等下去。</p>
+<h1 id="锁的重入机制"><a href="#锁的重入机制" class="headerlink" title="锁的重入机制"></a>锁的重入机制</h1><p>当某个线程请求一个由其他线程持有的锁的时候，发出请求的线程就会阻塞，然而，由于内置锁是可以重入的，因此如果某个线程视图获得一个已经由它自己持有的锁，那么这个请求就会成功，”重入”意味着获取锁的操作粒度为线程，而不是调用，重入的一种实现方法是，为每个锁关联一个计数值和一个所有者线程，当计数值为0时，这个锁就认为没有被任何线程持有。当线程请求一个未被持有的锁时，JVM记下锁的持有者，并将计数值设置为1.如果同一个线程再次获取这个锁，计数值递增，而当线程退出同步代码块时，计数值会相应的递减。当计数值为0时，这个锁会被释放。</p>
+<h1 id="锁的保护状态"><a href="#锁的保护状态" class="headerlink" title="锁的保护状态"></a>锁的保护状态</h1><p>对于可能被多个线程同时访问的可变状态变量，在访问它时，否需要持有同一个锁，在这种情况下，我们称状态变量是由这个锁保护的。<br>每个共享的和可变的变量都应该只由一个锁来保护，从而使开发人员知道是哪一个锁。<br>对于每个包含多个变量的不变性条件，其中涉及的所有变量都需要由同一个锁来保护。</p>
+<h1 id="锁的性能"><a href="#锁的性能" class="headerlink" title="锁的性能"></a>锁的性能</h1><p>通常在简单性与性能之间存在着相互制约的因素，当实现某个同步策略时，一定不要盲目的为了性能而牺牲简单性</p>
+<p>当执行较长的计算或者可能无法快速完成的操作时，例如网络IO,一定不要持有锁。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;一个对象是否需要线程安全，取决于它是否被多个线程访问，这指的是在程序中访问对象的方式，而不是对象要实现的功能，要使得对象是线程安全的，必须采用同步机制来协同对象可变状态的访问。&lt;/p&gt;
+&lt;p&gt;当多个线程访问某个状态变量并且其中一个线程执行写入操作的时候，必须采用同步机制来协
+    
+    </summary>
+    
+      <category term="Java并发编程" scheme="http://blog.vnicers.com/categories/Java%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/"/>
+    
+    
+      <category term="多线程" scheme="http://blog.vnicers.com/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java 多线程基础知识</title>
+    <link href="http://blog.vnicers.com/2014/05/11/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
+    <id>http://blog.vnicers.com/2014/05/11/Java多线程基础知识/</id>
+    <published>2014-05-10T16:00:00.000Z</published>
+    <updated>2017-08-12T05:40:53.000Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<p>本系列文章根据《Java并发编程实战》整理</p>
+</blockquote>
+<h1 id="线程安全性问题"><a href="#线程安全性问题" class="headerlink" title="线程安全性问题"></a>线程安全性问题</h1><p> 在没有充足同步的情况下，多个线程中的操作执行顺序是不可预测的，甚至会产生奇怪的结果。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UnsafeSequence</span></span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> value;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getNext</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.value++;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><code>UnsafeSequence</code>的问题在于，由于执行时机不对，多个线程在调用getNext时会得到想同的值。<code>value++</code>看上去像单个操作，但是实际上它包含三个独立的操作，读取value，将value加1，并将结果写入value,由于运行是可能将多个线程之间的操作交易执行，因此这连个线程可能同时执行读操作，从而得到相同的值，并同时加1.结果则是在不同线程中返回了相同的结果<br>由于存在指令重排序的肯能，因此实际情况可能会更糟糕。</p>
+<p>综上引起线程安全性的几个前提条件</p>
+<ol>
+<li>多个线程的交替运行  </li>
+<li>执行非原子性的操作语句</li>
+<li>编译器的指令重排序</li>
+</ol>
+<p>由于多个线程要共享相同的内存地址，并且是并发执行，因此他们可能会访问或修改其他线程正在使用的变量，虽然给线程间通信带来了数据共享的便利，但是给多线程执行带来了不可预测的结果，要想多线程的行为可预测，必须对共享变量的操作进行同步。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UnsafeSequence</span></span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> value;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">int</span> <span class="title">getNext</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.value++;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果没有同步，那么无论是编译器，硬件还是运行时，都可以随意安排操作的执行顺序和时间，例如对寄存器或者处理器中的变量缓存，而这些被缓存的变量对于其他线程来说是暂时不可见的。虽然这些技术可以实现更优的性能，但是给开发人员带来了负担</p>
+<h1 id="线程性能问题"><a href="#线程性能问题" class="headerlink" title="线程性能问题"></a>线程性能问题</h1><p>在多线程程序中，当线程调度器临时挂起活跃线程并转而运行另一个线程时，就会频繁的出现上下文切换的操作，这种操作带来了极大的开销，保存和恢复上下文，丢失局部性，并且CPU将更多的事件花在调度上而不是线程上面。当线程共享数据时，必须使用同步机制，而这些机制往往会抑制某些编译器优化，使内存缓存取中的数据无效，以及增加共享内存总线的同步流量。这些因素都将带来额外的性能开销</p>
+<h1 id="在使用框架时保证代码的并发安全性"><a href="#在使用框架时保证代码的并发安全性" class="headerlink" title="在使用框架时保证代码的并发安全性"></a>在使用框架时保证代码的并发安全性</h1><p>框架通过在框架线程中调用应用程序代码并将并发性引入到程序中，在代码中不可避免的访问应用程序状态，因此所有访问这些状态的代码路径都必须是线程安全的。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;本系列文章根据《Java并发编程实战》整理&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;线程安全性问题&quot;&gt;&lt;a href=&quot;#线程安全性问题&quot; class=&quot;headerlink&quot; title=&quot;线程安全性问题&quot;&gt;&lt;/a&gt;线程安全性问题&lt;/
+    
+    </summary>
+    
+      <category term="Java并发编程" scheme="http://blog.vnicers.com/categories/Java%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/"/>
+    
+    
+      <category term="多线程" scheme="http://blog.vnicers.com/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>VIM编辑器的基本用法</title>
+    <link href="http://blog.vnicers.com/2014/04/06/VIM%E7%BC%96%E8%BE%91%E5%99%A8%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95/"/>
+    <id>http://blog.vnicers.com/2014/04/06/VIM编辑器的基本用法/</id>
+    <published>2014-04-05T16:00:00.000Z</published>
+    <updated>2017-08-05T07:15:56.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="编辑模式使用按下aio任意三个键"><a href="#编辑模式使用按下aio任意三个键" class="headerlink" title="编辑模式使用按下aio任意三个键"></a>编辑模式使用按下aio任意三个键</h1><pre><code>a 在光标所有字符后插入
+A 在光标所在行尾插入
+i  在光标所在字符前插入
+I 在光标所在行首插入
+o 在光标所在下行插入新行
+O 在光标所在上行插入新行
+</code></pre><h1 id="光标定位命令"><a href="#光标定位命令" class="headerlink" title="光标定位命令"></a>光标定位命令</h1><pre><code>设置行号 set nu
+取消行号 set nonu
+到最后一行 G
+到第一行 gg
+到任意一行 : n
+</code></pre><h1 id="删除字符"><a href="#删除字符" class="headerlink" title="删除字符"></a>删除字符</h1><pre><code>删除光标所在字符x或者Backspace
+删除光标所在行 dd
+删除光标后面的一行D
+删除光标后面的所有行dG
+</code></pre><h1 id="复制和粘贴"><a href="#复制和粘贴" class="headerlink" title="复制和粘贴"></a>复制和粘贴</h1><pre><code>yy 复制一行
+dd 剪切一行
+p 粘贴到光标下面一行
+P 粘贴到光标上面一行
+</code></pre><h1 id="u-撤销上一步的操作"><a href="#u-撤销上一步的操作" class="headerlink" title="u 撤销上一步的操作"></a>u 撤销上一步的操作</h1><h1 id="搜索指定的字符-string"><a href="#搜索指定的字符-string" class="headerlink" title="搜索指定的字符 /string"></a>搜索指定的字符 /string</h1><pre><code>按n在搜索到的高亮条件中移动
+</code></pre><h1 id="全文替换-s-oldStr-newStr-g"><a href="#全文替换-s-oldStr-newStr-g" class="headerlink" title="全文替换 :%s /oldStr/newStr/g"></a>全文替换 :%s /oldStr/newStr/g</h1><pre><code>%s 代表全文
+/g 直接替换不询问
+/c 替换前询问
+</code></pre><h1 id="保存与退出"><a href="#保存与退出" class="headerlink" title="保存与退出"></a>保存与退出</h1><pre><code>:w 保存修改
+：wq 保存修改并退出
+：ZZ 保存修改并退出
+：q!直接退出不保存
+：wq! 文件所有者和root 强制修改只读文件并保持
+</code></pre><h1 id="将其他文件内容导入到当前文件中来"><a href="#将其他文件内容导入到当前文件中来" class="headerlink" title="将其他文件内容导入到当前文件中来"></a>将其他文件内容导入到当前文件中来</h1><pre><code>:r 文件名
+</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;编辑模式使用按下aio任意三个键&quot;&gt;&lt;a href=&quot;#编辑模式使用按下aio任意三个键&quot; class=&quot;headerlink&quot; title=&quot;编辑模式使用按下aio任意三个键&quot;&gt;&lt;/a&gt;编辑模式使用按下aio任意三个键&lt;/h1&gt;&lt;pre&gt;&lt;code&gt;a 在光标所
+    
+    </summary>
+    
+    
+      <category term="Linux" scheme="http://blog.vnicers.com/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux 常用命令</title>
+    <link href="http://blog.vnicers.com/2014/04/05/Linux%20%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"/>
+    <id>http://blog.vnicers.com/2014/04/05/Linux 常用命令/</id>
+    <published>2014-04-04T16:00:00.000Z</published>
+    <updated>2017-08-05T07:15:56.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h1><pre><code>显示当前目录下的所有文件
+ls [OPTION]... [FILE]...
+-a --all显示隐藏文件(linux隐藏文件都是.开头)
+-l --list 显示文件的详细信息(依次为文件权限,引用次数,所有者,所属组,文件大小,最后修改时间，文件名)
+ls -alh 显示所有文件详细信息，文件大小按照可读的格式显示出来
+ls -ld 显示当前目录本身的详细信息
+</code></pre><h1 id="mkdir"><a href="#mkdir" class="headerlink" title="mkdir"></a>mkdir</h1><pre><code>make  directories  创建目录
+mkdir -p [目录名称] 递归创建目录
+</code></pre><h1 id="cd"><a href="#cd" class="headerlink" title="cd"></a>cd</h1><pre><code>change directories 切换目录
+cd ~ 切换到根目录
+cd .. 切换到上级目录
+</code></pre><h1 id="pwd"><a href="#pwd" class="headerlink" title="pwd"></a>pwd</h1><pre><code>print working directories 显示当前目录
+</code></pre><h1 id="rmdir"><a href="#rmdir" class="headerlink" title="rmdir"></a>rmdir</h1><pre><code>remove empty directories 删除空目录
+</code></pre><h1 id="cp"><a href="#cp" class="headerlink" title="cp"></a>cp</h1><pre><code>copy 复制目录
+cp [源文件...] [目标文件]
+cp -r 复制目录
+cp -rp 复制目录保留属性
+</code></pre><h1 id="mv"><a href="#mv" class="headerlink" title="mv"></a>mv</h1><pre><code>move 剪切和改名
+mv[源文件或者目录...] [目标文件或者目录]
+</code></pre><h1 id="rm"><a href="#rm" class="headerlink" title="rm"></a>rm</h1><pre><code>remove 删除命令
+rm -r -f [文件或者目录]
+  ■ -r 删除目录
+  ■ -f 强制执行
+</code></pre><h1 id="touch"><a href="#touch" class="headerlink" title="touch"></a>touch</h1><pre><code>创建空文件
+touch [文件名称]
+</code></pre><h1 id="cat"><a href="#cat" class="headerlink" title="cat"></a>cat</h1><pre><code>查看文件 适合查看内容较少的文件
+cat -n 查看文件并显示行号
+</code></pre><h1 id="more"><a href="#more" class="headerlink" title="more"></a>more</h1><pre><code>分页查看文件
+more [文件名]
+空格或者f 翻页
+Enter 换行
+q或者Q 退出
+</code></pre><h1 id="less"><a href="#less" class="headerlink" title="less"></a>less</h1><pre><code>分页查看文件，可以选择往回翻页
+在翻页过程中可以 输入/xx 查找相关类容
+</code></pre><h1 id="head"><a href="#head" class="headerlink" title="head"></a>head</h1><pre><code>查看文件的前几行
+head -n 10 查看文件前10行
+</code></pre><h1 id="tail"><a href="#tail" class="headerlink" title="tail"></a>tail</h1><pre><code>查看文件的末尾几行
+tail -n 10 显示文件末尾10行
+tail -f 动态显示文件末尾内容
+</code></pre><h1 id="ln"><a href="#ln" class="headerlink" title="ln"></a>ln</h1><pre><code>link 创建链接文件
+ln -s [源文件] [目标文件] 创建软链接文件
+</code></pre><hr>
+<h1 id="chmod"><a href="#chmod" class="headerlink" title="chmod"></a>chmod</h1><pre><code>权限管理命令 更改目录或者文件的权限
+change the permissions of a file
+chmod [{ugoa}{+-=}{rwx}] [文件或者目录]
+chmod -R 777 使用数字表示权限 r=4,w=2,x=1, -R递归修改
+</code></pre><h1 id="chown"><a href="#chown" class="headerlink" title="chown"></a>chown</h1><pre><code>权限管理命令 chown 更改目录或者文件的所有者
+change file ownership
+chown [用户] [文件或者目录]
+</code></pre><h1 id="chgrp"><a href="#chgrp" class="headerlink" title="chgrp"></a>chgrp</h1><pre><code>权限管理命令 chgrp 更改文件或者目录的所属组
+chgrp [组的名称] [文件或者目录]
+</code></pre><h1 id="umask"><a href="#umask" class="headerlink" title="umask"></a>umask</h1><pre><code>权限管理命令 umask 显示新建文件的缺省权限
+umask -S 以rwx形式显示文件的缺省权限
+</code></pre><hr>
+<h1 id="find"><a href="#find" class="headerlink" title="find"></a>find</h1><pre><code>文件搜索命令
+find [搜索范围] [匹配条件]
+find /etc -name init 在 etc 目录下搜索 名称为init的文件
+find /etc -name *init* 在 etc 目录下模糊搜索名称带有init的文件
+find /etc -name init??? 在 etc 目录下搜索 名称为init后带有三个字符的文件？代表三个字符
+  -iname 不区分大小写
+  -size 根据文件大小来查找 +n 204800 代表大于100MB的文件 -n 小于多少的文件 根据数据块的大小来搜索
+    ■ 一个数据块=512字节=0.5k
+  -user 查找所有者的文件
+  -amin 访问时间 -cmin 文件属性 -mmin 文件内容 find /etc -mmin -5 表示查找5分钟之类被修改过得文件
+  -type 按照文件类型查找 f 文件 d 是目录 l 是软链接
+  -a -o 多个条件搜索是使用and 还是or
+  find /etc/ -name inittab -exec ls -l {} \; 查找文件并执行命令
+  find /home  -user dev -ok rm {} \; 查找用户dev下的文件找到后询问删除
+  find . -inum 31531 -exec rm {} \; 查找文件节点是31531的文件并删除
+</code></pre><h1 id="locate"><a href="#locate" class="headerlink" title="locate"></a>locate</h1><pre><code>文件快速搜索命令
+在新建文件之后需要updatedb 更新索引 -i不区分大小写
+</code></pre><h1 id="which"><a href="#which" class="headerlink" title="which"></a>which</h1><pre><code>命令搜索
+which rm 查找命令所在目录 并且列出是否有 别名
+</code></pre><h1 id="whereis"><a href="#whereis" class="headerlink" title="whereis"></a>whereis</h1><pre><code>命令搜索 以及帮助文档的位置
+</code></pre><h1 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h1><pre><code>文件内容搜索
+grep -iv [指定字符] [文件]
+-i 不区分大小写
+-v 排除指定字符 grep -v ^#  /ect/inittab  查找指定文件 忽略以#号开头的行
+</code></pre><h1 id="man"><a href="#man" class="headerlink" title="man"></a>man</h1><pre><code>帮助命令 manual
+man ls 查看ls命令目录 同less模式，可以输入/查找相关选项
+man services 查看配置文件
+man 5 passwd 查看配置文件的帮助信息 1代表命令 ，5代表配置文件
+</code></pre><h1 id="help"><a href="#help" class="headerlink" title="help"></a>help</h1><pre><code>帮助命令
+查看内置命令或者shell 编程语法帮助
+</code></pre><hr>
+<h1 id="useradd"><a href="#useradd" class="headerlink" title="useradd"></a>useradd</h1><pre><code>添加用户
+useradd tanwei 添加用户tanwei
+passwd tanwei 给新用户设置密码
+</code></pre><h1 id="who"><a href="#who" class="headerlink" title="who"></a>who</h1><pre><code>查看当前系统登录信息
+tty 代表本地登录    pts 代表远程登录
+</code></pre><h1 id="w"><a href="#w" class="headerlink" title="w"></a>w</h1><pre><code>查看当前系统的登录详细信息和负载
+21：35：27 当前系统时间
+up 10:54 系统连续运行时间  同命令uptime
+2 users 当前登录了多少用户
+load average: 系统连续 1分钟之类 5分钟之类 15分钟之类  负载值
+IDLE 登录空闲时间
+JCPU 当前登录用执行的命令户占用cpu时间
+PCPU 当前登录用户执行命令累计占用cpu时间
+WHAT 当前用户执行了什么
+</code></pre><hr>
+<h1 id="gzip"><a href="#gzip" class="headerlink" title="gzip"></a>gzip</h1><pre><code>.gz压缩格式   只能压缩文件，并且不保留源文件
+gzip [文件名...]
+gunzip 或者gzip -d
+</code></pre><h1 id="tar"><a href="#tar" class="headerlink" title="tar"></a>tar</h1><pre><code>.tar.gz 压缩格式
+ -c 打包
+ -v 显示详细信息
+ -f 指定文件名
+ -z 压缩或解压
+ -x 解包
+ tar -zcvf app.tar.gz app 将目录app 压缩打包 并显示详细信息
+ tar -zxvf app.tar.gz app 将目录app 解压缩 并显示详细信息
+</code></pre><h1 id="zip"><a href="#zip" class="headerlink" title="zip"></a>zip</h1><pre><code>-r 压缩目录
+unzip 解压缩文件
+</code></pre><h1 id="bz2"><a href="#bz2" class="headerlink" title=".bz2"></a>.bz2</h1><pre><code>bzip2压缩格式 之能压缩文件
+-k 保留源文件
+tar -cjf app.tar.bz2 和tar 搭配使用能够压缩目录
+bunzip2 解压缩文件 -k 解压后保留源文件
+tar -xjf app.tar.bz2 和tar搭配解压文件
+</code></pre><h1 id="write"><a href="#write" class="headerlink" title="write"></a>write</h1><pre><code>write tanwei 给在线用户tanwei发送命令 Ctrl+D 保存结束
+</code></pre><h1 id="wall"><a href="#wall" class="headerlink" title="wall"></a>wall</h1><pre><code>(writeall)命令
+发送广播消息
+</code></pre><h1 id="ping"><a href="#ping" class="headerlink" title="ping"></a>ping</h1><pre><code>测试网络连通性
+</code></pre><h1 id="ifcofig"><a href="#ifcofig" class="headerlink" title="ifcofig"></a>ifcofig</h1><pre><code>(interface configure) 查看设设置网卡信息
+</code></pre><h1 id="mail"><a href="#mail" class="headerlink" title="mail"></a>mail</h1><pre><code>邮件发送命令
+</code></pre><h1 id="last"><a href="#last" class="headerlink" title="last"></a>last</h1><pre><code>统计系统用户所有登陆信息
+</code></pre><h1 id="traceroute"><a href="#traceroute" class="headerlink" title="traceroute"></a>traceroute</h1><pre><code>探测网站路由
+</code></pre><h1 id="netstat"><a href="#netstat" class="headerlink" title="netstat"></a>netstat</h1><pre><code>查询网络状态信息
+netstat -tlun 查询本机开启的端口
+netstat -an 查询本机开启的网络端口以及正在链接的网络程序
+netstat -rn 查看本机网关
+</code></pre><h1 id="setup"><a href="#setup" class="headerlink" title="setup"></a>setup</h1><pre><code>配置网络命令 有些系统需要先下载 yum install -y system-config-network-tui
+</code></pre><h1 id="mount"><a href="#mount" class="headerlink" title="mount"></a>mount</h1><pre><code>手动挂载cd
+mkdir /mnt/cdrom
+mount /dev/sr0 /mnt/cdrom 讲设备文件名 链接到挂载点
+umount /dev/sr0
+</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;ls&quot;&gt;&lt;a href=&quot;#ls&quot; class=&quot;headerlink&quot; title=&quot;ls&quot;&gt;&lt;/a&gt;ls&lt;/h1&gt;&lt;pre&gt;&lt;code&gt;显示当前目录下的所有文件
+ls [OPTION]... [FILE]...
+-a --all显示隐藏文件(linux隐藏文件
+    
+    </summary>
+    
+    
+      <category term="Linux" scheme="http://blog.vnicers.com/tags/Linux/"/>
+    
+  </entry>
+  
+</feed>

@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>观察者模式 | Tanwei的个人技术博客 | 仰望大神不如退而求索</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="设计模式">
+    <meta name="description" content="观察者模式 观察者模式定义了对象之间的一对多依赖，这样依赖，当一个对象改变状态时，他的所有依赖都会接受到通知并自动更新。  认识观察者，直接看下Head First 设计模式书中给出的一张图就可以很容易理解观察值模式的定义">
+<meta name="keywords" content="设计模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="观察者模式">
+<meta property="og:url" content="http://blog.vnicers.com/2014/03/03/设计模式-观察者模式/index.html">
+<meta property="og:site_name" content="Tanwei的个人技术博客">
+<meta property="og:description" content="观察者模式 观察者模式定义了对象之间的一对多依赖，这样依赖，当一个对象改变状态时，他的所有依赖都会接受到通知并自动更新。  认识观察者，直接看下Head First 设计模式书中给出的一张图就可以很容易理解观察值模式的定义">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/818b7fe3gy1fib8vhcoawj20r60ooq8v.jpg">
+<meta property="og:updated_time" content="2017-08-07T12:22:23.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="观察者模式">
+<meta name="twitter:description" content="观察者模式 观察者模式定义了对象之间的一对多依赖，这样依赖，当一个对象改变状态时，他的所有依赖都会接受到通知并自动更新。  认识观察者，直接看下Head First 设计模式书中给出的一张图就可以很容易理解观察值模式的定义">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/818b7fe3gy1fib8vhcoawj20r60ooq8v.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="Tanwei的个人技术博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Tanwei</h5>
+          <a href="mailto:vnicers@gmail.com" title="vnicers@gmail.com" class="mail">vnicers@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                专题
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.hxjx360.com" target="_blank" >
+                <i class="icon icon-lg icon-dollar"></i>
+                理财
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/vnice" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">观察者模式</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">观察者模式</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-03-02T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-03-03
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Head-First-设计模式/">Head First 设计模式</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#观察者模式"><span class="post-toc-number">1.</span> <span class="post-toc-text">观察者模式</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-设计模式-观察者模式"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">观察者模式</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-03-03 00:00:00" datetime="2014-03-02T16:00:00.000Z"  itemprop="datePublished">2014-03-03</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Head-First-设计模式/">Head First 设计模式</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a>观察者模式</h1><blockquote>
+<p>观察者模式定义了对象之间的一对多依赖，这样依赖，当一个对象改变状态时，他的所有依赖都会接受到通知并自动更新。</p>
+</blockquote>
+<p>认识观察者，直接看下Head First 设计模式书中给出的一张图就可以很容易理解观察值模式的定义</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fib8vhcoawj20r60ooq8v.jpg" alt="观察者模式示意图" title="">
+                </div>
+                <div class="image-caption">观察者模式示意图</div>
+            </figure>
+<p>程序实现</p>
+<p>观察者主题类-天气主题，提供天气数据<code>weathDTO</code><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WeatherSubject</span> <span class="keyword">extends</span> <span class="title">Observable</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> WeatherDTO weatherDTO;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setWeatherDTO</span><span class="params">(WeatherDTO weatherDTO)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.weatherDTO = weatherDTO;</div><div class="line">        setChanged();</div><div class="line">        notifyObservers();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> WeatherDTO <span class="title">getWeatherDTO</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> weatherDTO;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>天气主题订阅类-当前天气显示面板类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CurrentConditionDisplay</span> <span class="keyword">implements</span> <span class="title">Observer</span>, <span class="title">DisplayElement</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> WeatherDTO weatherDTO;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CurrentConditionDisplay</span><span class="params">(Observable observable)</span> </span>&#123;</div><div class="line">        observable.addObserver(<span class="keyword">this</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">display</span><span class="params">()</span> </span>&#123;</div><div class="line">        log.info(<span class="string">"Current conditions: Temperature:&#123;&#125;,Humidity:&#123;&#125;"</span>,</div><div class="line">                weatherDTO.getTemperature(), weatherDTO.getHumidity());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">(Observable o, Object arg)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(o <span class="keyword">instanceof</span> WeatherSubject) &#123;</div><div class="line">            WeatherSubject weatherSubject = (WeatherSubject) o;</div><div class="line">            <span class="keyword">this</span>.weatherDTO=weatherSubject.getWeatherDTO();</div><div class="line">            <span class="keyword">this</span>.display();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>程序测试入口<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WheaterStation</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        WeatherSubject weatherSubject=<span class="keyword">new</span> WeatherSubject();</div><div class="line">        CurrentConditionDisplay display=<span class="keyword">new</span> CurrentConditionDisplay(weatherSubject);</div><div class="line">        weatherSubject.setWeatherDTO(<span class="keyword">new</span> WeatherDTO(<span class="number">80</span>,<span class="number">65</span>,<span class="number">30.4f</span>));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>当天气主题发布新的天气信息的时候，显示面板则马上收到新的数据显示。</p>
+<p><em>注意</em><br>上面的<code>WeatherSubject</code>继承的是<code>java.util.Observable</code>,下面是其源码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * This class represents an observable object, or "data"</div><div class="line"> * in the model-view paradigm. It can be subclassed to represent an</div><div class="line"> * object that the application wants to have observed.</div><div class="line"> * &lt;p&gt;</div><div class="line"> * An observable object can have one or more observers. An observer</div><div class="line"> * may be any object that implements interface &lt;tt&gt;Observer&lt;/tt&gt;. After an</div><div class="line"> * observable instance changes, an application calling the</div><div class="line"> * &lt;code&gt;Observable&lt;/code&gt;'s &lt;code&gt;notifyObservers&lt;/code&gt; method</div><div class="line"> * causes all of its observers to be notified of the change by a call</div><div class="line"> * to their &lt;code&gt;update&lt;/code&gt; method.</div><div class="line"> * &lt;p&gt;</div><div class="line"> * The order in which notifications will be delivered is unspecified.</div><div class="line"> * The default implementation provided in the Observable class will</div><div class="line"> * notify Observers in the order in which they registered interest, but</div><div class="line"> * subclasses may change this order, use no guaranteed order, deliver</div><div class="line"> * notifications on separate threads, or may guarantee that their</div><div class="line"> * subclass follows this order, as they choose.</div><div class="line"> * &lt;p&gt;</div><div class="line"> * Note that this notification mechanism has nothing to do with threads</div><div class="line"> * and is completely separate from the &lt;tt&gt;wait&lt;/tt&gt; and &lt;tt&gt;notify&lt;/tt&gt;</div><div class="line"> * mechanism of class &lt;tt&gt;Object&lt;/tt&gt;.</div><div class="line"> * &lt;p&gt;</div><div class="line"> * When an observable object is newly created, its set of observers is</div><div class="line"> * empty. Two observers are considered the same if and only if the</div><div class="line"> * &lt;tt&gt;equals&lt;/tt&gt; method returns true for them.</div><div class="line"> *</div><div class="line"> * <span class="doctag">@author</span>  Chris Warth</div><div class="line"> * <span class="doctag">@see</span>     java.util.Observable#notifyObservers()</div><div class="line"> * <span class="doctag">@see</span>     java.util.Observable#notifyObservers(java.lang.Object)</div><div class="line"> * <span class="doctag">@see</span>     java.util.Observer</div><div class="line"> * <span class="doctag">@see</span>     java.util.Observer#update(java.util.Observable, java.lang.Object)</div><div class="line"> * <span class="doctag">@since</span>   JDK1.0</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Observable</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> changed = <span class="keyword">false</span>;</div><div class="line">    <span class="keyword">private</span> Vector&lt;Observer&gt; obs;</div><div class="line"></div><div class="line">    <span class="comment">/** Construct an Observable with zero Observers. */</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Observable</span><span class="params">()</span> </span>&#123;</div><div class="line">        obs = <span class="keyword">new</span> Vector&lt;&gt;();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Adds an observer to the set of observers for this object, provided</div><div class="line">     * that it is not the same as some observer already in the set.</div><div class="line">     * The order in which notifications will be delivered to multiple</div><div class="line">     * observers is not specified. See the class comment.</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span>   o   an observer to be added.</div><div class="line">     * <span class="doctag">@throws</span> NullPointerException   if the parameter o is null.</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">addObserver</span><span class="params">(Observer o)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (o == <span class="keyword">null</span>)</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</div><div class="line">        <span class="keyword">if</span> (!obs.contains(o)) &#123;</div><div class="line">            obs.addElement(o);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Deletes an observer from the set of observers of this object.</div><div class="line">     * Passing &lt;CODE&gt;null&lt;/CODE&gt; to this method will have no effect.</div><div class="line">     * <span class="doctag">@param</span>   o   the observer to be deleted.</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">deleteObserver</span><span class="params">(Observer o)</span> </span>&#123;</div><div class="line">        obs.removeElement(o);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * If this object has changed, as indicated by the</div><div class="line">     * &lt;code&gt;hasChanged&lt;/code&gt; method, then notify all of its observers</div><div class="line">     * and then call the &lt;code&gt;clearChanged&lt;/code&gt; method to</div><div class="line">     * indicate that this object has no longer changed.</div><div class="line">     * &lt;p&gt;</div><div class="line">     * Each observer has its &lt;code&gt;update&lt;/code&gt; method called with two</div><div class="line">     * arguments: this observable object and &lt;code&gt;null&lt;/code&gt;. In other</div><div class="line">     * words, this method is equivalent to:</div><div class="line">     * &lt;blockquote&gt;&lt;tt&gt;</div><div class="line">     * notifyObservers(null)&lt;/tt&gt;&lt;/blockquote&gt;</div><div class="line">     *</div><div class="line">     * <span class="doctag">@see</span>     java.util.Observable#clearChanged()</div><div class="line">     * <span class="doctag">@see</span>     java.util.Observable#hasChanged()</div><div class="line">     * <span class="doctag">@see</span>     java.util.Observer#update(java.util.Observable, java.lang.Object)</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">notifyObservers</span><span class="params">()</span> </span>&#123;</div><div class="line">        notifyObservers(<span class="keyword">null</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * If this object has changed, as indicated by the</div><div class="line">     * &lt;code&gt;hasChanged&lt;/code&gt; method, then notify all of its observers</div><div class="line">     * and then call the &lt;code&gt;clearChanged&lt;/code&gt; method to indicate</div><div class="line">     * that this object has no longer changed.</div><div class="line">     * &lt;p&gt;</div><div class="line">     * Each observer has its &lt;code&gt;update&lt;/code&gt; method called with two</div><div class="line">     * arguments: this observable object and the &lt;code&gt;arg&lt;/code&gt; argument.</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span>   arg   any object.</div><div class="line">     * <span class="doctag">@see</span>     java.util.Observable#clearChanged()</div><div class="line">     * <span class="doctag">@see</span>     java.util.Observable#hasChanged()</div><div class="line">     * <span class="doctag">@see</span>     java.util.Observer#update(java.util.Observable, java.lang.Object)</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">notifyObservers</span><span class="params">(Object arg)</span> </span>&#123;</div><div class="line">        <span class="comment">/*</span></div><div class="line">         * a temporary array buffer, used as a snapshot of the state of</div><div class="line">         * current Observers.</div><div class="line">         */</div><div class="line">        Object[] arrLocal;</div><div class="line"></div><div class="line">        <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</div><div class="line">            <span class="comment">/* We don't want the Observer doing callbacks into</span></div><div class="line">             * arbitrary code while holding its own Monitor.</div><div class="line">             * The code where we extract each Observable from</div><div class="line">             * the Vector and store the state of the Observer</div><div class="line">             * needs synchronization, but notifying observers</div><div class="line">             * does not (should not).  The worst result of any</div><div class="line">             * potential race-condition here is that:</div><div class="line">             * 1) a newly-added Observer will miss a</div><div class="line">             *   notification in progress</div><div class="line">             * 2) a recently unregistered Observer will be</div><div class="line">             *   wrongly notified when it doesn't care</div><div class="line">             */</div><div class="line">            <span class="keyword">if</span> (!changed)</div><div class="line">                <span class="keyword">return</span>;</div><div class="line">            arrLocal = obs.toArray();</div><div class="line">            clearChanged();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = arrLocal.length-<span class="number">1</span>; i&gt;=<span class="number">0</span>; i--)</div><div class="line">            ((Observer)arrLocal[i]).update(<span class="keyword">this</span>, arg);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Clears the observer list so that this object no longer has any observers.</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">deleteObservers</span><span class="params">()</span> </span>&#123;</div><div class="line">        obs.removeAllElements();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Marks this &lt;tt&gt;Observable&lt;/tt&gt; object as having been changed; the</div><div class="line">     * &lt;tt&gt;hasChanged&lt;/tt&gt; method will now return &lt;tt&gt;true&lt;/tt&gt;.</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">setChanged</span><span class="params">()</span> </span>&#123;</div><div class="line">        changed = <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Indicates that this object has no longer changed, or that it has</div><div class="line">     * already notified all of its observers of its most recent change,</div><div class="line">     * so that the &lt;tt&gt;hasChanged&lt;/tt&gt; method will now return &lt;tt&gt;false&lt;/tt&gt;.</div><div class="line">     * This method is called automatically by the</div><div class="line">     * &lt;code&gt;notifyObservers&lt;/code&gt; methods.</div><div class="line">     *</div><div class="line">     * <span class="doctag">@see</span>     java.util.Observable#notifyObservers()</div><div class="line">     * <span class="doctag">@see</span>     java.util.Observable#notifyObservers(java.lang.Object)</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">clearChanged</span><span class="params">()</span> </span>&#123;</div><div class="line">        changed = <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Tests if this object has changed.</div><div class="line">     *</div><div class="line">     * <span class="doctag">@return</span>  &lt;code&gt;true&lt;/code&gt; if and only if the &lt;code&gt;setChanged&lt;/code&gt;</div><div class="line">     *          method has been called more recently than the</div><div class="line">     *          &lt;code&gt;clearChanged&lt;/code&gt; method on this object;</div><div class="line">     *          &lt;code&gt;false&lt;/code&gt; otherwise.</div><div class="line">     * <span class="doctag">@see</span>     java.util.Observable#clearChanged()</div><div class="line">     * <span class="doctag">@see</span>     java.util.Observable#setChanged()</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">boolean</span> <span class="title">hasChanged</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> changed;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Returns the number of observers of this &lt;tt&gt;Observable&lt;/tt&gt; object.</div><div class="line">     *</div><div class="line">     * <span class="doctag">@return</span>  the number of observers of this object.</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">int</span> <span class="title">countObservers</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> obs.size();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><em>注意：</em></p>
+<p>这个类从JDK1.0就已经存在，它是一个类而不是一个接口，这就导致我们的主题类继承了Observable之后就无法继承其他类。<br>违反了面向对象设计原则：针对接口编程，而不是针对实现编程。所以更多的时候我们需要自己去创建Observable接口。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+
+        
+        原创文章，转载请注明： 转载Tanwei的技术博客,原文地址:<a href="/2014/03/03/设计模式-观察者模式/" target="_blank" rel="external">http://blog.vnicers.com/2014/03/03/设计模式-观察者模式/</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.vnicers.com">
+            <img src="/img/avatar.jpg" alt="Tanwei">
+            Tanwei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.vnicers.com/2014/03/03/设计模式-观察者模式/&title=《观察者模式》 — Tanwei的个人技术博客&pic=http://blog.vnicers.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.vnicers.com/2014/03/03/设计模式-观察者模式/&title=《观察者模式》 — Tanwei的个人技术博客&source=暂时没有好描述自己的。。。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.vnicers.com/2014/03/03/设计模式-观察者模式/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《观察者模式》 — Tanwei的个人技术博客&url=http://blog.vnicers.com/2014/03/03/设计模式-观察者模式/&via=http://blog.vnicers.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.vnicers.com/2014/03/03/设计模式-观察者模式/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2014/03/05/设计模式-装饰器模式/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">装饰器模式</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2014/03/01/设计模式-策略模式/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">策略模式</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitment_thread"></div>
+    <link rel="stylesheet" href="//unpkg.com/gitment/style/default.css">
+    <script src="//unpkg.com/gitment/dist/gitment.browser.js"></script>
+    <script>
+        var gitment = new Gitment({
+            owner: 'vnice',
+            repo: 'vnice.github.io',
+            oauth: {
+                client_id: '62766e3f34a27536afe0',
+                client_secret: '1d9c1d04b0b892eedeffbbaac9c978b17fec0b4f',
+            },
+        })
+        gitment.render('comments')
+    </script>
+</section>
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Tanwei &copy; 2014 - 2017</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.vnicers.com/2014/03/03/设计模式-观察者模式/&title=《观察者模式》 — Tanwei的个人技术博客&pic=http://blog.vnicers.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.vnicers.com/2014/03/03/设计模式-观察者模式/&title=《观察者模式》 — Tanwei的个人技术博客&source=暂时没有好描述自己的。。。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.vnicers.com/2014/03/03/设计模式-观察者模式/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《观察者模式》 — Tanwei的个人技术博客&url=http://blog.vnicers.com/2014/03/03/设计模式-观察者模式/&via=http://blog.vnicers.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.vnicers.com/2014/03/03/设计模式-观察者模式/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACw0lEQVR42u3aQVLjQAwFUO5/6aGK1QwQ87/kDqmp55UrkHY/L1qKpLe3+PrzcX395O/Pr++vV3j0P9cr3Hbh4eHhjbZ+/bBrTLuh63XyVxm9IDw8PLxjvGQTydGfbP2aNFv54ed4eHh4v8rLX0G7xSRdxsPDw/s/ePlxv9oiHh4e3kvykmJEvpW86HBdSshT7RtqLXh4eHgxr22AvcL9wf4eHh4e3qKr3gaJ9imzdLzYLR4eHt4B3qbJlBRqE8CMWgwr4OHh4d3Ka1tWqwM6gO0DzD/3eHh4eMd4bVl2E0Jmxd987OCbXwx4eHh4t/LaH//tJtrixeZZP7xuPDw8vAO8/Pd7m163K7ep+aolhoeHhzfitaWHTRG2DRL7feLh4eGd4LWl1VkraxZsCkCeTOPh4eEteEkx9N4S7WYgoE3c8fDw8E7wklJp3qBqE/F2sOD6W1Hcw8PDw1vzZglu0nxKAkZSrs0Hrb55Fh4eHt5h3qwc0A4QzILBLAXHw8PDO83LD9+cNysftKHl4T0eHh7eAV7+5fywnh3lbaqdvFA8PDy8E7ykJNqWdGdHef7XPCDh4eHhnePtG1158JiFinYooah/4OHh4Y14m6Gr5Luzhlk7NBD19/Dw8PDWvPzYTQ76tvWVBJt2dKCoteDh4eGteefaXfmgwKYUgoeHh/ccXjImFb2V8l0m5YkbRhPw8PDwnsLbpLD5RttGWlsOxsPDwzvHy8NAu7m8AJE01WZ9Ljw8PLwTvDpJLTfRrjNrhj1cAQ8PD+8A7675pVk5uC1V3BtO8PDw8Da8vAxx/XmefOfrtKNgeHh4eM/k7cumm3GrPMDU/4OHh4f3q7y8lJCnvLOUukis8fDw8F6A1x7Wm5JrElp+WBMPDw/vGC8vRuTFghMrJ68ADw8P7zRvNdh0U3hIgkE+jnBbfw8PDw/v8/UO1GPkKUmvjm4AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

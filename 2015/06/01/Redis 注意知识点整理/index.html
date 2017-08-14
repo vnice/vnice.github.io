@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>Redis 注意知识点整理 | Tanwei的个人技术博客 | 仰望大神不如退而求索</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Redis">
+    <meta name="description" content="Redis 默认支持16个数据库，可以通过配置参数databases来修改这一数字，客户端与Redis建立链接后会自动选择0号数据库，可以select 命令更换数据库 select 1 Redis 不支持自定义数据库的名字，以编号命名，也不支持为每个数据库设置不同的访问密码。多个数据库之间并不是完全隔离，FLUSHALL命令可以清空一个Redis实例中所有数据库中的数据，Redis中的数据库更像是">
+<meta name="keywords" content="Redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis 注意知识点整理">
+<meta property="og:url" content="http://blog.vnicers.com/2015/06/01/Redis 注意知识点整理/index.html">
+<meta property="og:site_name" content="Tanwei的个人技术博客">
+<meta property="og:description" content="Redis 默认支持16个数据库，可以通过配置参数databases来修改这一数字，客户端与Redis建立链接后会自动选择0号数据库，可以select 命令更换数据库 select 1 Redis 不支持自定义数据库的名字，以编号命名，也不支持为每个数据库设置不同的访问密码。多个数据库之间并不是完全隔离，FLUSHALL命令可以清空一个Redis实例中所有数据库中的数据，Redis中的数据库更像是">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-08-12T12:12:50.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Redis 注意知识点整理">
+<meta name="twitter:description" content="Redis 默认支持16个数据库，可以通过配置参数databases来修改这一数字，客户端与Redis建立链接后会自动选择0号数据库，可以select 命令更换数据库 select 1 Redis 不支持自定义数据库的名字，以编号命名，也不支持为每个数据库设置不同的访问密码。多个数据库之间并不是完全隔离，FLUSHALL命令可以清空一个Redis实例中所有数据库中的数据，Redis中的数据库更像是">
+    
+        <link rel="alternate" type="application/atom+xml" title="Tanwei的个人技术博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Tanwei</h5>
+          <a href="mailto:vnicers@gmail.com" title="vnicers@gmail.com" class="mail">vnicers@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                专题
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.hxjx360.com" target="_blank" >
+                <i class="icon icon-lg icon-dollar"></i>
+                理财
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/vnice" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Redis 注意知识点整理</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Redis 注意知识点整理</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2015-05-31T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2015-06-01
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+<article id="post-Redis 注意知识点整理"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Redis 注意知识点整理</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2015-06-01 00:00:00" datetime="2015-05-31T16:00:00.000Z"  itemprop="datePublished">2015-06-01</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>Redis 默认支持16个数据库，可以通过配置参数databases来修改这一数字，客户端与Redis建立链接后会自动选择0号数据库，可以select 命令更换数据库 <code>select 1</code></p>
+<p>Redis 不支持自定义数据库的名字，以编号命名，也不支持为每个数据库设置不同的访问密码。多个数据库之间并不是完全隔离，<code>FLUSHALL</code>命令可以清空一个Redis实例中所有数据库中的数据，Redis中的数据库更像是一种命名空间，而不适合存储不同应用的数据。不同的应用应该使用不同的Redis实例存储。由于Redis非常轻量级，一个空的Redis实例占用内存1mb空间。</p>
+<p><code>keys</code> 命令需要遍历Redis中的所有键，当键的数量较多时会影响性能，不建议在生成环境中使用。</p>
+<p><code>DEL</code> 命令的参数不支持通配符号，可以结合Linux的管道和xargs命令实现删除所有复合规则的键。<code>redis-cli keys &quot;user:*&quot; | xargs redis-cli del</code> 或者<code>redis del redis-cli keys &quot;user:*&quot;</code></p>
+<p>一个字符串类型的键允许存储的最大容量为512MB，字符串类型是其他四中基本类型的基础 </p>
+<p>Redis 的数据类型同样不支持数据类型嵌套</p>
+<p>列表类型的内部是使用双向链表，搭配使用lpush和lpop或者rpop和rpush可以当做栈来使用。如果当成队列则搭配使用lpush和rpop或者rpush和lpop</p>
+<p>Redis 保证一个事物中的所有命令要么执行，要么不执行，如果在发送exec命令前，客户端断了线，则Redis会清空事物队列。事物中的所有命令都不会执行。而一旦客户端发送了exec命令，所有的命令都会执行。即使客户端断线也没关系。因为Redis中记录了所有要执行的命令</p>
+<p>Redis 事物在2.6.5版本之后 如果多个命令中有<strong>语法错误</strong>，则会忽略所有的命令，正确的命令也不会执行。在2.6.5版本之前会执行正确的命令，如果是<strong>运行错误</strong>比如使用不同类型的命令操作其他类型。这种错误在实际执行之前Redis是无法发现的。所以出现错误后，其他命令会正常执行</p>
+<p>Redis 没有事物回滚的功能，需要自己手动收拾摊子</p>
+<p>Redis 使用Watch 命令防止竞态条件</p>
+<p>Watch 命令的作用只是当被监控的键值被修改后阻止之后的一个事物执行，而不能保证其他客户端不修改这个键值，所以需要在exec失败后重新执行整个函数</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+
+        
+        原创文章，转载请注明： 转载Tanwei的技术博客,原文地址:<a href="/2015/06/01/Redis 注意知识点整理/" target="_blank" rel="external">http://blog.vnicers.com/2015/06/01/Redis 注意知识点整理/</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.vnicers.com">
+            <img src="/img/avatar.jpg" alt="Tanwei">
+            Tanwei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/">Redis</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.vnicers.com/2015/06/01/Redis 注意知识点整理/&title=《Redis 注意知识点整理》 — Tanwei的个人技术博客&pic=http://blog.vnicers.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.vnicers.com/2015/06/01/Redis 注意知识点整理/&title=《Redis 注意知识点整理》 — Tanwei的个人技术博客&source=暂时没有好描述自己的。。。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.vnicers.com/2015/06/01/Redis 注意知识点整理/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Redis 注意知识点整理》 — Tanwei的个人技术博客&url=http://blog.vnicers.com/2015/06/01/Redis 注意知识点整理/&via=http://blog.vnicers.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.vnicers.com/2015/06/01/Redis 注意知识点整理/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2015/11/12/Mac系统使用常见问题汇总/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Mac系统使用常见问题汇总</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2014/06/05/Linux 使用常见问题汇总/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Linux 使用常见问题汇总</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitment_thread"></div>
+    <link rel="stylesheet" href="//unpkg.com/gitment/style/default.css">
+    <script src="//unpkg.com/gitment/dist/gitment.browser.js"></script>
+    <script>
+        var gitment = new Gitment({
+            owner: 'vnice',
+            repo: 'vnice.github.io',
+            oauth: {
+                client_id: '62766e3f34a27536afe0',
+                client_secret: '1d9c1d04b0b892eedeffbbaac9c978b17fec0b4f',
+            },
+        })
+        gitment.render('comments')
+    </script>
+</section>
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Tanwei &copy; 2014 - 2017</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.vnicers.com/2015/06/01/Redis 注意知识点整理/&title=《Redis 注意知识点整理》 — Tanwei的个人技术博客&pic=http://blog.vnicers.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.vnicers.com/2015/06/01/Redis 注意知识点整理/&title=《Redis 注意知识点整理》 — Tanwei的个人技术博客&source=暂时没有好描述自己的。。。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.vnicers.com/2015/06/01/Redis 注意知识点整理/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Redis 注意知识点整理》 — Tanwei的个人技术博客&url=http://blog.vnicers.com/2015/06/01/Redis 注意知识点整理/&via=http://blog.vnicers.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.vnicers.com/2015/06/01/Redis 注意知识点整理/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACtElEQVR42u3aQW7jMBAEwPz/0w6wpwUSW90zop1D6RTEMsVSAHLSw6+v+Hr8u5JPX9+Z3//478pHHl54eHh4o6k/u9qhf37r9Tivn5uMfPFdPDw8vGO8fPl+NulnD2invtkk8PDw8P4ar12a80m8Hr8txPHw8PD+Dq9dxGcRRvszHh4e3qd4yRKfF9mz4jgv1o9kLXh4eHgxbxbOfvbng/09PDw8vEVXvQ0a9gFuuwFczBMPDw/vAK8tiJP7E3Z+f1vc19PFw8PDW/DaWDZfxNsYIr8nesV4eHh4h3nJ15JP29J8VkbX/T08PDy8NS+PGGYx62zbyGOOi5eOh4eHd4y3DwX2E0qmW/8GDw8P7428zTaQl+OzePc1/pf+Hh4eHt6tvLzBPwsj9n2otp91EUng4eHh3cqbHSnIt4088E1GHqbUeHh4eGvezUvw6M672mO/PAsPDw/vMK899rTB7OPaqOjHw8PDO8DbhAX5Aj0rtfPiO1Lg4eHh3cTLG1r5FjI7XNW2zaIQBA8PD+8Ab3bNhtuEtu3cVkg8PDy8kpdPIm/5ty20zdFYPDw8vNO82bJ7rl7NQ41oO8HDw8M7zGsX6LyRvwlw85cS9ffw8PDw1ry24s7j1HZ7aNtveUGPh4eHd4I3W/TbAjcJMvIjrW1RjoeHh3eOd1cjf7bZzKLhYmPAw8PDu4k3ixtm7bH2WfmfoThZhoeHh3crb7aizkrzIkrYHLrCw8PDu5X3KK99eb1ppOVhLh4eHt453v6w1GxCeaNrc4AADw8P7xxvEzS04PwY1uYAAR4eHt57eLPNIOHNXtYMX3yAh4eH90ZeeyBgf7BgdRwBDw8P76O89nBAcrhq88SoNMfDw8M7xmsPSLVTb5+bMy5KcDw8PLwDvNW/+qP4NY8z8hexmiceHh5eOs43VcXFOthVeYwAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

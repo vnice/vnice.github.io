@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>Spring MVC | Tanwei的个人技术博客 | 仰望大神不如退而求索</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Spring">
+    <meta name="description" content="概要 Spring MVC 是建立在IoC容器的基础之上的。了解Spring MVC，首先要了解Spring IoC容器是如何在Web环境中被载入，并起作用的  Spring IoC是一个独立的模块，它并不是直接在Web容器中发挥作用的，如果在Web环境中使用IoC容器，需要为IoC设计一个启动过程，将IoC容器载入，并在Web容器中建立起来，这个过程是和Web容器的启动过程是建立在一起的。在这个">
+<meta name="keywords" content="Spring">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring MVC">
+<meta property="og:url" content="http://blog.vnicers.com/2014/02/15/Spring MVC/index.html">
+<meta property="og:site_name" content="Tanwei的个人技术博客">
+<meta property="og:description" content="概要 Spring MVC 是建立在IoC容器的基础之上的。了解Spring MVC，首先要了解Spring IoC容器是如何在Web环境中被载入，并起作用的  Spring IoC是一个独立的模块，它并不是直接在Web容器中发挥作用的，如果在Web环境中使用IoC容器，需要为IoC设计一个启动过程，将IoC容器载入，并在Web容器中建立起来，这个过程是和Web容器的启动过程是建立在一起的。在这个">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://blog.vnicers.com/img/inline/webapplicationcontext.png">
+<meta property="og:updated_time" content="2017-08-07T07:39:27.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring MVC">
+<meta name="twitter:description" content="概要 Spring MVC 是建立在IoC容器的基础之上的。了解Spring MVC，首先要了解Spring IoC容器是如何在Web环境中被载入，并起作用的  Spring IoC是一个独立的模块，它并不是直接在Web容器中发挥作用的，如果在Web环境中使用IoC容器，需要为IoC设计一个启动过程，将IoC容器载入，并在Web容器中建立起来，这个过程是和Web容器的启动过程是建立在一起的。在这个">
+<meta name="twitter:image" content="http://blog.vnicers.com/img/inline/webapplicationcontext.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Tanwei的个人技术博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Tanwei</h5>
+          <a href="mailto:vnicers@gmail.com" title="vnicers@gmail.com" class="mail">vnicers@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                专题
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.hxjx360.com" target="_blank" >
+                <i class="icon icon-lg icon-dollar"></i>
+                理财
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/vnice" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Spring MVC</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Spring MVC</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-02-14T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-02-15
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Spring-源码分析/">Spring 源码分析</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#概要"><span class="post-toc-number">1.</span> <span class="post-toc-text">概要</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Web-xml配置"><span class="post-toc-number">2.</span> <span class="post-toc-text">Web.xml配置</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#IoC容器在Web环境中的启动过程"><span class="post-toc-number">3.</span> <span class="post-toc-text">IoC容器在Web环境中的启动过程</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#IoC容器启动的基本过程"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">IoC容器启动的基本过程</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-Spring MVC"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Spring MVC</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-02-15 00:00:00" datetime="2014-02-14T16:00:00.000Z"  itemprop="datePublished">2014-02-15</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Spring-源码分析/">Spring 源码分析</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h1><blockquote>
+<p>Spring MVC 是建立在IoC容器的基础之上的。了解Spring MVC，首先要了解Spring IoC容器是如何在Web环境中被载入，并起作用的</p>
+</blockquote>
+<p>Spring IoC是一个独立的模块，它并不是直接在Web容器中发挥作用的，如果在Web环境中使用IoC容器，需要为IoC设计一个启动过程，将IoC容器载入，并在<br>Web容器中建立起来，这个过程是和Web容器的启动过程是建立在一起的。在这个过程中，一方面处理Web容器的启动，另一方面通过设定特定的Web容器拦截器或者<br>监听器，将IoC容器载入到Web环境中来，并将其初始化。在建立完这个过程后，IoC容器才能正常工作。而Spring MVC是建立在IOC容器基础之上的，这样才能建立<br>其MVC框架的运行机制，从而响应Web容器传递的Http请求。</p>
+<h1 id="Web-xml配置"><a href="#Web-xml配置" class="headerlink" title="Web.xml配置"></a>Web.xml配置</h1><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>mvc<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>contextConfigLocation<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>classpath:spring/spring-mvc.xml<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">load-on-startup</span>&gt;</span>1<span class="tag">&lt;/<span class="name">load-on-startup</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">async-supported</span>&gt;</span>true<span class="tag">&lt;/<span class="name">async-supported</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>mvc<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></div><div class="line"></div><div class="line"> <span class="tag">&lt;<span class="name">context-param</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>contextConfigLocation<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>classpath:spring/spring-dao.xml,classpath:spring/spring-service.xml<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></div><div class="line"> <span class="tag">&lt;/<span class="name">context-param</span>&gt;</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">listener</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">listener-class</span>&gt;</span>org.springframework.web.context.ContextLoaderListener<span class="tag">&lt;/<span class="name">listener-class</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">listener</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>在上面的配置中，首先定义了一个Servlet，它是Spring MVC 的DispatcherServlet,在Spring MVC中是一个很重要的类，起着分发请求的作用，同时<br>这个Servlet对应的url为/，意味着接收所有格式的请求地址。init-param中配置了spring mvc的配置文件，在这个文件中定义了mvc相关的bean,同时定义了<br>一个listener，这个监听器是与Web服务器生命周期相关联的，由ContextLoaderListener监听器负责完成IoC容器在Web环境中的启动工作。<br>从上面的配置看到DispatcherServlet，ContextLoaderListener，提供了Web容器中对Spring的接口，也就是说，这些接口与Web容器耦合是通过<br>ServletContext来实现的，这个ServletContext为SpringIoC容器提供了一个宿主环境，在这个宿主环境中，Spring MVC 建立起了一个IoC容器的体系。<br>这个IoC容器体系是通过ContextLoaderListeners的初始化建立的。在建立起IoC容器体系后，把DispatcherServlet作为Sping MVC 处理Web请求的转发器<br>建立起来，从而完成了响应Http请求的准备。</p>
+<h1 id="IoC容器在Web环境中的启动过程"><a href="#IoC容器在Web环境中的启动过程" class="headerlink" title="IoC容器在Web环境中的启动过程"></a>IoC容器在Web环境中的启动过程</h1><h2 id="IoC容器启动的基本过程"><a href="#IoC容器启动的基本过程" class="headerlink" title="IoC容器启动的基本过程"></a>IoC容器启动的基本过程</h2><p>IoC容器的启动过程就是建立上下文的过程，该上下文与ServletContext相伴而生的，同时也是IoC容器在Web环境中的具体表现之一。由ContextLoaderListener启动的<br>上下文为根上下文，在根上下文的基础上，还有一个WebMVC 相关的上下文用来保存控制器MVC需要的对象，作为根上下文的子上下文，构成一个层次化的上下结构体系，这个<br>上下文体系是由ContextLoader来完成的。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/inline/webapplicationcontext.png" alt="WebApplicationContext接口的继承关系" title="">
+                </div>
+                <div class="image-caption">WebApplicationContext接口的继承关系</div>
+            </figure>
+<p>在这个类继承关系中 , 可以从熟悉的XmlWebAPPlicationContext入手来了解它的接口实现.在接口设计中 , 最后是通过ApplicationContex接口与BeanFactory接口对接的 ,<br>而对于具体的功能实现 , 很多都是封装在其基类AbstractRefreshableWebApplicationContext中 完成的。 同样 , 在源代码中 , 也可以分析出类似的继承关系。</p>
+<p>在启动过程中，Spring会使用一个默认的WebApplicationContext的实现作为IoC容器就是<code>XmlApplicationContext</code>,在继承了基本的ApplicationContext功能的基础<br>上，增加了Web环境和对Xml配置处理功能，在<code>XmlApplicationContext</code>的初始化过程中，Web容器中的IoC容器被建立起来，从而在Web容器中建立起整个Spring应用<br>这里加载Bean的方式和之前所说的加载<code>BeanDefinition</code>一样，只不过多了一些读取指定配置文件的applicationContext.xml文件的细节。</p>
+<p>为了了解IoC容器在Web容器中的启动原理 , 这里对启动器ContextLoaderListener的实现 进行分析. 这个监听器是启动根IoC容器并把它载入到Web容器的主要 ,<br>也是整个 Spring Web应用加载IoC的第一个地方。 从加载过程可以看到, 首先从Servlet事件中得到 ServletContext, 然后可以读取配置在web.xml中的各个相关的属性值,<br>接着ContextLoader会 实例化WebApplicationContext, 并完成其载入和初始化过程. 这个被初始化的第一个上下文 作为根上下文而存在.<br>这个根上下文载人后, 被绑定到Web应用程序的ServletContext上。 任何需要访问根上下文的应用程序代码都可以从WebApplicationContextUtils类的静态方法中得到</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> WebApplicationContext <span class="title">initWebApplicationContext</span><span class="params">(ServletContext servletContext)</span> </span>&#123;</div><div class="line">       <span class="comment">// 先判断WebApplicationContext是不是已经存在，已存在则抛出异常</span></div><div class="line">       <span class="keyword">if</span> (servletContext.getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE) != <span class="keyword">null</span>) &#123;</div><div class="line">           <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">"Cannot initialize context because there is already a root application context present - check whether you have multiple ContextLoader* definitions in your web.xml!"</span>);</div><div class="line">       &#125; <span class="keyword">else</span> &#123;</div><div class="line">           Log logger = LogFactory.getLog(ContextLoader.class);</div><div class="line">           servletContext.log(<span class="string">"Initializing Spring root WebApplicationContext"</span>);</div><div class="line">           <span class="keyword">if</span> (logger.isInfoEnabled()) &#123;</div><div class="line">               logger.info(<span class="string">"Root WebApplicationContext: initialization started"</span>);</div><div class="line">           &#125;</div><div class="line"></div><div class="line">           <span class="keyword">long</span> startTime = System.currentTimeMillis();</div><div class="line"></div><div class="line">           <span class="keyword">try</span> &#123;</div><div class="line">               <span class="comment">// 没有先创建一个</span></div><div class="line">               <span class="keyword">if</span> (<span class="keyword">this</span>.context == <span class="keyword">null</span>) &#123;</div><div class="line">                   <span class="keyword">this</span>.context = <span class="keyword">this</span>.createWebApplicationContext(servletContext);</div><div class="line">               &#125;</div><div class="line"></div><div class="line">               <span class="comment">// 这里判断有没有parent上下文，如果有则把parent上下文加载出来。</span></div><div class="line">               <span class="keyword">if</span> (<span class="keyword">this</span>.context <span class="keyword">instanceof</span> ConfigurableWebApplicationContext) &#123;</div><div class="line">                   ConfigurableWebApplicationContext cwac = (ConfigurableWebApplicationContext)<span class="keyword">this</span>.context;</div><div class="line">                   <span class="keyword">if</span> (!cwac.isActive()) &#123;</div><div class="line">                       <span class="keyword">if</span> (cwac.getParent() == <span class="keyword">null</span>) &#123;</div><div class="line">                           ApplicationContext parent = <span class="keyword">this</span>.loadParentContext(servletContext);</div><div class="line">                           cwac.setParent(parent);</div><div class="line">                       &#125;</div><div class="line"></div><div class="line">                       <span class="keyword">this</span>.configureAndRefreshWebApplicationContext(cwac, servletContext);</div><div class="line">                   &#125;</div><div class="line">               &#125;</div><div class="line"></div><div class="line">               <span class="comment">//将加载完的webapplicationcontext设置到servletContext中保存起来。</span></div><div class="line">               servletContext.setAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE, <span class="keyword">this</span>.context);</div><div class="line"></div><div class="line">              <span class="comment">//... 省略部分代码</span></div><div class="line">       &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p>创建WebApplicationContext的代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> WebApplicationContext <span class="title">createWebApplicationContext</span><span class="params">(ServletContext sc)</span> </span>&#123;</div><div class="line">       <span class="comment">// 这里判断用什么样的类作为Web 容器中Ioc容器</span></div><div class="line">       Class&lt;?&gt; contextClass = <span class="keyword">this</span>.determineContextClass(sc);</div><div class="line">       <span class="keyword">if</span> (!ConfigurableWebApplicationContext.class.isAssignableFrom(contextClass)) &#123;</div><div class="line">           <span class="keyword">throw</span> <span class="keyword">new</span> ApplicationContextException(<span class="string">"Custom context class ["</span> + contextClass.getName() + <span class="string">"] is not of type ["</span> + ConfigurableWebApplicationContext.class.getName() + <span class="string">"]"</span>);</div><div class="line">       &#125; <span class="keyword">else</span> &#123;</div><div class="line">           <span class="comment">// 直接实例化要产生的IoC容器</span></div><div class="line">           <span class="keyword">return</span> (ConfigurableWebApplicationContext)BeanUtils.instantiateClass(contextClass);</div><div class="line">       &#125;</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   <span class="keyword">protected</span> Class&lt;?&gt; determineContextClass(ServletContext servletContext) &#123;</div><div class="line">       String contextClassName = servletContext.getInitParameter(<span class="string">"contextClass"</span>);</div><div class="line">       <span class="keyword">if</span> (contextClassName != <span class="keyword">null</span>) &#123;</div><div class="line">           <span class="keyword">try</span> &#123;</div><div class="line">               <span class="keyword">return</span> ClassUtils.forName(contextClassName, ClassUtils.getDefaultClassLoader());</div><div class="line">           &#125; <span class="keyword">catch</span> (ClassNotFoundException var4) &#123;</div><div class="line">               <span class="keyword">throw</span> <span class="keyword">new</span> ApplicationContextException(<span class="string">"Failed to load custom context class ["</span> + contextClassName + <span class="string">"]"</span>, var4);</div><div class="line">           &#125;</div><div class="line">       &#125; <span class="keyword">else</span> &#123;</div><div class="line">           contextClassName = defaultStrategies.getProperty(WebApplicationContext.class.getName());</div><div class="line"></div><div class="line">           <span class="keyword">try</span> &#123;</div><div class="line">               <span class="keyword">return</span> ClassUtils.forName(contextClassName, ContextLoader.class.getClassLoader());</div><div class="line">           &#125; <span class="keyword">catch</span> (ClassNotFoundException var5) &#123;</div><div class="line">               <span class="keyword">throw</span> <span class="keyword">new</span> ApplicationContextException(<span class="string">"Failed to load default context class ["</span> + contextClassName + <span class="string">"]"</span>, var5);</div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+
+        
+        原创文章，转载请注明： 转载Tanwei的技术博客,原文地址:<a href="/2014/02/15/Spring MVC/" target="_blank" rel="external">http://blog.vnicers.com/2014/02/15/Spring MVC/</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.vnicers.com">
+            <img src="/img/avatar.jpg" alt="Tanwei">
+            Tanwei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/">Spring</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.vnicers.com/2014/02/15/Spring MVC/&title=《Spring MVC》 — Tanwei的个人技术博客&pic=http://blog.vnicers.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.vnicers.com/2014/02/15/Spring MVC/&title=《Spring MVC》 — Tanwei的个人技术博客&source=暂时没有好描述自己的。。。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.vnicers.com/2014/02/15/Spring MVC/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Spring MVC》 — Tanwei的个人技术博客&url=http://blog.vnicers.com/2014/02/15/Spring MVC/&via=http://blog.vnicers.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.vnicers.com/2014/02/15/Spring MVC/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2014/02/18/DispatcherServlet 设计和原理 /" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">DispatcherServlet 设计和原理</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2014/02/15/Spring AOP/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Spring AOP</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitment_thread"></div>
+    <link rel="stylesheet" href="//unpkg.com/gitment/style/default.css">
+    <script src="//unpkg.com/gitment/dist/gitment.browser.js"></script>
+    <script>
+        var gitment = new Gitment({
+            owner: 'vnice',
+            repo: 'vnice.github.io',
+            oauth: {
+                client_id: '62766e3f34a27536afe0',
+                client_secret: '1d9c1d04b0b892eedeffbbaac9c978b17fec0b4f',
+            },
+        })
+        gitment.render('comments')
+    </script>
+</section>
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Tanwei &copy; 2014 - 2017</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.vnicers.com/2014/02/15/Spring MVC/&title=《Spring MVC》 — Tanwei的个人技术博客&pic=http://blog.vnicers.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.vnicers.com/2014/02/15/Spring MVC/&title=《Spring MVC》 — Tanwei的个人技术博客&source=暂时没有好描述自己的。。。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.vnicers.com/2014/02/15/Spring MVC/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Spring MVC》 — Tanwei的个人技术博客&url=http://blog.vnicers.com/2014/02/15/Spring MVC/&via=http://blog.vnicers.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.vnicers.com/2014/02/15/Spring MVC/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACI0lEQVR42u3aW27EMAxD0dn/pt0FTOOQVNLC0vVXUUweJx+EbOnzkdf6Wt//v/q9cmf3qnDBgAHjWMbarqsHuA/b3/Pqzsq7wYABYw5DicJKBOtPVD4WDBgwYGQMPTTdwIUBAwaMjJHF5ZIXDBgwYGSb2P2N9kWhHqyv78VhwIBxIEM/LPv7v1/pb8CAAeMoxjKX24B0o3xFCwYMGL0ZlQ1qVvC5R2/G+8CAAaMp46miLXstfaTjBgYDBozWDHcYojL4lbUtlfiGAQPGTIbbyHSDVX9WNl4GAwaMfozKUZoSo/v2Z6UMhQEDxgRGfSBMT+5K2yCsZGHAgNGOkTUa3fkHt20plZIwYMAYxtAryrfZxkEeDBgwWjPcrWO2xc0O4PaYX66FAQNGU4Y7qqUEojtmsf9A0lYZBgwYrRnZEb8br25rQW8h3JSGMGDAaMHQA9R9rfrG2I5aGDBgNGW44w7uoZj7UfS7wYABYyYjHHSIItgtOqW3ggEDxhiGe35VLyXdJsHlZ4IBA8YARqVYdMO03hC96cTCgAGjNcNtK2bloz7kYSwYMGA0ZSxz1e9ZKRml2hYGDBjtGFmmKWGqH5Zlhan7cWHAgHE6Q4nIbCQiGyMLAxcGDBgDGO6GU78qbEmaSBgwYMDIGE+1Kv85cGHAgHEgQ39dnfrA2AcMGDAGMPRBUnecQin7KhtdGDBgTGA8NZChRKpR6j16FQwYMI5l/AAl1kuprPAEEAAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

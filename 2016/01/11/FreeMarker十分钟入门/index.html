@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>FreeMarker十分钟入门 | Tanwei的个人技术博客 | 仰望大神不如退而求索</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="开源组件">
+    <meta name="description" content="在要学习一门新技术直接，一般如何开始入手，达到什么程度叫入门，达到什么程度较学会，达到什么程度叫精通。学习计算机相关的知识，需要我们时刻保持一颗学习的心态。这里打算写一下我的学习过程，叫做《十分钟入门系列》当然十分钟并不能保证你完全入门，但是我们更重要的是学习方法。这里第一篇入门系列是以FreeMarker为开篇，因为最近项目中需要用到，而且以前只是听说，所以要用到才会学习，如果你学了，一时半会用">
+<meta name="keywords" content="开源组件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FreeMarker十分钟入门">
+<meta property="og:url" content="http://blog.vnicers.com/2016/01/11/FreeMarker十分钟入门/index.html">
+<meta property="og:site_name" content="Tanwei的个人技术博客">
+<meta property="og:description" content="在要学习一门新技术直接，一般如何开始入手，达到什么程度叫入门，达到什么程度较学会，达到什么程度叫精通。学习计算机相关的知识，需要我们时刻保持一颗学习的心态。这里打算写一下我的学习过程，叫做《十分钟入门系列》当然十分钟并不能保证你完全入门，但是我们更重要的是学习方法。这里第一篇入门系列是以FreeMarker为开篇，因为最近项目中需要用到，而且以前只是听说，所以要用到才会学习，如果你学了，一时半会用">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/818b7fe3gy1fii5n5zc3jj218o0wo47k.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/818b7fe3gy1fii5qdkcj1j21yw10sk8u.jpg">
+<meta property="og:updated_time" content="2017-08-13T15:05:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="FreeMarker十分钟入门">
+<meta name="twitter:description" content="在要学习一门新技术直接，一般如何开始入手，达到什么程度叫入门，达到什么程度较学会，达到什么程度叫精通。学习计算机相关的知识，需要我们时刻保持一颗学习的心态。这里打算写一下我的学习过程，叫做《十分钟入门系列》当然十分钟并不能保证你完全入门，但是我们更重要的是学习方法。这里第一篇入门系列是以FreeMarker为开篇，因为最近项目中需要用到，而且以前只是听说，所以要用到才会学习，如果你学了，一时半会用">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/818b7fe3gy1fii5n5zc3jj218o0wo47k.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="Tanwei的个人技术博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Tanwei</h5>
+          <a href="mailto:vnicers@gmail.com" title="vnicers@gmail.com" class="mail">vnicers@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                专题
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.hxjx360.com" target="_blank" >
+                <i class="icon icon-lg icon-dollar"></i>
+                理财
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/vnice" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">FreeMarker十分钟入门</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">FreeMarker十分钟入门</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-01-10T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2016-01-11
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/十分钟入门系列/">十分钟入门系列</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#如何学习"><span class="post-toc-number">1.</span> <span class="post-toc-text">如何学习</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#What-is-Apache-FreeMarker"><span class="post-toc-number">2.</span> <span class="post-toc-text">What is Apache FreeMarker ?</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Download-from-Maven"><span class="post-toc-number">3.</span> <span class="post-toc-text">Download from Maven</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Getting-Started"><span class="post-toc-number">4.</span> <span class="post-toc-text">Getting Started</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#数据模型介绍"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">数据模型介绍</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#模板介绍"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">模板介绍</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#几个基本的指令"><span class="post-toc-number">4.2.1.</span> <span class="post-toc-text">几个基本的指令</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#if-elseif-else-指令"><span class="post-toc-number">4.2.1.1.</span> <span class="post-toc-text">if elseif else 指令</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#list-指令"><span class="post-toc-number">4.2.1.2.</span> <span class="post-toc-text">list 指令</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#sep指令"><span class="post-toc-number">4.2.1.3.</span> <span class="post-toc-text">sep指令</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#include指令"><span class="post-toc-number">4.2.1.4.</span> <span class="post-toc-text">include指令</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#内置插件"><span class="post-toc-number">4.2.2.</span> <span class="post-toc-text">内置插件</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#空值处理"><span class="post-toc-number">4.2.3.</span> <span class="post-toc-text">空值处理</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#特殊字符处理"><span class="post-toc-number">4.2.4.</span> <span class="post-toc-text">特殊字符处理</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#数据类型"><span class="post-toc-number">4.2.5.</span> <span class="post-toc-text">数据类型</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#标识符"><span class="post-toc-number">4.2.5.1.</span> <span class="post-toc-text">标识符</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#容器"><span class="post-toc-number">4.2.5.2.</span> <span class="post-toc-text">容器</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#方法和函数"><span class="post-toc-number">4.2.5.3.</span> <span class="post-toc-text">方法和函数</span></a></li></ol></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-FreeMarker十分钟入门"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">FreeMarker十分钟入门</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-01-11 00:00:00" datetime="2016-01-10T16:00:00.000Z"  itemprop="datePublished">2016-01-11</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/十分钟入门系列/">十分钟入门系列</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>在要学习一门新技术直接，一般如何开始入手，达到什么程度叫入门，达到什么程度较学会，达到什么程度叫精通。<br>学习计算机相关的知识，需要我们时刻保持一颗学习的心态。这里打算写一下我的学习过程，叫做《十分钟入门系列》<br>当然十分钟并不能保证你完全入门，但是我们更重要的是学习方法。这里第一篇入门系列是以FreeMarker为开篇，因为最近项目中需要用到，而且以前只是听说，所以要用到才会学习，如果你学了，一时半会用不到，那样也很快会忘记。</p>
+<h1 id="如何学习"><a href="#如何学习" class="headerlink" title="如何学习"></a>如何学习</h1><p>直接Google FreeMarker 关键字，为什么不用百度，这个做开发的都知道，百度上的技术文章烂得跟啥一样的。前排一律，文不对题。不适合技术人员寻找资料，如果没办法Google，再怎么着也得用Bing搜索，百度我觉得只是时候查下身边相关的资料，技术文章Google才是归属。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fii5n5zc3jj218o0wo47k.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>搜索到的结果是前两条是FreeMarker的官网，第三条是国内的CSDN用户写的博客，说明访问量还是挺多的。但是日期是2012年，肯能比较旧了。所以直接略过，学习一手的东西，直接进第一条官网的就OK</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fii5qdkcj1j21yw10sk8u.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>打开FreeMarker官网，直入主题，什么是Apache FreeMarker，看下左侧的目录包括 下载，maven坐标，文档包括手册，java api ，甚至还有中文手册。工具包含编辑器和插件在线模板测试，下面就是组织。<br>看到这些信息，基本是入门到上手没啥问题了。</p>
+<h1 id="What-is-Apache-FreeMarker"><a href="#What-is-Apache-FreeMarker" class="headerlink" title="What is Apache FreeMarker ?"></a>What is Apache FreeMarker ?</h1><p>读完它的介绍和一副实例图，基本知道FreeMarker是干嘛的了，然后在看完整个介绍后从中获取的信息</p>
+<ol>
+<li>FreeMarker是一个模板引擎，这里应该想到它和Velocity是同一类东西。</li>
+<li>可以用来生成文本，包括html,邮件，配置文件，源代码等。这里可以知道，一些框架前端现在直接用的FreeMarker来替代jsp，在邮件中实现复杂的html页面将内容动态的替换到指定位置，甚至代码生成器类似的东西也可以用它来做。</li>
+<li>使用FreeMarker模板特有的简单的模板语言FTL,你只需要准备好数据，和模板，然后塞到FreeMarker中，他就可以按照你的模板显示出来。</li>
+<li>遵循MVC设计模式，非常适合动态网页的显示，将页面和java代码分离，设计师可以不用面对嵌套在页面中的逻辑，可以直接修改页面而不用重新编译代码。这里应该想到它和JSP有什么异同，从下面的分析中寻找答案</li>
+<li>不仅可以在web中使用，也可以在非Web环境使用。</li>
+<li>从声明中可以看出FreeMarker项目已经交给Apache开源组织管理，现在还是孵化阶段，后面对孵化阶段做了一个解释。</li>
+<li>特性一 :条件语句，循环，赋值，字符串，和算数运算以及格式化，宏，以及函数，包含其他模板，转义以及其他。</li>
+<li>特性二 :没有任何依赖，各种输出样式，可以从任何地方加载模板。</li>
+<li>特性三 :国际化</li>
+<li>特性四 :XML处理功能</li>
+<li>特性五 :通用数据模型</li>
+</ol>
+<p>从上面的特性可以知道，FreeMarker支持的功能应该比JSP和Velocity更强大不少。</p>
+<h1 id="Download-from-Maven"><a href="#Download-from-Maven" class="headerlink" title="Download from Maven"></a>Download from Maven</h1><p>在了解完FreeMarker的基本信息之后，可以从Maven中央仓库中下载它的最新版本来玩一下。最新的是2.3版本<br>新建一个Web项目测试</p>
+<h1 id="Getting-Started"><a href="#Getting-Started" class="headerlink" title="Getting Started"></a>Getting Started</h1><p>  编写模板文件<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Welcome!<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Welcome $&#123;user&#125;!<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>Our latest product:</div><div class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"$&#123;latestProduct.url&#125;"</span>&gt;</span>$&#123;latestProduct.name&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span>!</div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>如果直接访问该文件，模板中的变量会原样输出到界面上。</p>
+<h2 id="数据模型介绍"><a href="#数据模型介绍" class="headerlink" title="数据模型介绍"></a>数据模型介绍</h2><p>数据模型基本结构就是一个对象树，结构和json比较类似。访问方式则和javascript比较类似，子节点的数据类型有字符串，数字，日期/时间 ，布尔值</p>
+<h2 id="模板介绍"><a href="#模板介绍" class="headerlink" title="模板介绍"></a>模板介绍</h2><p> ${…} ftl变量:会被括号中的表达式实际值替换</p>
+<p> &lt;#…&gt; ftl标签:也可以称作指令，不会被输出</p>
+<p> &lt;@…&gt; ftl自定义标签</p>
+<p> &lt;#–…–&gt;  ftl注释，不会被输出</p>
+<p> 除了以上几个标签其他的任何形式的标签都不会被FreeMarker处理，都会直接输出。</p>
+<h3 id="几个基本的指令"><a href="#几个基本的指令" class="headerlink" title="几个基本的指令"></a>几个基本的指令</h3><h4 id="if-elseif-else-指令"><a href="#if-elseif-else-指令" class="headerlink" title="if elseif else 指令"></a>if elseif else 指令</h4><pre><code>&lt;#if animals.python.price &lt; animals.elephant.price&gt;
+  Pythons are cheaper than elephants today.
+&lt;#elseif animals.elephant.price &lt; animals.python.price&gt;
+  Elephants are cheaper than pythons today.
+&lt;#else&gt;
+  Elephants and pythons cost the same today.
+&lt;/#if&gt;
+
+当表达式为true时，会输出包含的内容 当==左右两边的数据类型不匹配时会报错。
+如果表达式是boolean类型，可以使用如下输出
+&lt;#if animals.python.protected&gt;
+  Pythons are protected animals!
+&lt;/#if&gt;
+</code></pre><h4 id="list-指令"><a href="#list-指令" class="headerlink" title="list 指令"></a>list 指令</h4><pre><code>&lt;table border=1&gt;
+  &lt;#list animals as animal&gt;
+    &lt;tr&gt;&lt;td&gt;${animal.name}&lt;td&gt;${animal.price} Euros
+  &lt;/#list&gt;
+&lt;/table&gt;
+animals是数据模型中的集合 animal是循环出的单个对象，循环体中可以使用ftl变量
+
+如果list是空的，那么上面的会输出一个&lt;table border=1&gt;&lt;/table&gt;。可以使用将list指令拆成两部分来避免，如下
+
+&lt;#list animals&gt;
+    &lt;table border=1&gt;
+        &lt;#items as animal&gt;
+            &lt;tr&gt;&lt;td&gt;${animal.name}&lt;td&gt;${animal.price} Euros
+        &lt;/#items&gt;
+    &lt;/table&gt;
+&lt;#list&gt;
+如果animals是空，则里面的所有都不会输出。
+</code></pre><h4 id="sep指令"><a href="#sep指令" class="headerlink" title="sep指令"></a>sep指令</h4><pre><code>&lt;p&gt;Fruits: &lt;#list misc.fruits as fruit&gt;${fruit}&lt;#sep&gt;, &lt;/#list&gt;
+可以按照逗号拼接每个item，最后一个则忽略。
+</code></pre><h4 id="include指令"><a href="#include指令" class="headerlink" title="include指令"></a>include指令</h4><p>   include指令类似于jsp里面的静态include</p>
+<h3 id="内置插件"><a href="#内置插件" class="headerlink" title="内置插件"></a>内置插件</h3><pre><code>user?upper_case 将user变量的值转为大写
+
+animal.name?cap_first 值转成首字母大写
+
+user?length 获取内容长度
+
+animals?size 获取集合大小
+
+在循环 &lt;#list animals as animal&gt; 标签里面:
+
+    animal?index 获取item的索引从0开始
+
+    animal?counter 获取item所在位置从1开始
+
+    animal?item_parity 返回基数行或者偶数行字符 &quot;odd&quot; or &quot;even&quot;
+
+带有参数的插件
+
+animal.protected?string(&quot;Y&quot;, &quot;N&quot;) 根据表达式的boolean值 返回字符Y或者N
+
+animal?item_cycle(&apos;lightRow&apos;, &apos;darkRow&apos;) 根据基偶行返回知道的字符
+
+fruits?join(&quot;, &quot;): 将集合展开安装指定的字符拼接
+
+user?starts_with(&quot;J&quot;) 判断表达式的值是否是指定的参数开头，返回true或者false
+
+内置插件可以链式调用
+</code></pre><h3 id="空值处理"><a href="#空值处理" class="headerlink" title="空值处理"></a>空值处理</h3><p> 在Freemarker中一个不存在的变量和该变量值为null是一个意思</p>
+<p> 为变量指定默认值，当user对象值不存在或为null时，将会用默认值”visitor”代替<br> <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Welcome $&#123;user!"visitor"&#125;!<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p> 使用表达式??预先判断变量值是否存在然后再渲染</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">#if</span> <span class="attr">user</span>??&gt;</span><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Welcome $&#123;user&#125;!<span class="tag">&lt;/<span class="name">h1</span>&gt;</span><span class="tag">&lt;/<span class="name">#if</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="特殊字符处理"><a href="#特殊字符处理" class="headerlink" title="特殊字符处理"></a>特殊字符处理</h3><p>默认FreeMarker会自动转义所有以$ {…}打印的值，所有的以ftlh和ftlx为扩展名的freemarker模板都会自动关联到HTML和XML输出格式</p>
+<p>如果想故意输出特殊字符，则可以使用${value?no_esc}</p>
+<h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><h4 id="标识符"><a href="#标识符" class="headerlink" title="标识符"></a>标识符</h4><pre><code>字符串，数字，布尔值，日期(日期/时间/日期时间)
+</code></pre><h4 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h4><pre><code>哈希(对象)，序列(可以使用索引访问)，集合(有限的序列，不能使用索引访问)
+</code></pre><h4 id="方法和函数"><a href="#方法和函数" class="headerlink" title="方法和函数"></a>方法和函数</h4><pre><code>${avg(3,5)} 获取平均数
+</code></pre>
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+
+        
+        原创文章，转载请注明： 转载Tanwei的技术博客,原文地址:<a href="/2016/01/11/FreeMarker十分钟入门/" target="_blank" rel="external">http://blog.vnicers.com/2016/01/11/FreeMarker十分钟入门/</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.vnicers.com">
+            <img src="/img/avatar.jpg" alt="Tanwei">
+            Tanwei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/开源组件/">开源组件</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.vnicers.com/2016/01/11/FreeMarker十分钟入门/&title=《FreeMarker十分钟入门》 — Tanwei的个人技术博客&pic=http://blog.vnicers.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.vnicers.com/2016/01/11/FreeMarker十分钟入门/&title=《FreeMarker十分钟入门》 — Tanwei的个人技术博客&source=暂时没有好描述自己的。。。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.vnicers.com/2016/01/11/FreeMarker十分钟入门/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《FreeMarker十分钟入门》 — Tanwei的个人技术博客&url=http://blog.vnicers.com/2016/01/11/FreeMarker十分钟入门/&via=http://blog.vnicers.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.vnicers.com/2016/01/11/FreeMarker十分钟入门/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2016/11/12/Mac 系统常用软件汇总/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Mac系统常用软件汇总</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2015/11/12/Mac系统使用常见问题汇总/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Mac系统使用常见问题汇总</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitment_thread"></div>
+    <link rel="stylesheet" href="//unpkg.com/gitment/style/default.css">
+    <script src="//unpkg.com/gitment/dist/gitment.browser.js"></script>
+    <script>
+        var gitment = new Gitment({
+            owner: 'vnice',
+            repo: 'vnice.github.io',
+            oauth: {
+                client_id: '62766e3f34a27536afe0',
+                client_secret: '1d9c1d04b0b892eedeffbbaac9c978b17fec0b4f',
+            },
+        })
+        gitment.render('comments')
+    </script>
+</section>
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Tanwei &copy; 2014 - 2017</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.vnicers.com/2016/01/11/FreeMarker十分钟入门/&title=《FreeMarker十分钟入门》 — Tanwei的个人技术博客&pic=http://blog.vnicers.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.vnicers.com/2016/01/11/FreeMarker十分钟入门/&title=《FreeMarker十分钟入门》 — Tanwei的个人技术博客&source=暂时没有好描述自己的。。。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.vnicers.com/2016/01/11/FreeMarker十分钟入门/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《FreeMarker十分钟入门》 — Tanwei的个人技术博客&url=http://blog.vnicers.com/2016/01/11/FreeMarker十分钟入门/&via=http://blog.vnicers.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.vnicers.com/2016/01/11/FreeMarker十分钟入门/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACK0lEQVR42u3awW6DQAxFUf7/p6nUbQq5z55ExXNnhVIKc1hY9tjHgdf5u66uX9frX2v3L14yZMh4LOO8XWRDV8/hHyX9TH88X4YMGRswOi9bFYjvr9/sWYYMGTIA4D4g8kRQhgwZMvqM+//qbIiEdRkyZOzMIMkceXGtxCVJ5LJaXIYMGQ9k9BsDn7v+an9DhgwZ/5Jxhouka6QlwO9Bu5IhQ8ZoBknLalMNPIlMxyyCDFeGDBlDGbXjMP4hOqXymz3LkCFjNIM3CWqHX50xi+LwmQwZMsYx+GF9GpR5OsjffhmIZciQsQHjPuz2N0d+aQ15yJAhYygjTcVI8sc/Rzo6drkrGTJkjGageNwoRzmvE7JlyJCxG4OUo/wgLG1J1loLMmTI2IFRO9yPkza80nfJkCFjT0YtvPLis9Y0jWdGZMiQMY7RGbbobJoXtCg1lCFDxmhGWkbyJkGtIUo+3IJqWIYMGQ9hrCovg+N70AAonhrKkCFjNKM2zhUUmWGJm17LkCFjKqM11oDDLkfyYzsZMmTsyUiPugimdnzG8TJkyNiBsbbdyMvg9AiPlMoyZMiYyjjDlW6x9vy4RSFDhozRjE5LAEXxUsD9YH9DhgwZj2V0Rr548ZmOd8QFswwZMjZg8EN/8ksa1xfcKUOGDBk4r+w0JmsjZTJkyJBBAmia/MWNSRkyZMgoHdbXhjD4CEVcMMuQIWM0o1M6km2lJStvDBzpkiFDxvMYP3g1zFLUvF0jAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

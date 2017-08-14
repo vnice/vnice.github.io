@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>Spring 依赖注入源码分析 | Tanwei的个人技术博客 | 仰望大神不如退而求索</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Spring">
+    <meta name="description" content="getBean 之前写的Spring IOC 容器这篇文章大致讲了一些IoC容器的初始化过程,主要是IoC容器中建立BeanDefinition的数据映射。但是还没涉及到IoC容器对Bean的依赖关系进行注入，接下来从源码角度分析一下IoC容器是怎样对Bean的依赖关系进行注入的。  首先注意到依赖注入的过程是用户第一次向IoC容器获取Bean时触发的。也就是最基本的BeanFactory接口中的">
+<meta name="keywords" content="Spring">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring 依赖注入源码分析">
+<meta property="og:url" content="http://blog.vnicers.com/2014/02/13/Spring 依赖注入源码分析/index.html">
+<meta property="og:site_name" content="Tanwei的个人技术博客">
+<meta property="og:description" content="getBean 之前写的Spring IOC 容器这篇文章大致讲了一些IoC容器的初始化过程,主要是IoC容器中建立BeanDefinition的数据映射。但是还没涉及到IoC容器对Bean的依赖关系进行注入，接下来从源码角度分析一下IoC容器是怎样对Bean的依赖关系进行注入的。  首先注意到依赖注入的过程是用户第一次向IoC容器获取Bean时触发的。也就是最基本的BeanFactory接口中的">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-08-06T07:50:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring 依赖注入源码分析">
+<meta name="twitter:description" content="getBean 之前写的Spring IOC 容器这篇文章大致讲了一些IoC容器的初始化过程,主要是IoC容器中建立BeanDefinition的数据映射。但是还没涉及到IoC容器对Bean的依赖关系进行注入，接下来从源码角度分析一下IoC容器是怎样对Bean的依赖关系进行注入的。  首先注意到依赖注入的过程是用户第一次向IoC容器获取Bean时触发的。也就是最基本的BeanFactory接口中的">
+    
+        <link rel="alternate" type="application/atom+xml" title="Tanwei的个人技术博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Tanwei</h5>
+          <a href="mailto:vnicers@gmail.com" title="vnicers@gmail.com" class="mail">vnicers@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                专题
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.hxjx360.com" target="_blank" >
+                <i class="icon icon-lg icon-dollar"></i>
+                理财
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/vnice" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Spring 依赖注入源码分析</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Spring 依赖注入源码分析</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-02-12T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-02-13
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Spring-源码分析/">Spring 源码分析</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#getBean"><span class="post-toc-number">1.</span> <span class="post-toc-text">getBean</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#createBean"><span class="post-toc-number">2.</span> <span class="post-toc-text">createBean</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#createBeanInstance"><span class="post-toc-number">3.</span> <span class="post-toc-text">createBeanInstance</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#populateBean"><span class="post-toc-number">4.</span> <span class="post-toc-text">populateBean</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#参考"><span class="post-toc-number">5.</span> <span class="post-toc-text">参考</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-Spring 依赖注入源码分析"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Spring 依赖注入源码分析</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-02-13 00:00:00" datetime="2014-02-12T16:00:00.000Z"  itemprop="datePublished">2014-02-13</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Spring-源码分析/">Spring 源码分析</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="getBean"><a href="#getBean" class="headerlink" title="getBean"></a>getBean</h1><blockquote>
+<p>之前写的<a href="https://vnice.github.io/2014/02/04/Spring%20IOC%20%E5%AE%B9%E5%99%A8/" target="_blank" rel="external">Spring IOC 容器</a>这篇文章大致讲了一些IoC容器的初始化过程,主要是IoC容器中建立BeanDefinition的数据映射。<br>但是还没涉及到IoC容器对Bean的依赖关系进行注入，接下来从源码角度分析一下IoC容器是怎样对Bean的依赖关系进行注入的。</p>
+</blockquote>
+<p>首先注意到依赖注入的过程是用户第一次向IoC容器获取Bean时触发的。也就是最基本的BeanFactory接口中的getBean方法，下面从它<br><code>DefaultListableBeanFactory</code>的基类<code>AbstractBeanFactory</code>入手去看下getBean的实现</p>
+<blockquote>
+<p>通过查看getBean方法的几个重载，正在干活的是doGetBean方法,也就是依赖注入发生的地方</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">protected</span> &lt;T&gt; <span class="function">T <span class="title">doGetBean</span><span class="params">(</span></span></div><div class="line">			<span class="keyword">final</span> String name, <span class="keyword">final</span> Class&lt;T&gt; requiredType, <span class="keyword">final</span> Object[] args, <span class="keyword">boolean</span> typeCheckOnly)</div><div class="line">			<span class="keyword">throws</span> BeansException &#123;</div><div class="line">		<span class="keyword">final</span> String beanName = transformedBeanName(name);</div><div class="line">		Object bean;</div><div class="line"></div><div class="line">        <span class="comment">// 这里先检查缓存中是否已经有单例对象</span></div><div class="line">		<span class="comment">// Eagerly check singleton cache for manually registered singletons.</span></div><div class="line">		Object sharedInstance = getSingleton(beanName);</div><div class="line">		<span class="keyword">if</span> (sharedInstance != <span class="keyword">null</span> &amp;&amp; args == <span class="keyword">null</span>) &#123;</div><div class="line">			<span class="keyword">if</span> (logger.isDebugEnabled()) &#123;</div><div class="line">			     <span class="comment">// 一些健壮性的代码检查单例对象是否还未完成初始化</span></div><div class="line">				<span class="keyword">if</span> (isSingletonCurrentlyInCreation(beanName)) &#123;</div><div class="line">					logger.debug(<span class="string">"Returning eagerly cached instance of singleton bean '"</span> + beanName +</div><div class="line">							<span class="string">"' that is not fully initialized yet - a consequence of a circular reference"</span>);</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">else</span> &#123;</div><div class="line">					logger.debug(<span class="string">"Returning cached instance of singleton bean '"</span> + beanName + <span class="string">"'"</span>);</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">			<span class="comment">// 如果是单例对象，在这里根据sharedInstance直接返回了，这里包含了一些处理sharedInstance是否是</span></div><div class="line">			<span class="comment">// FactoryBean的逻辑,如果是普通对象直接返回sharedInstance，如果sharedInstance是FactoryBean</span></div><div class="line">			<span class="comment">// 则通过这个FactoryBean来创建一个单例对象返回</span></div><div class="line">			bean = getObjectForBeanInstance(sharedInstance, name, beanName, <span class="keyword">null</span>);</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">else</span> &#123;</div><div class="line">		    <span class="comment">// 多例状态的bean如果正在创建过程中抛出异常，避免循环引用</span></div><div class="line">			<span class="comment">// Fail if we're already creating this bean instance:</span></div><div class="line">			<span class="comment">// We're assumably within a circular reference.</span></div><div class="line">			<span class="keyword">if</span> (isPrototypeCurrentlyInCreation(beanName)) &#123;</div><div class="line">				<span class="keyword">throw</span> <span class="keyword">new</span> BeanCurrentlyInCreationException(beanName);</div><div class="line">			&#125;</div><div class="line"></div><div class="line">            <span class="comment">//判断BeanDefintion是否存在，顺着BeanFactory链条一直往上递归查找</span></div><div class="line">			<span class="comment">// Check if bean definition exists in this factory.</span></div><div class="line">			BeanFactory parentBeanFactory = getParentBeanFactory();</div><div class="line">			<span class="keyword">if</span> (parentBeanFactory != <span class="keyword">null</span> &amp;&amp; !containsBeanDefinition(beanName)) &#123;</div><div class="line">				<span class="comment">// Not found -&gt; check parent.</span></div><div class="line">				String nameToLookup = originalBeanName(name);</div><div class="line">				<span class="keyword">if</span> (args != <span class="keyword">null</span>) &#123;</div><div class="line">					<span class="comment">// Delegation to parent with explicit args.</span></div><div class="line">					<span class="keyword">return</span> (T) parentBeanFactory.getBean(nameToLookup, args);</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">else</span> &#123;</div><div class="line">					<span class="comment">// No args -&gt; delegate to standard getBean method.</span></div><div class="line">					<span class="keyword">return</span> parentBeanFactory.getBean(nameToLookup, requiredType);</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line"></div><div class="line">			<span class="keyword">if</span> (!typeCheckOnly) &#123;</div><div class="line">				markBeanAsCreated(beanName);</div><div class="line">			&#125;</div><div class="line"></div><div class="line">			<span class="keyword">try</span> &#123;</div><div class="line">				<span class="keyword">final</span> RootBeanDefinition mbd = getMergedLocalBeanDefinition(beanName);</div><div class="line">				checkMergedBeanDefinition(mbd, beanName, args);</div><div class="line">                <span class="comment">// 获取当前Bean的所有依赖Bean，同样是递归调用getBean,直到所有依赖都获取到。</span></div><div class="line">				<span class="comment">// Guarantee initialization of beans that the current bean depends on.</span></div><div class="line">				String[] dependsOn = mbd.getDependsOn();</div><div class="line">				<span class="keyword">if</span> (dependsOn != <span class="keyword">null</span>) &#123;</div><div class="line">					<span class="keyword">for</span> (String dependsOnBean : dependsOn) &#123;</div><div class="line">						<span class="keyword">if</span> (isDependent(beanName, dependsOnBean)) &#123;</div><div class="line">							<span class="keyword">throw</span> <span class="keyword">new</span> BeanCreationException(mbd.getResourceDescription(), beanName,</div><div class="line">									<span class="string">"Circular depends-on relationship between '"</span> + beanName + <span class="string">"' and '"</span> + dependsOnBean + <span class="string">"'"</span>);</div><div class="line">						&#125;</div><div class="line">						registerDependentBean(dependsOnBean, beanName);</div><div class="line">						getBean(dependsOnBean);</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line"></div><div class="line">				<span class="comment">// Create bean instance.</span></div><div class="line">				<span class="keyword">if</span> (mbd.isSingleton()) &#123;</div><div class="line">				<span class="comment">// 通过调用createBean 方法创建单例Bean,回调函数则是根据不同实现类来处理createBean的逻辑</span></div><div class="line">					sharedInstance = getSingleton(beanName, <span class="keyword">new</span> ObjectFactory&lt;Object&gt;() &#123;</div><div class="line">						<span class="meta">@Override</span></div><div class="line">						<span class="function"><span class="keyword">public</span> Object <span class="title">getObject</span><span class="params">()</span> <span class="keyword">throws</span> BeansException </span>&#123;</div><div class="line">							<span class="keyword">try</span> &#123;</div><div class="line">								<span class="keyword">return</span> createBean(beanName, mbd, args);</div><div class="line">							&#125;</div><div class="line">							<span class="keyword">catch</span> (BeansException ex) &#123;</div><div class="line">								<span class="comment">// Explicitly remove instance from singleton cache: It might have been put there</span></div><div class="line">								<span class="comment">// eagerly by the creation process, to allow for circular reference resolution.</span></div><div class="line">								<span class="comment">// Also remove any beans that received a temporary reference to the bean.</span></div><div class="line">								destroySingleton(beanName);</div><div class="line">								<span class="keyword">throw</span> ex;</div><div class="line">							&#125;</div><div class="line">						&#125;</div><div class="line">					&#125;);</div><div class="line">					bean = getObjectForBeanInstance(sharedInstance, name, beanName, mbd);</div><div class="line">				&#125;</div><div class="line">                <span class="comment">// 多例Bean的创建</span></div><div class="line">				<span class="keyword">else</span> <span class="keyword">if</span> (mbd.isPrototype()) &#123;</div><div class="line">					<span class="comment">// It's a prototype -&gt; create a new instance.</span></div><div class="line">					Object prototypeInstance = <span class="keyword">null</span>;</div><div class="line">					<span class="keyword">try</span> &#123;</div><div class="line">						beforePrototypeCreation(beanName);</div><div class="line">						prototypeInstance = createBean(beanName, mbd, args);</div><div class="line">					&#125;</div><div class="line">					<span class="keyword">finally</span> &#123;</div><div class="line">						afterPrototypeCreation(beanName);</div><div class="line">					&#125;</div><div class="line">					bean = getObjectForBeanInstance(prototypeInstance, name, beanName, mbd);</div><div class="line">				&#125;</div><div class="line"></div><div class="line">				<span class="keyword">else</span> &#123;</div><div class="line">			        <span class="comment">// ... 省略一部分代码</span></div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">catch</span> (BeansException ex) &#123;</div><div class="line">				cleanupAfterBeanCreationFailure(beanName);</div><div class="line">				<span class="keyword">throw</span> ex;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">        <span class="comment">// 对创建的Bean进行类型检查</span></div><div class="line">		<span class="comment">// Check if required type matches the type of the actual bean instance.</span></div><div class="line">		<span class="keyword">if</span> (requiredType != <span class="keyword">null</span> &amp;&amp; bean != <span class="keyword">null</span> &amp;&amp; !requiredType.isAssignableFrom(bean.getClass())) &#123;</div><div class="line">			<span class="keyword">try</span> &#123;</div><div class="line">				<span class="keyword">return</span> getTypeConverter().convertIfNecessary(bean, requiredType);</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">catch</span> (TypeMismatchException ex) &#123;</div><div class="line">				<span class="keyword">if</span> (logger.isDebugEnabled()) &#123;</div><div class="line">					logger.debug(<span class="string">"Failed to convert bean '"</span> + name + <span class="string">"' to required type ["</span> +</div><div class="line">							ClassUtils.getQualifiedName(requiredType) + <span class="string">"]"</span>, ex);</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">throw</span> <span class="keyword">new</span> BeanNotOfRequiredTypeException(name, requiredType, bean.getClass());</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="comment">// 返回包含了依赖关系的Bean</span></div><div class="line">		<span class="keyword">return</span> (T) bean;</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
+<h1 id="createBean"><a href="#createBean" class="headerlink" title="createBean"></a>createBean</h1><p>重点来说getBean是依赖注入的起点，之后会调用createBean，下面通过createBean源码来了解这个实现过程<br>在<code>AbstractAutowireCapableBeanFactory</code> 中实现了这个createBean，也就是上面的ObjectFactory中getObject回调方法中的createBean，<br>createBean 不但要生成了需要的Bean,还对Bean初始化进行了处理，比如实现了BeanDefinition中的init-method和Bean的后置处理，代码如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> Object <span class="title">createBean</span><span class="params">(String beanName, RootBeanDefinition mbd, Object[] args)</span> <span class="keyword">throws</span> BeanCreationException </span>&#123;</div><div class="line">	<span class="keyword">if</span> (logger.isDebugEnabled()) &#123;</div><div class="line">		logger.debug(<span class="string">"Creating instance of bean '"</span> + beanName + <span class="string">"'"</span>);</div><div class="line">	&#125;</div><div class="line">	RootBeanDefinition mbdToUse = mbd;</div><div class="line"></div><div class="line">       <span class="comment">// 这里判断需要创建的Bean是否可以实例化，这个类是否可以通过类加载来加载</span></div><div class="line">	<span class="comment">// Make sure bean class is actually resolved at this point, and</span></div><div class="line">	<span class="comment">// clone the bean definition in case of a dynamically resolved Class</span></div><div class="line">	<span class="comment">// which cannot be stored in the shared merged bean definition.</span></div><div class="line">	Class&lt;?&gt; resolvedClass = resolveBeanClass(mbd, beanName);</div><div class="line">	<span class="keyword">if</span> (resolvedClass != <span class="keyword">null</span> &amp;&amp; !mbd.hasBeanClass() &amp;&amp; mbd.getBeanClassName() != <span class="keyword">null</span>) &#123;</div><div class="line">		mbdToUse = <span class="keyword">new</span> RootBeanDefinition(mbd);</div><div class="line">		mbdToUse.setBeanClass(resolvedClass);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">// Prepare method overrides.</span></div><div class="line">	<span class="keyword">try</span> &#123;</div><div class="line">		mbdToUse.prepareMethodOverrides();</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">catch</span> (BeanDefinitionValidationException ex) &#123;</div><div class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> BeanDefinitionStoreException(mbdToUse.getResourceDescription(),</div><div class="line">				beanName, <span class="string">"Validation of method overrides failed"</span>, ex);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">try</span> &#123;</div><div class="line">		<span class="comment">// Give BeanPostProcessors a chance to return a proxy instead of the target bean instance.</span></div><div class="line">		<span class="comment">// 如果Bean配置了PostProcessor 那么返回一个代理对象</span></div><div class="line">		Object bean = resolveBeforeInstantiation(beanName, mbdToUse);</div><div class="line">		<span class="keyword">if</span> (bean != <span class="keyword">null</span>) &#123;</div><div class="line">			<span class="keyword">return</span> bean;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">catch</span> (Throwable ex) &#123;</div><div class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> BeanCreationException(mbdToUse.getResourceDescription(), beanName,</div><div class="line">				<span class="string">"BeanPostProcessor before instantiation of bean failed"</span>, ex);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">       <span class="comment">//这里调用真正干活的方法doCreateBean</span></div><div class="line">	Object beanInstance = doCreateBean(beanName, mbdToUse, args);</div><div class="line">	<span class="keyword">if</span> (logger.isDebugEnabled()) &#123;</div><div class="line">		logger.debug(<span class="string">"Finished creating instance of bean '"</span> + beanName + <span class="string">"'"</span>);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> beanInstance;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>具体创建bean的方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> Object <span class="title">doCreateBean</span><span class="params">(<span class="keyword">final</span> String beanName, <span class="keyword">final</span> RootBeanDefinition mbd, <span class="keyword">final</span> Object[] args)</span> </span>&#123;</div><div class="line">		<span class="comment">// Instantiate the bean.</span></div><div class="line">		<span class="comment">// 这个Wrapper是用来持有创建出来的Bean对象的</span></div><div class="line">		BeanWrapper instanceWrapper = <span class="keyword">null</span>;</div><div class="line">		<span class="comment">// 如果是单利则把缓存中的同名的Bean 清除</span></div><div class="line">		<span class="keyword">if</span> (mbd.isSingleton()) &#123;</div><div class="line">			instanceWrapper = <span class="keyword">this</span>.factoryBeanInstanceCache.remove(beanName);</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="comment">// 真正创建Bean的地方，由createBeanInstance来完成</span></div><div class="line">		<span class="keyword">if</span> (instanceWrapper == <span class="keyword">null</span>) &#123;</div><div class="line">			instanceWrapper = createBeanInstance(beanName, mbd, args);</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="comment">// ... 省略部分代码</span></div><div class="line"></div><div class="line">		<span class="comment">// 对Bean进行初始化，依赖注入往往发生在这里，这个exposedObject在初始化完成以后会返回作为依赖注入完成后的Bean</span></div><div class="line">		<span class="comment">// Initialize the bean instance.</span></div><div class="line">		Object exposedObject = bean;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			populateBean(beanName, mbd, instanceWrapper);</div><div class="line">			<span class="keyword">if</span> (exposedObject != <span class="keyword">null</span>) &#123;</div><div class="line">				exposedObject = initializeBean(beanName, exposedObject, mbd);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">catch</span> (Throwable ex) &#123;</div><div class="line">			<span class="keyword">if</span> (ex <span class="keyword">instanceof</span> BeanCreationException &amp;&amp; beanName.equals(((BeanCreationException) ex).getBeanName())) &#123;</div><div class="line">				<span class="keyword">throw</span> (BeanCreationException) ex;</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">else</span> &#123;</div><div class="line">				<span class="keyword">throw</span> <span class="keyword">new</span> BeanCreationException(mbd.getResourceDescription(), beanName, <span class="string">"Initialization of bean failed"</span>, ex);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="comment">// ... 省略部分代码</span></div><div class="line"></div><div class="line">		<span class="keyword">return</span> exposedObject;</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
+<h1 id="createBeanInstance"><a href="#createBeanInstance" class="headerlink" title="createBeanInstance"></a>createBeanInstance</h1><p>在上面可以看到与依赖关系特别密切的方法有createBeanInstace和，populateBean，下面分别介绍着两个方法。<br>在createInstance中生成了Bean所包含的Java对象，这个对象的生成有很多不同方式，可以通过工厂方法，也可以通过容器的autowire特性生成，这些<br>生成方式都是通过BeanDefinition来指定的。源码如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> BeanWrapper <span class="title">createBeanInstance</span><span class="params">(String beanName, RootBeanDefinition mbd, Object[] args)</span> </span>&#123;</div><div class="line">		<span class="comment">// Make sure bean class is actually resolved at this point.</span></div><div class="line">		    <span class="comment">// 确保所创建的Bean可以实例化</span></div><div class="line">		Class&lt;?&gt; beanClass = resolveBeanClass(mbd, beanName);</div><div class="line">		<span class="keyword">if</span> (beanClass != <span class="keyword">null</span> &amp;&amp; !Modifier.isPublic(beanClass.<span class="function">getMo</span></div><div class="line"><span class="title">difiers</span><span class="params">()</span>) &amp;&amp; !mbd.<span class="title">isNonPublicAccessAllowed</span><span class="params">()</span>) &#123;</div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> BeanCreationException(mbd.getResourceDescription(), beanName,</div><div class="line">					<span class="string">"Bean class isn't public, and non-public access not allowed: "</span> + beanClass.getName());</div><div class="line">		&#125;</div><div class="line"></div><div class="line">      <span class="comment">// 如果BeanDefinition有工厂方法配置，则用工厂方法模式创建对象</span></div><div class="line">		<span class="keyword">if</span> (mbd.getFactoryMethodName() != <span class="keyword">null</span>)  &#123;</div><div class="line">			<span class="keyword">return</span> instantiateUsingFactoryMethod(beanName, mbd, args);</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="comment">// Shortcut when re-creating the same bean...</span></div><div class="line">		<span class="keyword">boolean</span> resolved = <span class="keyword">false</span>;</div><div class="line">		<span class="keyword">boolean</span> autowireNecessary = <span class="keyword">false</span>;</div><div class="line">		<span class="keyword">if</span> (args == <span class="keyword">null</span>) &#123;</div><div class="line">			<span class="keyword">synchronized</span> (mbd.constructorArgumentLock) &#123;</div><div class="line">				<span class="keyword">if</span> (mbd.resolvedConstructorOrFactoryMethod != <span class="keyword">null</span>) &#123;</div><div class="line">					resolved = <span class="keyword">true</span>;</div><div class="line">					autowireNecessary = mbd.constructorArgumentsResolved;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (resolved) &#123;</div><div class="line">			<span class="keyword">if</span> (autowireNecessary) &#123;</div><div class="line">				<span class="keyword">return</span> autowireConstructor(beanName, mbd, <span class="keyword">null</span>, <span class="keyword">null</span>);</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">else</span> &#123;</div><div class="line">				<span class="keyword">return</span> instantiateBean(beanName, mbd);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">        <span class="comment">// 使用构造函数进行实例化</span></div><div class="line">		<span class="comment">// Need to determine the constructor...</span></div><div class="line">		Constructor&lt;?&gt;[] ctors = determineConstructorsFromBeanPostProcessors(beanClass, beanName);</div><div class="line">		<span class="keyword">if</span> (ctors != <span class="keyword">null</span> ||</div><div class="line">				mbd.getResolvedAutowireMode() == RootBeanDefinition.AUTOWIRE_CONSTRUCTOR ||</div><div class="line">				mbd.hasConstructorArgumentValues() || !ObjectUtils.isEmpty(args))  &#123;</div><div class="line">			<span class="keyword">return</span> autowireConstructor(beanName, mbd, ctors, args);</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="comment">// No special handling: simply use no-arg constructor.</span></div><div class="line">		<span class="comment">// 使用默认的实例化策略对Bean进行实例化，也就是使用CGLIB对Bean进行实例化</span></div><div class="line">		<span class="keyword">return</span> instantiateBean(beanName, mbd);</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
+<p>最后面使用CGLIB对Bean进行实例化。CGLIB是一个常用的字节码生成器类库，他提供了一些API来提供生成和转换Java的字节码功能。<br>在Spring AOP中也使用CGLIB对Java的字节码进行增强。要了解怎样使用CGLIB来生成Bean对象，需要看下<code>SimpleInstantitionStrategy</code>类的源码<br>这个策略是Spring用来生成Bean对象的默认类，它提供了两种实例化Java对象的方法，一种是BeanUtils,通过反射功能来实例化对象，一种是通过CGLIB来生成</p>
+<h1 id="populateBean"><a href="#populateBean" class="headerlink" title="populateBean"></a>populateBean</h1><p>上面个介绍了Bean对象的生成，在Bean对象生成完成以后，怎样把Bean的依赖对象的关系设置好，完成整个依赖注入过程。就是上面提到了populateBean方法，<br>这里代码优点多不贴了。总之是对各种数据类型的依赖进行注入。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://item.jd.com/10922251.html" target="_blank" rel="external">《Spring 技术内幕-深入理解SPring架构与设计原理第二版》</a></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+
+        
+        原创文章，转载请注明： 转载Tanwei的技术博客,原文地址:<a href="/2014/02/13/Spring 依赖注入源码分析/" target="_blank" rel="external">http://blog.vnicers.com/2014/02/13/Spring 依赖注入源码分析/</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.vnicers.com">
+            <img src="/img/avatar.jpg" alt="Tanwei">
+            Tanwei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/">Spring</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.vnicers.com/2014/02/13/Spring 依赖注入源码分析/&title=《Spring 依赖注入源码分析》 — Tanwei的个人技术博客&pic=http://blog.vnicers.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.vnicers.com/2014/02/13/Spring 依赖注入源码分析/&title=《Spring 依赖注入源码分析》 — Tanwei的个人技术博客&source=暂时没有好描述自己的。。。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.vnicers.com/2014/02/13/Spring 依赖注入源码分析/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Spring 依赖注入源码分析》 — Tanwei的个人技术博客&url=http://blog.vnicers.com/2014/02/13/Spring 依赖注入源码分析/&via=http://blog.vnicers.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.vnicers.com/2014/02/13/Spring 依赖注入源码分析/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2014/02/13/在Bean操作IoC容器/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">在Bean中操作IoC容器</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2014/02/04/Spring IOC 容器/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Spring IOC 容器</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitment_thread"></div>
+    <link rel="stylesheet" href="//unpkg.com/gitment/style/default.css">
+    <script src="//unpkg.com/gitment/dist/gitment.browser.js"></script>
+    <script>
+        var gitment = new Gitment({
+            owner: 'vnice',
+            repo: 'vnice.github.io',
+            oauth: {
+                client_id: '62766e3f34a27536afe0',
+                client_secret: '1d9c1d04b0b892eedeffbbaac9c978b17fec0b4f',
+            },
+        })
+        gitment.render('comments')
+    </script>
+</section>
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Tanwei &copy; 2014 - 2017</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.vnicers.com/2014/02/13/Spring 依赖注入源码分析/&title=《Spring 依赖注入源码分析》 — Tanwei的个人技术博客&pic=http://blog.vnicers.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.vnicers.com/2014/02/13/Spring 依赖注入源码分析/&title=《Spring 依赖注入源码分析》 — Tanwei的个人技术博客&source=暂时没有好描述自己的。。。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.vnicers.com/2014/02/13/Spring 依赖注入源码分析/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Spring 依赖注入源码分析》 — Tanwei的个人技术博客&url=http://blog.vnicers.com/2014/02/13/Spring 依赖注入源码分析/&via=http://blog.vnicers.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.vnicers.com/2014/02/13/Spring 依赖注入源码分析/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACq0lEQVR42u3aQZIiMQwEQP7/6dnL3hh6q2Rrg0P2iQDadpqIlpD8esXXz+P1/p33e99ff7ormevyhYeHh/dflv48Zf5pO2O9BXh4eHhrvE+LOBo6puakfM14eHh438NLEugk/X3GnHwTDw8P7zt5z0HiZAueR8PDw8P7Hl6y0DYAtCnyc4K+XmvBw8PDW+gifc/rlf4eHh4e3nFXPU9t83fakWfr/HsvHh4e3gIvf+DmhdS7d7XpMh4eHt4276SAe9LEyssceVH4l3fw8PDw1njPyWuCydPlfMzZjK92uXh4eHiXekPDJn25oDy0tGULPDw8vD1evsRZwyyHJYl7srnDXwAPDw+v7LPnj+k82uTjtMcU6g3Cw8PDu8rbCAztmO2RgqL4i4eHh7fMyw881WcTyhS83ax/nCnDw8PDW+PN/tEn+JMac7LR9ckIPDw8vANenqS2j+nZCEnRoS1n4OHh4e3xTkoGbRp9vmUFCQ8PD2+Blyeye4cDbo1ZRDw8PDy8EW82fV60PS8NJ4yPPwYeHh7eAi8vuZ60ypJ38rlm5WA8PDy8u7x8mjwMtOPU/wPi4gUeHh7eXd5s4qTAmgeG+hBAnnzj4eHhLfPO2/kn7as8PBRbgIeHh7fAuxUSZm2tPGy0LbGoDYaHh4d3iRe1kYKH8iwwtEHiWtMLDw8P7xJv2EMbFSaST/M1RIEBDw8P7xLvVoNqljqfF3B/uQsPDw/vKu+nvBJMngTfapt93FY8PDy8BV5+nZd0944mtI09PDw8vHPeeTBoSwntdpwcLMDDw8Pb481KsW2Dqi1SvMoLDw8P7zt5s+JvPmb7aVSlxsPDw/sy3nm6nB9BaIsgeHh4eHu82dGBpJx67YxDecALDw8Pb483GyJZRJuUX+jUzS48PDy89PoDXZYDJ8tMvvQAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

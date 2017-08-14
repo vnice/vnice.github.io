@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>Linux 集群软件安装 | Tanwei的个人技术博客 | 仰望大神不如退而求索</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Linux">
+    <meta name="description" content="需求 之前公司需要将某个系统部署切换到Linux 上部署多台，当时是两台Oracle Linux ，软件的安装让我来负责，刚开始就是一台一台的弄，感觉有点傻，还好是两台，如果是集群，那不得累死人。所以趁休息这个机会在家捣鼓一下，如果使用一台机器同时控制多台机器部署软件。  下面我直接使用MAC 机器下的5台CentOS7 来测试，内存还算给力。这5台机器全部是Centos7 mini 版安装。使用">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux 集群软件安装">
+<meta property="og:url" content="http://blog.vnicers.com/2017/07/05/Linux 集群软件安装/index.html">
+<meta property="og:site_name" content="Tanwei的个人技术博客">
+<meta property="og:description" content="需求 之前公司需要将某个系统部署切换到Linux 上部署多台，当时是两台Oracle Linux ，软件的安装让我来负责，刚开始就是一台一台的弄，感觉有点傻，还好是两台，如果是集群，那不得累死人。所以趁休息这个机会在家捣鼓一下，如果使用一台机器同时控制多台机器部署软件。  下面我直接使用MAC 机器下的5台CentOS7 来测试，内存还算给力。这5台机器全部是Centos7 mini 版安装。使用">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/818b7fe3gy1fidmmq8et6j21hb0tzwno.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/818b7fe3gy1fidpjgvuwzj20fl06374q.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/818b7fe3gy1fidqq8nceyj20pw0h9q7o.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/818b7fe3gy1fidrgzj09ij20hf0dtdk7.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/818b7fe3gy1fidrycw4zyj206y06y0so.jpg">
+<meta property="og:updated_time" content="2017-08-09T15:28:37.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux 集群软件安装">
+<meta name="twitter:description" content="需求 之前公司需要将某个系统部署切换到Linux 上部署多台，当时是两台Oracle Linux ，软件的安装让我来负责，刚开始就是一台一台的弄，感觉有点傻，还好是两台，如果是集群，那不得累死人。所以趁休息这个机会在家捣鼓一下，如果使用一台机器同时控制多台机器部署软件。  下面我直接使用MAC 机器下的5台CentOS7 来测试，内存还算给力。这5台机器全部是Centos7 mini 版安装。使用">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/818b7fe3gy1fidmmq8et6j21hb0tzwno.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="Tanwei的个人技术博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Tanwei</h5>
+          <a href="mailto:vnicers@gmail.com" title="vnicers@gmail.com" class="mail">vnicers@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                专题
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.hxjx360.com" target="_blank" >
+                <i class="icon icon-lg icon-dollar"></i>
+                理财
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/vnice" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Linux 集群软件安装</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Linux 集群软件安装</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-07-04T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2017-07-05
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#需求"><span class="post-toc-number">1.</span> <span class="post-toc-text">需求</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#寻找工具"><span class="post-toc-number">2.</span> <span class="post-toc-text">寻找工具</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#下载pssh"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">下载pssh</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#执行命令测试，所有命令如下"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">执行命令测试，所有命令如下</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#测试安装软件"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">测试安装软件</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-Linux 集群软件安装"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Linux 集群软件安装</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-07-05 00:00:00" datetime="2017-07-04T16:00:00.000Z"  itemprop="datePublished">2017-07-05</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><blockquote>
+<p>之前公司需要将某个系统部署切换到Linux 上部署多台，当时是两台Oracle Linux ，软件的安装让我来负责，刚开始就是一台一台的弄，感觉有点傻，还好是两台，如果是集群，那不得累死人。所以趁休息这个机会在家捣鼓一下，如果使用一台机器同时控制多台机器部署软件。</p>
+</blockquote>
+<p>下面我直接使用MAC 机器下的5台CentOS7 来测试，内存还算给力。这5台机器全部是Centos7 mini 版安装。使用第5台机器来控制剩下的4台同时安装软件。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fidmmq8et6j21hb0tzwno.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h1 id="寻找工具"><a href="#寻找工具" class="headerlink" title="寻找工具"></a>寻找工具</h1><p>在经过一番Google和知乎上搜索知乎，别人推荐使用pssh 工具来安装。pssh 意思是 parallel ssh program 一个python编写可以在多台服务器上执行命令的工具，同时支持拷贝文件，是同类工具中很出色的，类似<a href="http://kumu-linux.github.io/blog/2013/06/19/pdsh/" target="_blank" rel="external">pdsh</a>使用方法 。为方便操作，使用前请在各个服务器上配置好密钥认证访问。项目地址: <a href="https://code.google.com/p/parallel-ssh/" target="_blank" rel="external">parallel-ssh</a> (代码托管在google code 需要翻墙)</p>
+<h2 id="下载pssh"><a href="#下载pssh" class="headerlink" title="下载pssh"></a>下载pssh</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">wget http://parallel-ssh.googlecode.com/files/pssh-2.3.1.tar.gz</div><div class="line">tar zxvf pssh-2.3.1.tar.gz</div><div class="line"><span class="built_in">cd</span> pssh-2.3.1/</div><div class="line">python setup.py install</div></pre></td></tr></table></figure>
+<p>python 在centos mini版本中已经存在。所以不需要安装python</p>
+<p>首先保证这5台机器网络是通的。<br>在操作的机器上新建立一个host.txt文件里面存放其他需要安装软件的机器配置如下。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fidpjgvuwzj20fl06374q.jpg" alt="host.txt" title="">
+                </div>
+                <div class="image-caption">host.txt</div>
+            </figure>
+<h2 id="执行命令测试，所有命令如下"><a href="#执行命令测试，所有命令如下" class="headerlink" title="执行命令测试，所有命令如下"></a>执行命令测试，所有命令如下</h2><pre><code>-h 执行命令的远程主机列表,文件内容格式[user@]host[:port]
+如 test@172.16.10.10:229
+-H 执行命令主机，主机格式 user@ip:port
+-l 远程机器的用户名
+-p 一次最大允许多少连接
+-P 执行时输出执行信息
+-o 输出内容重定向到一个文件
+-e 执行错误重定向到一个文件
+-t 设置命令执行超时时间
+-A 提示输入密码并且把密码传递给ssh(如果私钥也有密码也用这个参数)
+-O 设置ssh一些选项
+-x 设置ssh额外的一些参数，可以多个，不同参数间空格分开
+-X 同-x,但是只能设置一个参数
+-i 显示标准输出和标准错误在每台host执行完毕后
+</code></pre><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pssh -P -A -i -h host.txt -e error  uptime</div></pre></td></tr></table></figure>
+<p>执行上面的命令会报错 Exited with error code 255 这是因为pssh的一个<a href="https://code.google.com/archive/p/parallel-ssh/issues/80" target="_blank" rel="external">bug</a><br>没有传递接收秘钥的信息给命令执行者，所以后面根本没办法执行命令。你可以先手动ssh单独一台机器接受ssh fingerprint 再看看效果，如下图 </p>
+<p>  <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fidqq8nceyj20pw0h9q7o.jpg" alt=""></p>
+<p>  我先手动ssh 连接到了10.211.55.10这台机器，接受了fingerprint yes,然后执行了命令，其他没接受的全部抱错，但是这台机uptime命令执行成功，如果机器数量较小的话，可以先手动ssh 连接一下。<br>  如果机器数量众多，可以安装keychina工具<a href="https://unix.stackexchange.com/questions/128974/parallel-ssh-with-passphrase-protected-ssh-key" target="_blank" rel="external">参考这篇文章</a><br>  然后我这边没有试验，因为CentOS 7环境中的keychina工具在rpm中无法直接下载。需要手动build一个，太麻烦了。</p>
+<p>  下图显示在四台机器中执行w命令<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fidrgzj09ij20hf0dtdk7.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<h2 id="测试安装软件"><a href="#测试安装软件" class="headerlink" title="测试安装软件"></a>测试安装软件</h2><pre><code>发现一个很扯淡的问题。凡是遇到需要手动接收yes/no的地方全部处理失败
+</code></pre><p>   <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fidrycw4zyj206y06y0so.jpg" alt=""></p>
+<p>   不过同时执行一些普通命令还是有效的。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+
+        
+        原创文章，转载请注明： 转载Tanwei的技术博客,原文地址:<a href="/2017/07/05/Linux 集群软件安装/" target="_blank" rel="external">http://blog.vnicers.com/2017/07/05/Linux 集群软件安装/</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.vnicers.com">
+            <img src="/img/avatar.jpg" alt="Tanwei">
+            Tanwei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.vnicers.com/2017/07/05/Linux 集群软件安装/&title=《Linux 集群软件安装》 — Tanwei的个人技术博客&pic=http://blog.vnicers.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.vnicers.com/2017/07/05/Linux 集群软件安装/&title=《Linux 集群软件安装》 — Tanwei的个人技术博客&source=暂时没有好描述自己的。。。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.vnicers.com/2017/07/05/Linux 集群软件安装/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Linux 集群软件安装》 — Tanwei的个人技术博客&url=http://blog.vnicers.com/2017/07/05/Linux 集群软件安装/&via=http://blog.vnicers.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.vnicers.com/2017/07/05/Linux 集群软件安装/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/07/27/关于此博客/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">关于此博客</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/07/02/使用DigitalOcean搭建科学上网服务/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">使用DigitalOcean搭建科学上网服务</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitment_thread"></div>
+    <link rel="stylesheet" href="//unpkg.com/gitment/style/default.css">
+    <script src="//unpkg.com/gitment/dist/gitment.browser.js"></script>
+    <script>
+        var gitment = new Gitment({
+            owner: 'vnice',
+            repo: 'vnice.github.io',
+            oauth: {
+                client_id: '62766e3f34a27536afe0',
+                client_secret: '1d9c1d04b0b892eedeffbbaac9c978b17fec0b4f',
+            },
+        })
+        gitment.render('comments')
+    </script>
+</section>
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Tanwei &copy; 2014 - 2017</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.vnicers.com/2017/07/05/Linux 集群软件安装/&title=《Linux 集群软件安装》 — Tanwei的个人技术博客&pic=http://blog.vnicers.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.vnicers.com/2017/07/05/Linux 集群软件安装/&title=《Linux 集群软件安装》 — Tanwei的个人技术博客&source=暂时没有好描述自己的。。。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.vnicers.com/2017/07/05/Linux 集群软件安装/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Linux 集群软件安装》 — Tanwei的个人技术博客&url=http://blog.vnicers.com/2017/07/05/Linux 集群软件安装/&via=http://blog.vnicers.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.vnicers.com/2017/07/05/Linux 集群软件安装/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKUlEQVR42u3aQY7jMAwEwPn/pzPAnhaYWadbUhYwXToFtmOofCBIkV9f8Xr9WT+v/H29vZI8f3hhYGDclvG6XP96Jv/vzw+R383fj4GB8QTGdZA9C0vu5nvDwMDAWHum/X39sTAwMDDWGEkieJ0CXtehGBgYGGtF7KnjuQTzwVocAwPjhox2W//z9wf7GxgYGDdhvMrVNibzxC5/2y/vx8DAGM1IjvjbBK59ph2zKDJcDAyMQYw248rxebDebyFgYGBMZWwpy7GJtTGL6PNhYGA8gLETENtN7LRIo1ocAwNjHKMNtQm7vb42kLFV42JgYNyKsbOhtsGZV9VtiomBgTGb0R7rr42C7bQwi9YFBgbGUMapA/od2P5gBwYGxmxGG/LyjRbDEGWi+WZXGBgY4xjXgSwPgm14bQfFFmtxDAyMQYydhGxtLOxwQYuBgTGakQ831EFw4+i/HrDAwMB4GGOtDZBsInnb2vEcBgbGExj5WEOe5CXBNwnfRaMCAwNjKGMnLLbp3VoWF304DAyMRzJy3tq/2je8CdMYGBijGcnwRFuyJu9ZG8XI258YGBiTGK9y7dTKp9qlUWqIgYExiHFqqPTUmNfO8R8GBsZsRjtm0Ya/fPyiBW9Ni2BgYNyQcbZw/VxZG02LYGBgPJjRHtYn1DwQF2NhGBgYGGUpmxe3ySEaBgbGkxmnQmebAuZh9027AgMDYzSjbQzsjE0kwffs2BkGBsbNGd9CjqOJi0/XvgAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

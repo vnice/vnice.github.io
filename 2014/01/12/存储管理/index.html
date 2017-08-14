@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>存储管理 | Tanwei的个人技术博客 | 仰望大神不如退而求索</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="操作系统">
+    <meta name="description" content="逻辑地址和绝对地址 绝地地址：主存储器以字节为编址单位，容量为n的主存储器中，每个单元有唯一的编号，从0到n-1这个唯一的编号就是主存储器的物理地址。逻辑地址：在多道程序设计地址中，操作系统为了方便用户，就允许每个用户都认为自己的作业程序和数据都是存放在地址是0开始的连续地址空间中。这样用户程序中使用的地址就是逻辑地址。  重定位(地址转换)  为了保证作业的连续执行，必须根据分配给作业的主存空间">
+<meta name="keywords" content="操作系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="存储管理">
+<meta property="og:url" content="http://blog.vnicers.com/2014/01/12/存储管理/index.html">
+<meta property="og:site_name" content="Tanwei的个人技术博客">
+<meta property="og:description" content="逻辑地址和绝对地址 绝地地址：主存储器以字节为编址单位，容量为n的主存储器中，每个单元有唯一的编号，从0到n-1这个唯一的编号就是主存储器的物理地址。逻辑地址：在多道程序设计地址中，操作系统为了方便用户，就允许每个用户都认为自己的作业程序和数据都是存放在地址是0开始的连续地址空间中。这样用户程序中使用的地址就是逻辑地址。  重定位(地址转换)  为了保证作业的连续执行，必须根据分配给作业的主存空间">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-08-06T07:50:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="存储管理">
+<meta name="twitter:description" content="逻辑地址和绝对地址 绝地地址：主存储器以字节为编址单位，容量为n的主存储器中，每个单元有唯一的编号，从0到n-1这个唯一的编号就是主存储器的物理地址。逻辑地址：在多道程序设计地址中，操作系统为了方便用户，就允许每个用户都认为自己的作业程序和数据都是存放在地址是0开始的连续地址空间中。这样用户程序中使用的地址就是逻辑地址。  重定位(地址转换)  为了保证作业的连续执行，必须根据分配给作业的主存空间">
+    
+        <link rel="alternate" type="application/atom+xml" title="Tanwei的个人技术博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Tanwei</h5>
+          <a href="mailto:vnicers@gmail.com" title="vnicers@gmail.com" class="mail">vnicers@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                专题
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.hxjx360.com" target="_blank" >
+                <i class="icon icon-lg icon-dollar"></i>
+                理财
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/vnice" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">存储管理</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">存储管理</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2014-01-11T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2014-01-12
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#逻辑地址和绝对地址"><span class="post-toc-number">1.</span> <span class="post-toc-text">逻辑地址和绝对地址</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#重定位-地址转换"><span class="post-toc-number">2.</span> <span class="post-toc-text">重定位(地址转换)</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#固定分区存储管理的原理"><span class="post-toc-number">3.</span> <span class="post-toc-text">固定分区存储管理的原理</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#存储保护的目的，如何实现存储保护"><span class="post-toc-number">4.</span> <span class="post-toc-text">存储保护的目的，如何实现存储保护</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#提高主存空间的利用率的方法"><span class="post-toc-number">5.</span> <span class="post-toc-text">提高主存空间的利用率的方法</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#主存的分配与回收"><span class="post-toc-number">6.</span> <span class="post-toc-text">主存的分配与回收</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#常用的分配算法"><span class="post-toc-number">7.</span> <span class="post-toc-text">常用的分配算法</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#地址转换和存储保护"><span class="post-toc-number">8.</span> <span class="post-toc-text">地址转换和存储保护</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#作业的移动"><span class="post-toc-number">9.</span> <span class="post-toc-text">作业的移动</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#虚拟存储器"><span class="post-toc-number">10.</span> <span class="post-toc-text">虚拟存储器</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#虚拟存储器的实现原理"><span class="post-toc-number">11.</span> <span class="post-toc-text">虚拟存储器的实现原理</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#分页式虚拟存储器的实现"><span class="post-toc-number">12.</span> <span class="post-toc-text">分页式虚拟存储器的实现</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#常见的页面调度算法"><span class="post-toc-number">13.</span> <span class="post-toc-text">常见的页面调度算法</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-存储管理"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">存储管理</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2014-01-12 00:00:00" datetime="2014-01-11T16:00:00.000Z"  itemprop="datePublished">2014-01-12</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="逻辑地址和绝对地址"><a href="#逻辑地址和绝对地址" class="headerlink" title="逻辑地址和绝对地址"></a>逻辑地址和绝对地址</h1><blockquote>
+<p>绝地地址：主存储器以字节为编址单位，容量为n的主存储器中，每个单元有唯一的编号，从0到n-1这个唯一的编号就是主存储器的物理地址。<br>逻辑地址：在多道程序设计地址中，操作系统为了方便用户，就允许每个用户都认为自己的作业程序和数据都是存放在地址是0开始的连续地址空间中。这样用户程序中使用的地址就是逻辑地址。</p>
+</blockquote>
+<h1 id="重定位-地址转换"><a href="#重定位-地址转换" class="headerlink" title="重定位(地址转换)"></a>重定位(地址转换)</h1><blockquote>
+<p> 为了保证作业的连续执行，必须根据分配给作业的主存空间对作业中的指令和数据的存放地址进行转换，这种把相对地址转化成绝对地址的工作成为重定位或者是地址转换。重定位的方式有静态重定位和动态重定位方式。</p>
+</blockquote>
+<pre><code>①静态重定位：在装入一个作业时，将一个作业中的指令地址和数据地址全部转换成绝对地址，这种转换工作是在作业开始前集中完成的。在作业执行过程中无需执行地址转换
+②动态重定位：在装入一个作业时，不进行地址转换，而是把作业装到分配的主区域中。在作业的执行过程中，每当执行一条指令时都由硬件的地址转化机构转换成绝对地址，这种方式的地址转换工作是在作业执行时动态完成的。动态重定向由操作系统和硬件的地址转化机相互配合来实现。动态重定向的系统支持程序浮动，而静态重定向不能。
+</code></pre><h1 id="固定分区存储管理的原理"><a href="#固定分区存储管理的原理" class="headerlink" title="固定分区存储管理的原理"></a>固定分区存储管理的原理</h1><blockquote>
+<p>固定分区的意思是指主存空间划分成若干连续区后，这些分区的大小和个数固定不变。固定分区管理利用一张“主存分配表” 来说明各分区的情况。装入和结束作业均通过这个分区表来记录分区的使用变化。</p>
+</blockquote>
+<h1 id="存储保护的目的，如何实现存储保护"><a href="#存储保护的目的，如何实现存储保护" class="headerlink" title="存储保护的目的，如何实现存储保护"></a>存储保护的目的，如何实现存储保护</h1><blockquote>
+<p>为了实现存储保护，处理器设置了一对寄存器，即”下限寄存器“和”上限寄存器“，当一个已经装入主存储器的作业得到处理器运行时，进程调度应记录当前运行作业所在的分区号，且把该分区的下限地址和上线地址分别送入下限寄存器和上线寄存器，处理器执行作业时，对每条指令中的地址都要核对，满足下限地址≤绝对地址≤上限地址，如果不成立，则为了防止破坏其他分区的信息，硬件产生地址越界中断事件，停止该指令，达到存储保护的目的。</p>
+</blockquote>
+<h1 id="提高主存空间的利用率的方法"><a href="#提高主存空间的利用率的方法" class="headerlink" title="提高主存空间的利用率的方法"></a>提高主存空间的利用率的方法</h1><pre><code>①分区按照大小顺序排列，这样能使作业总是先满足要求最小分区。
+②按照经常出现的作业大小和频率划分分区
+③按照作业对主存空间的需求量排成多个队列，规定队列与分区的对应关系。也就是多大的作业只能放在多大的分区里面，就算有更大的分区空着，也不许进入。
+</code></pre><h1 id="主存的分配与回收"><a href="#主存的分配与回收" class="headerlink" title="主存的分配与回收"></a>主存的分配与回收</h1><blockquote>
+<p> 在系统初始化时，主存除了操作系统所占部分外，整个用户区是一个大的空闲区，可以按照作业需要的空间大小顺序分配空闲空间直到不够为止。当作业结束时，它所占用的分区被回收。这个空闲区又可以根据新作业的大小重新由于分配，所以主存中已占分区和空闲区的数目的大小是在 变化的。可以在两张已分配表和空闲区表来记录和管理。</p>
+</blockquote>
+<h1 id="常用的分配算法"><a href="#常用的分配算法" class="headerlink" title="常用的分配算法"></a>常用的分配算法</h1><pre><code>最先适配分配算法：简单的说，就是在分区表中顺序查找，找到够大的空闲区分配，但是这样的分配算可能形成许多不连续的空闲区，造成许多碎片，使空间使用率降低。
+最优适应分配算法：这种算法总是挑选一个能满足作业要求的最小空闲区，但是这种算法肯能形成一些极小的空闲区，以致装入大作业时无法使用，会影响主存的使用率。
+最坏适应分配算法：这种算法和上面的算法刚好相反，它总是挑一个最大的空闲区分给作业使用，使剩下的空间不至于太小。
+</code></pre><h1 id="地址转换和存储保护"><a href="#地址转换和存储保护" class="headerlink" title="地址转换和存储保护"></a>地址转换和存储保护</h1><blockquote>
+<p>采用可变分区管理时，一般采用动态重定位方式装入作业，也就是每读一条指令，都要变化一次地址，变换要靠硬件支持，主要是两个寄存器：基址寄存器和限长寄存器，限长寄存器存放作业所占分区的长度，基址寄存器则存放作业所占分区的起始位置，这两个值确定了一个分区的位置和大小。转换时根据逻辑地址与限长地址比较，如果没有超过，这个值，表示访问地址合法，再加上基址寄存器中的值，就得到了绝对地址，否则形成”地址越界“的中断，达到存储保护的目的。对于共享程序，则硬件提供两组限长寄存器和基址寄存器，访问时对访问共享区和作业的地址分别进行转换。</p>
+</blockquote>
+<h1 id="作业的移动"><a href="#作业的移动" class="headerlink" title="作业的移动"></a>作业的移动</h1><blockquote>
+<p>移动技术要”移动”的是主存空间中的作业，把某个作业移动到另一处的主存空间去（磁盘处理中应用的也是类似的移动技术），这样最大的好处就是合并一些空闲区。但是移动会增加系统的开销，所以尽量少移动，如果作业正在执行的过程中，正等待外围设备传输信息，就不能移动。</p>
+</blockquote>
+<h1 id="虚拟存储器"><a href="#虚拟存储器" class="headerlink" title="虚拟存储器"></a>虚拟存储器</h1><blockquote>
+<p> 虚拟存储器为了扩大主存容量而采取的一种设计手段，它利用作业在只装入部分信息时可以执行的特点，和程序执行中表现出来的的局部特性，借助于大容量的辅助存储器实现小主存空间容纳大逻辑地址空间的作业。</p>
+</blockquote>
+<h1 id="虚拟存储器的实现原理"><a href="#虚拟存储器的实现原理" class="headerlink" title="虚拟存储器的实现原理"></a>虚拟存储器的实现原理</h1><blockquote>
+<p>首先把作业信息保留在磁盘上，当作业请求装入时，只将其中一部分装入主存，作业执行中，若要访问信息不再主存中，则再设法将这些信息装入主存。</p>
+</blockquote>
+<h1 id="分页式虚拟存储器的实现"><a href="#分页式虚拟存储器的实现" class="headerlink" title="分页式虚拟存储器的实现"></a>分页式虚拟存储器的实现</h1><blockquote>
+<p>页式虚拟存储管理器是在页式存储管理的基础上实现的，首先把作业信息作为副本存放到磁盘上，作业执行时，将作业的部分信息装入主存储器，作业执行时，若所访问的页面已经在主存中，则进行地址转换，得到绝对地址，否则产生“缺页中断”，由操作系统将所缺的页面加载到主存。</p>
+</blockquote>
+<h1 id="常见的页面调度算法"><a href="#常见的页面调度算法" class="headerlink" title="常见的页面调度算法"></a>常见的页面调度算法</h1><blockquote>
+<p>当主页中无空闲块时，为了装入一个页面，就必须按照某种算法将主存中的某个页面调出，调入所需装入的页面，这就是页面调度，常用的算法有：先进先出算法(FIFO)，最近最久未使用算法(LRU)，和最近最不常用的调度算法(LFU)。</p>
+</blockquote>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+
+        
+        原创文章，转载请注明： 转载Tanwei的技术博客,原文地址:<a href="/2014/01/12/存储管理/" target="_blank" rel="external">http://blog.vnicers.com/2014/01/12/存储管理/</a>
+        
+    </div>
+    <footer>
+        <a href="http://blog.vnicers.com">
+            <img src="/img/avatar.jpg" alt="Tanwei">
+            Tanwei
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/操作系统/">操作系统</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.vnicers.com/2014/01/12/存储管理/&title=《存储管理》 — Tanwei的个人技术博客&pic=http://blog.vnicers.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.vnicers.com/2014/01/12/存储管理/&title=《存储管理》 — Tanwei的个人技术博客&source=暂时没有好描述自己的。。。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.vnicers.com/2014/01/12/存储管理/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《存储管理》 — Tanwei的个人技术博客&url=http://blog.vnicers.com/2014/01/12/存储管理/&via=http://blog.vnicers.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.vnicers.com/2014/01/12/存储管理/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2014/02/01/Spring 基本概念/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Spring 基本概念</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2014/01/11/处理器管理/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">处理器管理</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitment_thread"></div>
+    <link rel="stylesheet" href="//unpkg.com/gitment/style/default.css">
+    <script src="//unpkg.com/gitment/dist/gitment.browser.js"></script>
+    <script>
+        var gitment = new Gitment({
+            owner: 'vnice',
+            repo: 'vnice.github.io',
+            oauth: {
+                client_id: '62766e3f34a27536afe0',
+                client_secret: '1d9c1d04b0b892eedeffbbaac9c978b17fec0b4f',
+            },
+        })
+        gitment.render('comments')
+    </script>
+</section>
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Tanwei &copy; 2014 - 2017</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.vnicers.com/2014/01/12/存储管理/&title=《存储管理》 — Tanwei的个人技术博客&pic=http://blog.vnicers.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.vnicers.com/2014/01/12/存储管理/&title=《存储管理》 — Tanwei的个人技术博客&source=暂时没有好描述自己的。。。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.vnicers.com/2014/01/12/存储管理/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《存储管理》 — Tanwei的个人技术博客&url=http://blog.vnicers.com/2014/01/12/存储管理/&via=http://blog.vnicers.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.vnicers.com/2014/01/12/存储管理/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACK0lEQVR42u3aQZKDMAwFUe5/aeYAEzz9JZgKcnuVSpHgx0LIko4Dr/PX4teTK9NfFZcMGTJeyziXa83gt1z/dv15vTcZMmTswyChkGydBM2ra/hjkiFDhgyy9XVKR4J1GohlyJAhI2WQI+56018RcGXIkPEqBjnEdkpsKfLBs7gMGTJeyODFsv///Eh/Q4YMGa9inOHiwbHWcijuSoYMGaMZ96Z9tWbkbcMcMmTIGMrg4xQ8UKbb4sH3SP9ChgwZgxjr5O+5tK8zePFHhitDhoxxjFobkgfWGza6DtYyZMgYzSAjF+QIWgum5DGleaAMGTJmM9JL+3U+8jhubm3KkCHjhYzOIZaX/kkKmA6HfchwZciQMZRx10BYLbD2G6UyZMjYh8FLbLXGZLpdvgf0/GTIkDGakRbuOTUtt6H3gwwZMoYyauld7TCZjpEVhy1kyJAxmsFHKNIQnB6M44KaDBkyRjM6AbE/HtFJQGXIkLEb47nwytuTN5TqZMiQsQEjTSLTAy1pbabsDy1MGTJkbMDg6WCt6UgaBuQFcDlsIUOGjA0YtW2l1TDSyIyRMmTIGMo4w1VL6dLQyctwKK7LkCHj5YxOZ7BzTCUJYlrskyFDxmxGayQrLMz1W56XyasMGTI2YPDAl+LTb9KjrAwZMmT0w2hnmCPOXmXIkCGj1DxI71gbL5MhQ8YOjDTJI4W2Tnuy2ImVIUPGUEZ/SIKEyH6wTst2MmTIGMH4AdCU+gh4wiqhAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
