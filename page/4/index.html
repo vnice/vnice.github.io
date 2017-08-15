@@ -146,6 +146,58 @@
     <ul class="post-list">
     
         <li class="post-list-item fade">
+            <article id="post-设计模式-工厂模式"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2014-03-07 00:00:00" datetime="2014-03-06T16:00:00.000Z"  itemprop="datePublished">2014-03-07</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Head-First-设计模式/">Head First 设计模式</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2014/03/07/设计模式-工厂模式/">工厂模式</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        工厂模式
+工厂方法模式定义了一个创建对象的接口，但由子类决定要实例化的类是哪一个。工厂方法让类把实例化推迟到子类
+
+new对象的问题  当使用new 关键之创建一个对象的时候，你是在实例化一个具体的类，你使用的是实现，而不是接口。代码绑定着具体的类会导致代码更脆弱，更缺乏弹性。
+例如如下代码,有一大堆不同的鸭子实现类时，但是必须等到运行时，才知道该实例化哪一个
+12345678Duck du...
+    
+
+        <a href="/2014/03/07/设计模式-工厂模式/" class="post-more waves-effect waves-button">
+            Continue reading...
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
             <article id="post-设计模式-装饰器模式"
   class="article-card article-type-post" itemprop="blogPost">
 
@@ -502,54 +554,6 @@ Spring IoC是一个独立的模块，它并不是直接在Web容器中发挥作�
         </li>
     
         <li class="post-list-item fade">
-            <article id="post-在Bean操作IoC容器"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2014-02-13 00:00:00" datetime="2014-02-12T16:00:00.000Z"  itemprop="datePublished">2014-02-13</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2014/02/13/在Bean操作IoC容器/">在Bean中操作IoC容器</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        IoC容器管理的Bean一般不需要了解容器的状态和直接使用容器，为了和IoC容器api耦合降到最低。但是在某些情况下，是需要在Bean里面直接对IoC容器进行操作，这个时候，需要在Bean中设定对容器的感知。Spring IoC容器提供了该功能，它是通过特定的aware接口来完成的主要有以下这些:
-
-BeanNameAware 可以在Bean中得到它所在的IoC容器中的Bean的示例名称。
-...
-    
-
-        <a href="/2014/02/13/在Bean操作IoC容器/" class="post-more waves-effect waves-button">
-            Continue reading...
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/">Spring</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
             <article id="post-Spring 依赖注入源码分析"
   class="article-card article-type-post" itemprop="blogPost">
 
@@ -600,11 +604,11 @@ BeanNameAware 可以在Bean中得到它所在的IoC容器中的Bean的示例名�
         </li>
     
         <li class="post-list-item fade">
-            <article id="post-Spring IOC 容器"
+            <article id="post-在Bean操作IoC容器"
   class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
-        <time class="post-time" title="2014-02-04 00:00:00" datetime="2014-02-03T16:00:00.000Z"  itemprop="datePublished">2014-02-04</time>
+        <time class="post-time" title="2014-02-13 00:00:00" datetime="2014-02-12T16:00:00.000Z"  itemprop="datePublished">2014-02-13</time>
 
         
 
@@ -616,7 +620,7 @@ BeanNameAware 可以在Bean中得到它所在的IoC容器中的Bean的示例名�
 
   
     <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2014/02/04/Spring IOC 容器/">Spring IOC 容器</a>
+      <a class="post-title-link" href="/2014/02/13/在Bean操作IoC容器/">在Bean中操作IoC容器</a>
     </h3>
   
 
@@ -626,16 +630,13 @@ BeanNameAware 可以在Bean中得到它所在的IoC容器中的Bean的示例名�
     <div class="post-content" id="post-content" itemprop="postContent">
 
     
-        IOC容器的设计与实现Spring IOC 容器中有两个主要的容器
+        IoC容器管理的Bean一般不需要了解容器的状态和直接使用容器，为了和IoC容器api耦合降到最低。但是在某些情况下，是需要在Bean里面直接对IoC容器进行操作，这个时候，需要在Bean中设定对容器的感知。Spring IoC容器提供了该功能，它是通过特定的aware接口来完成的主要有以下这些:
 
-实现BeanFactory 接口的简单容器实现，只是实现了容器的基本功能，主要的几个方法如下
-其中最主要的是getBean方法，通过指定的名字对在容器中获取Bean
-containsBean判断容器中是否包含指定名字的bean
-isSingletion和isPrototype方法分别判断bean是否是单例或者多例的
-isT...
+BeanNameAware 可以在Bean中得到它所在的IoC容器中的Bean的示例名称。
+...
     
 
-        <a href="/2014/02/04/Spring IOC 容器/" class="post-more waves-effect waves-button">
+        <a href="/2014/02/13/在Bean操作IoC容器/" class="post-more waves-effect waves-button">
             Continue reading...
         </a>
     </div>
