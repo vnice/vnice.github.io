@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.vnicers.com/"/>
-  <updated>2017-08-15T09:12:15.000Z</updated>
+  <updated>2017-08-15T14:20:40.000Z</updated>
   <id>http://blog.vnicers.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://blog.vnicers.com/2017/08/10/%E5%90%8E%E7%AB%AF%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BA%94%E8%AF%A5%E4%BC%9A%E7%9A%84%E5%89%8D%E7%AB%AF%E6%8A%80%E8%83%BD/"/>
     <id>http://blog.vnicers.com/2017/08/10/后端程序员应该会的前端技能/</id>
     <published>2017-08-09T16:00:00.000Z</published>
-    <updated>2017-08-15T09:12:15.000Z</updated>
+    <updated>2017-08-15T14:20:40.000Z</updated>
     
     <content type="html"><![CDATA[<h1 id="后端开发人员应该掌握哪些前端技能"><a href="#后端开发人员应该掌握哪些前端技能" class="headerlink" title="后端开发人员应该掌握哪些前端技能"></a>后端开发人员应该掌握哪些前端技能</h1><p>这里说的后端开发人员应该是一个很广泛的概念，不是特指某些中间件的开发人员，专门研究某一个领域，而且大多数公司的后端开发也还没有达到研究某一块领域特别专业的程度，一般的后端开发或多或少是需要接触前端的一些东西的。<br>比如我刚毕业的时候找的第一份工作是Java Web 开发程序员，所以需要一些Web的开发经验。比如那时JSP的开发，富客服端的开发。都需要开发人员具有前端的相关知识，一般来说就是基础的html知识，少量的css知识和必备的javascript知识</p>
 <h1 id="富客户端框架"><a href="#富客户端框架" class="headerlink" title="富客户端框架"></a>富客户端框架</h1><p>我觉得只要是产品面向用户的开发人员，JavaScript语言是必须学会的。而且按照现在前端的发展来看JavaScript语言起到的作用也越来越大。<br>之前我的第一份工作是做企业后台程序开发的，当时我们组里面没有前端开发，甚至那个时候还没有前端这个职业，随着html5，webapp的的发展近两年才逐渐火起来了。当时后端程序员的工作既需要开发后台业务，前端的界面也需要开发。<br>但是后端开发人员系统的学习html，css和javascript是非常耗时的一件事。所以当时就使用网上的开源组件，一些富客户端开发技术，比如ExtJs。使用ExtJs开发前端页面，后端开发人员只需要掌握JavaScript。<br>就能开发出页面。不需要html，不需要css。所以ExtJs当时也是非常的流行。<br><figure class="image-bubble">
@@ -46,7 +46,7 @@
                 <div class="image-caption"></div>
             </figure><br>这才是其中的一部分，后续又加入了很多。使用这么多插件带来了一些问题就是很难以维护，多个插件之间可能还有兼容性问题。插件本身功能有bug。<br>随着前端工程化的出现，前端框架就出现了三足鼎立的场景 分别是React,Angular,Vue 之前分别研究过这三个框架。根据我们组的前端知识储备情况，选择了<a href="https://facebook.github.io/react/" target="_blank" rel="external">React</a><br>相比较其他两个框架的原因，主要是React的jsx的使用非常时候后台开发人员，他们也并不反感。但是Angular的使用，尤其是Angular的几个版本互不兼容，以及TypeScript的学习，让组内的同事感到有点吃力。<br>Vue也相对于其他两个框架更简洁方便。当时有考虑，但是它的项目背景大家也知道，在国外Vue相比Angular和React也没啥出名度。这里不是黑Vue。</p>
 <p>前两天看到知乎上的Anglar 布道师大漠穷秋满嘴跑火车黑了Vue，导致他被Google fire掉，技术没有对错，攻击别人确实是不应该。</p>
-<h1 id="React的使用感想"><a href="#React的使用感想" class="headerlink" title="React的使用感想"></a>React的使用感想</h1><p>React 只是一个前端框架，它并不包含任何的UI,之前在github上找到蚂蚁金服开源的一个框架<a href="https://github.com/ant-design/ant-design" target="_blank" rel="external">ant-design</a><br>可以看看它的官网。不仅提供了一整套的UI解决方案。同时给出的一些设计原则正好解决了我们系统在开发过程中的一些痛点，以前我们数据中心组一直没有UI/UE相关的规范<br><figure class="image-bubble">
+<h1 id="React的使用感想"><a href="#React的使用感想" class="headerlink" title="React的使用感想"></a>React的使用感想</h1><p>引入了React，不是为了技术而技术，而是基于React的开发过程，促使大家一切都是以组件的思考模式，这的确让业务也变的更加清晰，开发效率提升，维护成本降低<br>React 只是一个前端框架，它并不包含任何的UI,之前在github上找到蚂蚁金服开源的一个框架<a href="https://github.com/ant-design/ant-design" target="_blank" rel="external">ant-design</a><br>可以看看它的官网。不仅提供了一整套的UI解决方案。同时给出的一些设计原则正好解决了我们系统在开发过程中的一些痛点，以前我们数据中心组一直没有UI/UE相关的规范<br><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
                     <img src="https://ws1.sinaimg.cn/large/818b7fe3gy1fikibehqjxj21qy0yi7b5.jpg" alt="设计原则" title="">
@@ -439,6 +439,43 @@
     
     
       <category term="Linux" scheme="http://blog.vnicers.com/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ReactNative开发填坑</title>
+    <link href="http://blog.vnicers.com/2017/02/10/ReactNative%E5%BC%80%E5%8F%91%E5%A1%AB%E5%9D%91/"/>
+    <id>http://blog.vnicers.com/2017/02/10/ReactNative开发填坑/</id>
+    <published>2017-02-09T16:00:00.000Z</published>
+    <updated>2017-08-15T15:39:54.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>在使用React-Native开发应用前需要有一些移动端的开发经验，不然遇到的问题够你喝一壶的。而且是Android和IOS两边的问题。</p>
+<ol>
+<li>IOS 运行报错 ‘boost/iterator/iterator_adaptor.hpp’ file not found’ 及控制台”:CFBundleIdentifier”, Does Not Exist</li>
+</ol>
+<p>原因：boost依赖没有找打，到当前用户目录下的.rncahe目录下查找boost_1_63_0.tar.gz文件，如果存在查看是否能够正常解压如果不能，需要手动到网上下载该包<br>下载地址<a href="https://sourceforge.net/projects/boost/files/boost/1.63.0/" target="_blank" rel="external">Boot_1_63_0</a>然后放入.rncache文件夹中。</p>
+<ol>
+<li>config.h file not found</li>
+</ol>
+<p>根据这个<a href="https://github.com/facebook/react-native/issues/14382" target="_blank" rel="external">issue</a> 找到解决方法</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ rm -rf node_modules/ &amp;&amp; yarn cache clean &amp;&amp; yarn install</div></pre></td></tr></table></figure>
+<p>重新安装依赖项目</p>
+<p>最好分别用Android Studio 和Xcode工具能够把两个项目先运行起来。在开发工具中运行成功后，用react-native的命令会简单很多。然后遇到问题解决问题。</p>
+<ol>
+<li>android 项目第一次 打开很慢的问题。<br>第一次打开需要下载gradle相关的包。可以去gradle官网先手动下载下来，然后将gradle环境在本机运行好之后再打开android项目。</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在使用React-Native开发应用前需要有一些移动端的开发经验，不然遇到的问题够你喝一壶的。而且是Android和IOS两边的问题。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;IOS 运行报错 ‘boost/iterator/iterator_adaptor.hpp’ file not
+    
+    </summary>
+    
+    
+      <category term="移动端" scheme="http://blog.vnicers.com/tags/%E7%A7%BB%E5%8A%A8%E7%AB%AF/"/>
     
   </entry>
   
@@ -932,55 +969,6 @@ user?starts_with(&quot;J&quot;) 判断表达式的值是否是指定的参数开
     
       &lt;p&gt;同步代码块和同步方法可以确保以原子的方式执行操作，同时另外一个重要的作用是内存可见性，我们不仅希望防止某个线程正在使用对象的状态，而另一个线程在同时修改这个状态，而且还希望确保一个线程修改了对象状态后，其他线程能够看到发生的状态变化。&lt;/p&gt;
 &lt;h1 id=&quot;可见性&quot;&gt;&lt;a
-    
-    </summary>
-    
-      <category term="Java并发编程" scheme="http://blog.vnicers.com/categories/Java%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/"/>
-    
-    
-      <category term="多线程" scheme="http://blog.vnicers.com/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Java多线程安全性</title>
-    <link href="http://blog.vnicers.com/2014/05/12/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E6%80%A7/"/>
-    <id>http://blog.vnicers.com/2014/05/12/Java多线程安全性/</id>
-    <published>2014-05-11T16:00:00.000Z</published>
-    <updated>2017-08-13T03:48:30.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>一个对象是否需要线程安全，取决于它是否被多个线程访问，这指的是在程序中访问对象的方式，而不是对象要实现的功能，要使得对象是线程安全的，必须采用同步机制来协同对象可变状态的访问。</p>
-<p>当多个线程访问某个状态变量并且其中一个线程执行写入操作的时候，必须采用同步机制来协同这些线程对变量的访问。Java中主要的同步机制是<code>synchronized</code>,它提供了一种独占的枷锁方式。同步这类还包括volatile类型变量，显示锁，以及原子变量</p>
-<p>  如果多线程访问同一个可变的状态变量时没有使用合适的同步，那么程序就会出现错误。三种解决方式</p>
-<ol>
-<li>不在线程间共享该状态变量</li>
-<li>将状态变量修改为不可变变量</li>
-<li>在访问状态变量时使用同步</li>
-</ol>
-<p>线程安全类的定义：</p>
-<pre><code>当多个线程访问某个类时，不管运行时环境采用何种调度方式或者这些线程将如何交替执行，并且在主调代码中不需要任何额外的同步或协调，这个类都能表现出正确的行为，那么就称为这个类是线程安全的类                       
-
-无状态的对象一定是线程安全的
-</code></pre><h1 id="竞态条件"><a href="#竞态条件" class="headerlink" title="竞态条件"></a>竞态条件</h1><p>   当某个计算的正确性取决于多个线程的交替执行时序时了那么就会发生竞态条件、就是一个线程需要判断一个变量的状态，然后根据这个变量的状态来执行某个操作，在执行这个操作之前，这个变量的状态可能会被其他线程修改。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@NotThreadSafe</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LazyInitRace</span> </span>&#123;  </div><div class="line">    <span class="keyword">private</span> ExpensiveObject instance=<span class="keyword">null</span>;  </div><div class="line">      </div><div class="line">    <span class="function"><span class="keyword">public</span> ExpensiveObject <span class="title">getInstance</span><span class="params">()</span></span>&#123;  </div><div class="line">        <span class="keyword">if</span>(instance==<span class="keyword">null</span>)&#123;  </div><div class="line">            instance=<span class="keyword">new</span> ExpensiveObject();  </div><div class="line">        &#125;  </div><div class="line">        <span class="keyword">return</span> instance;  </div><div class="line">    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>在上面懒汉式单例对象创建的代码中， 在LazyInitRace 中包含了一个竞态条件，它可能会破坏这个类的正确性。假定线程A和线程B 同时执行getInstance 方法。A 看到instance 为空，因此A创建一个新的ExpensiveObject实例。B 同样需要判断instance 是否为空。此时的instance是否为空，要取决于不可预测的时序，包括线程的调度方式，以及A 需要花多长时间来初始化ExpensiveObject并设置instance。如果当B检查时，instance为空，那么在两次调用getInstance 时可能会得到不同的对象</p>
-<h1 id="原子操作"><a href="#原子操作" class="headerlink" title="原子操作"></a>原子操作</h1><p>要避免竞态条件文件，就必须在某个线程修改该变量时，通过某种方式防止其他线程使用这个变量，从而确保其他线程只能修改操作完成之前或之后读取修改状态，而不是在修改过程中</p>
-<p>假定有两个操作A和B,如果从执行A的线程来看，当另外一个线程执行B时，要么将B全部执行完，要么全部不执行B,那么A和B的执行对彼此来说都不原子的。原子操作是指，对于访问同一个状态的所有操作包括该操作本身来说，这个操作是一个以原子方式执行的操作。</p>
-<p>在实际情况中，应尽可能的使用现有的线程安全对象，来管理类的状态，与非线程安全的对象相比，判断线程安全对象的可能状态以及其状态的转换情况，要更为容易，从而也更容易维护和验证线程的安全性。</p>
-<p>要保持状态的一致性，就需要在单个原子操作中更新所有相关状态变量</p>
-<h1 id="锁机制"><a href="#锁机制" class="headerlink" title="锁机制"></a>锁机制</h1><p>java 提供了一种内置的锁机制来支持原子性，同步代码块（Synchronized Block）同步代码块包含两部分：一个是作为锁的对象引用，一个是作为由这个锁保护的代码块，在方法声明中使用synchronized修饰的方法是一种横跨整个方法体的同步代码块，其中该同步代码块的锁就是就是方法调用所在的对象。静态的synchronized方法以Class 对象作为锁</p>
-<p>每个Java对象都可以用作一个实现同步的锁，这些锁称为内置锁或者监视器锁，线程在进入同步代码块之前会自动获得锁，并且在退出同步代码块之前自动释放锁，而无论是通过正常的控制路径退出，还是通过从代码块中抛出异常退出，获得内置锁的唯一途径就是进入由这个锁保护的同步代码块或方法</p>
-<p>Java内置的锁相当于一种互斥的锁，这就意味着最多只有一个线程能够持有这种锁，当线程A尝试获取一个由线程B持有的锁的时候，线程A必须等到或者阻塞，知道线程B释放这个锁，如果B线程永远不释放，那么讲A将永远等下去。</p>
-<h1 id="锁的重入机制"><a href="#锁的重入机制" class="headerlink" title="锁的重入机制"></a>锁的重入机制</h1><p>当某个线程请求一个由其他线程持有的锁的时候，发出请求的线程就会阻塞，然而，由于内置锁是可以重入的，因此如果某个线程视图获得一个已经由它自己持有的锁，那么这个请求就会成功，”重入”意味着获取锁的操作粒度为线程，而不是调用，重入的一种实现方法是，为每个锁关联一个计数值和一个所有者线程，当计数值为0时，这个锁就认为没有被任何线程持有。当线程请求一个未被持有的锁时，JVM记下锁的持有者，并将计数值设置为1.如果同一个线程再次获取这个锁，计数值递增，而当线程退出同步代码块时，计数值会相应的递减。当计数值为0时，这个锁会被释放。</p>
-<h1 id="锁的保护状态"><a href="#锁的保护状态" class="headerlink" title="锁的保护状态"></a>锁的保护状态</h1><p>对于可能被多个线程同时访问的可变状态变量，在访问它时，否需要持有同一个锁，在这种情况下，我们称状态变量是由这个锁保护的。<br>每个共享的和可变的变量都应该只由一个锁来保护，从而使开发人员知道是哪一个锁。<br>对于每个包含多个变量的不变性条件，其中涉及的所有变量都需要由同一个锁来保护。</p>
-<h1 id="锁的性能"><a href="#锁的性能" class="headerlink" title="锁的性能"></a>锁的性能</h1><p>通常在简单性与性能之间存在着相互制约的因素，当实现某个同步策略时，一定不要盲目的为了性能而牺牲简单性</p>
-<p>当执行较长的计算或者可能无法快速完成的操作时，例如网络IO,一定不要持有锁。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;一个对象是否需要线程安全，取决于它是否被多个线程访问，这指的是在程序中访问对象的方式，而不是对象要实现的功能，要使得对象是线程安全的，必须采用同步机制来协同对象可变状态的访问。&lt;/p&gt;
-&lt;p&gt;当多个线程访问某个状态变量并且其中一个线程执行写入操作的时候，必须采用同步机制来协
     
     </summary>
     

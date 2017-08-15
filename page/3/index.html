@@ -146,6 +146,54 @@
     <ul class="post-list">
     
         <li class="post-list-item fade">
+            <article id="post-Java多线程安全性"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2014-05-12 00:00:00" datetime="2014-05-11T16:00:00.000Z"  itemprop="datePublished">2014-05-12</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Java并发编程/">Java并发编程</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2014/05/12/Java多线程安全性/">Java多线程安全性</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        一个对象是否需要线程安全，取决于它是否被多个线程访问，这指的是在程序中访问对象的方式，而不是对象要实现的功能，要使得对象是线程安全的，必须采用同步机制来协同对象可变状态的访问。
+当多个线程访问某个状态变量并且其中一个线程执行写入操作的时候，必须采用同步机制来协同这些线程对变量的访问。Java中主要的同步机制是synchronized,它提供了一种独占的枷锁方式。同步这类还包括volatile...
+    
+
+        <a href="/2014/05/12/Java多线程安全性/" class="post-more waves-effect waves-button">
+            Continue reading...
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/多线程/">多线程</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
             <article id="post-Java多线程基础知识"
   class="article-card article-type-post" itemprop="blogPost">
 
@@ -618,56 +666,6 @@ mkdirmake  d...
     
 
         <a href="/2014/03/11/设计模式-命令模式/" class="post-more waves-effect waves-button">
-            Continue reading...
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-设计模式-单例模式"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2014-03-08 00:00:00" datetime="2014-03-07T16:00:00.000Z"  itemprop="datePublished">2014-03-08</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Head-First-设计模式/">Head First 设计模式</a></li></ul>
-
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2014/03/08/设计模式-单例模式/">单例模式</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        单例模式
-确保一个类只有一个实例，并提供一个全局的访问点
-
-最简单的形式12345678910111213public class Singleton1 &#123;    private static Singleton1 uniqueInstance;    private Singleton1() &#123;    &#125;        public static Single...
-    
-
-        <a href="/2014/03/08/设计模式-单例模式/" class="post-more waves-effect waves-button">
             Continue reading...
         </a>
     </div>

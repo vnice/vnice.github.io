@@ -146,6 +146,56 @@
     <ul class="post-list">
     
         <li class="post-list-item fade">
+            <article id="post-设计模式-单例模式"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2014-03-08 00:00:00" datetime="2014-03-07T16:00:00.000Z"  itemprop="datePublished">2014-03-08</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Head-First-设计模式/">Head First 设计模式</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2014/03/08/设计模式-单例模式/">单例模式</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        单例模式
+确保一个类只有一个实例，并提供一个全局的访问点
+
+最简单的形式12345678910111213public class Singleton1 &#123;    private static Singleton1 uniqueInstance;    private Singleton1() &#123;    &#125;        public static Single...
+    
+
+        <a href="/2014/03/08/设计模式-单例模式/" class="post-more waves-effect waves-button">
+            Continue reading...
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
             <article id="post-设计模式-工厂模式"
   class="article-card article-type-post" itemprop="blogPost">
 
@@ -454,56 +504,6 @@ new对象的问题  当使用new 关键之创建一个对象的时候，你是�
         </li>
     
         <li class="post-list-item fade">
-            <article id="post-Spring AOP"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2014-02-15 00:00:00" datetime="2014-02-14T16:00:00.000Z"  itemprop="datePublished">2014-02-15</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Spring-源码分析/">Spring 源码分析</a></li></ul>
-
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2014/02/15/Spring AOP/">Spring AOP</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        
-AOP 是Spring框架的核心功能模块之一。AOP与IoC容器的结合使用，为应用开发或者Spring自身功能的扩展都提供了便利。Spring AOP的实现和其他特性的实现一样，除了可以使用Spring 本身提供的AOP实现之外，还封装了业界优秀的AOP解决方案AspectJ来供使用。
-
-Advice 通知Advice通知定义在连接点做什么，为切面增强提供织如接口。在Spring AOP ...
-    
-
-        <a href="/2014/02/15/Spring AOP/" class="post-more waves-effect waves-button">
-            Continue reading...
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/">Spring</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
             <article id="post-Spring MVC"
   class="article-card article-type-post" itemprop="blogPost">
 
@@ -554,11 +554,11 @@ Spring IoC是一个独立的模块，它并不是直接在Web容器中发挥作�
         </li>
     
         <li class="post-list-item fade">
-            <article id="post-Spring 依赖注入源码分析"
+            <article id="post-Spring AOP"
   class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
-        <time class="post-time" title="2014-02-13 00:00:00" datetime="2014-02-12T16:00:00.000Z"  itemprop="datePublished">2014-02-13</time>
+        <time class="post-time" title="2014-02-15 00:00:00" datetime="2014-02-14T16:00:00.000Z"  itemprop="datePublished">2014-02-15</time>
 
         
 	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Spring-源码分析/">Spring 源码分析</a></li></ul>
@@ -572,7 +572,7 @@ Spring IoC是一个独立的模块，它并不是直接在Web容器中发挥作�
 
   
     <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2014/02/13/Spring 依赖注入源码分析/">Spring 依赖注入源码分析</a>
+      <a class="post-title-link" href="/2014/02/15/Spring AOP/">Spring AOP</a>
     </h3>
   
 
@@ -582,13 +582,13 @@ Spring IoC是一个独立的模块，它并不是直接在Web容器中发挥作�
     <div class="post-content" id="post-content" itemprop="postContent">
 
     
-        getBean
-之前写的Spring IOC 容器这篇文章大致讲了一些IoC容器的初始化过程,主要是IoC容器中建立BeanDefinition的数据映射。但是还没涉及到IoC容器对Bean的依赖关系进行注入，接下来从源码角度分析一下IoC容器是怎样对Bean的依赖关系进行注入的。
+        
+AOP 是Spring框架的核心功能模块之一。AOP与IoC容器的结合使用，为应用开发或者Spring自身功能的扩展都提供了便利。Spring AOP的实现和其他特性的实现一样，除了可以使用Spring 本身提供的AOP实现之外，还封装了业界优秀的AOP解决方案AspectJ来供使用。
 
-首先注意到依赖注入的过程是用户第一次向IoC容器获取Bean时触发的。也就是最基本的BeanFactory接...
+Advice 通知Advice通知定义在连接点做什么，为切面增强提供织如接口。在Spring AOP ...
     
 
-        <a href="/2014/02/13/Spring 依赖注入源码分析/" class="post-more waves-effect waves-button">
+        <a href="/2014/02/15/Spring AOP/" class="post-more waves-effect waves-button">
             Continue reading...
         </a>
     </div>
