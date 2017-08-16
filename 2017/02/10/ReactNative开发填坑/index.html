@@ -28,7 +28,7 @@
 <meta property="og:site_name" content="Tanwei的个人技术博客">
 <meta property="og:description" content="在使用React-Native开发应用前需要有一些移动端的开发经验，不然遇到的问题够你喝一壶的。而且是Android和IOS两边的问题。  IOS 运行报错 ‘boost/iterator/iterator_adaptor.hpp’ file not found’ 及控制台”:CFBundleIdentifier”, Does Not Exist  原因：boost依赖没有找打，到当前用户目录下的">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-15T15:39:54.000Z">
+<meta property="og:updated_time" content="2017-08-16T05:04:30.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ReactNative开发填坑">
 <meta name="twitter:description" content="在使用React-Native开发应用前需要有一些移动端的开发经验，不然遇到的问题够你喝一壶的。而且是Android和IOS两边的问题。  IOS 运行报错 ‘boost/iterator/iterator_adaptor.hpp’ file not found’ 及控制台”:CFBundleIdentifier”, Does Not Exist  原因：boost依赖没有找打，到当前用户目录下的">
@@ -175,7 +175,7 @@
 </ol>
 <p>原因：boost依赖没有找打，到当前用户目录下的.rncahe目录下查找boost_1_63_0.tar.gz文件，如果存在查看是否能够正常解压如果不能，需要手动到网上下载该包<br>下载地址<a href="https://sourceforge.net/projects/boost/files/boost/1.63.0/" target="_blank" rel="external">Boot_1_63_0</a>然后放入.rncache文件夹中。</p>
 <ol>
-<li>config.h file not found</li>
+<li>IOS config.h file not found</li>
 </ol>
 <p>根据这个<a href="https://github.com/facebook/react-native/issues/14382" target="_blank" rel="external">issue</a> 找到解决方法</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ rm -rf node_modules/ &amp;&amp; yarn cache clean &amp;&amp; yarn install</div></pre></td></tr></table></figure>
@@ -184,6 +184,12 @@
 <ol>
 <li>android 项目第一次 打开很慢的问题。<br>第一次打开需要下载gradle相关的包。可以去gradle官网先手动下载下来，然后将gradle环境在本机运行好之后再打开android项目。</li>
 </ol>
+<p>4 Start Systrace 之后报错  global.nativeTraceBeginSection is not a function </p>
+<p>根据官方人员的回答：</p>
+<blockquote>
+<p>I’m aware of this issue. We currently don’t have these methods on the C++ bridge since the C++ implementation depends on fbsystrace, which is not open-source. As a workaround, you can revert back to RCTBatchedBridge (ReactLegacy), we’ll try to find a solution for this soon.</p>
+</blockquote>
+<p> 暂时还没解决。所以先不要用Systrace。不然报错之后只能重新跑模拟器。</p>
 
         </div>
 
