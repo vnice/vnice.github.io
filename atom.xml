@@ -443,6 +443,91 @@
   </entry>
   
   <entry>
+    <title>Java知识点总结</title>
+    <link href="http://blog.vnicers.com/2017/03/20/Java%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/"/>
+    <id>http://blog.vnicers.com/2017/03/20/Java知识点总结/</id>
+    <published>2017-03-19T16:00:00.000Z</published>
+    <updated>2017-08-17T09:10:14.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h1><p>   JVM 中加载Class的原理和机制</p>
+<pre><code>Class的加载到主要分5个阶段
+    1.  加载阶段 主要由类加载器来完成
+        Bootstrap ClassLoader 负责加载jre中的lib/rt.jar 同时可以指定JVM参数 -Xbootclasspath
+        Extension ClassLoader 负责加载JDK/lib/ext/*.jar 扩展包下面的jar
+        App ClassLoader 负责加载ClassPath下的jar
+        Custom ClassLoader 自定义的类加载器
+        这些加载器使用双亲委派模式加载。从下往上findClass，然后从上往下loadClass。直到抛出ClassNotFoundException  
+        加载完成后将获取class的二进制流，类信息，静态变量，字节码常量放到方法区，然后再内存中生成Class 对象
+
+    2.  验证阶段
+        首先确保class文件中的字节流中包含的信息符合虚拟机规范，是安全的
+        然后验证文件格式，元数据，字节码和符号引用
+
+    3.  准备阶段 
+        为类的静态变量设置默认初始值。
+
+    4.  解析阶段
+        将虚拟机常量池中的符号引用转换为直接引用。
+
+    5.  初始化阶段
+        给static字段赋予用户指定的值，静态代码块的执行
+</code></pre><p>   JVM 的垃圾回收</p>
+<pre><code>采用“分代式垃圾收集”。这种方法会跟Java对象的生命周期将堆内存划分为不同的区域，在垃圾收集过程中，可能会将对象移动到不同区域： 
+ - 伊甸园（Eden）：这是对象最初诞生的区域，并且对大多数对象来说，这里是它们唯一存在过的区域。 
+ - 幸存者乐园（Survivor）：从伊甸园幸存下来的对象会被挪到这里。 
+ - 终身颐养园（Tenured）：这是足够老的幸存对象的归宿。年轻代收集（Minor-GC）过程是不会触及这个地方的。
+ 新建的对象都是用新生代分配内存，Eden空间不足的时候，会把存活的对象转移到Survivor中，新生代大小可以由-Xmn来控制，也可以用-XX:SurvivorRatio来控制Eden和Survivor的比例旧生代。用于存放新生代中经过多次垃圾回收仍然存活的对象
+ 当年轻代收集不能把对象放进终身颐养园时，就会触发一次完全收集（Major-GC），这里可能还会牵扯到压缩，以便为大对象腾出足够的空间。
+</code></pre><p>   <img src="https://ws1.sinaimg.cn/large/818b7fe3gy1fims08sh9bj20u20gkgvn.jpg" alt="">      </p>
+<p>   JVM 内存模型</p>
+<p>   <img src="https://ws1.sinaimg.cn/large/818b7fe3gy1fims7ids22j20sg0h940g.jpg" alt=""></p>
+<p>   JVM各种参数的含义</p>
+<pre><code>-Xmx   Java Heap最大值，默认值为物理内存的1/4，最佳设值应该视物理内存大小及计算机内其他内存开销而定；
+-Xms   Java Heap初始值，Server端JVM最好将-Xms和-Xmx设为相同值，开发测试机JVM可以保留默认值；
+-XX:PermSize 非堆内存
+-XX:MaxPermSize 非堆内存最大值
+
+Xmx 与PermSize的和不可超过JVM可获得的总内存
+PermSize不可大于Xmx
+</code></pre><p>   Tomcat JVM参数设置(包括打印GC 日志)</p>
+<pre><code>linux修改catalina.sh文件
+JAVA_OPTS=”-server -Dfile.encoding=UTF-8 -Xms=512m -Xmx1024m -XX:PermSize=128m -XX:MaxPermSize=256m -verbose:gc -Xloggc:${CATALINA_HOME}/logs/gc.log`date +%Y-%m-%d-%H-%M` -XX:+UseConcMarkSweepGC -XX:+CMSIncrementalMode -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -noclassgc”
+</code></pre><p>   当一个对象被当作参数传递到一个方法后，此方法可改变这个对象的属性，并可返回变化后的结果，那么这里到底是值传递还是引用传递？      </p>
+<pre><code>Java语言的方法调用只支持参数的值传递。当一个对象实例作为一个参数被传递到方法中时，参数的值就是对该对象的引用。对象的属性可以在被调用过程中被改变，但对对象引用的改变是不会影响到调用者的。
+</code></pre><h1 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h1><p>   Thread类的sleep()方法和对象的wait()方法都可以让线程暂停执行，它们有什么区别?</p>
+<pre><code>sleep()方法（休眠）是线程类（Thread）的静态方法，调用此方法会让当前线程暂停执行指定的时间，将执行机会（CPU）让给其他线程，但是对象的锁依然保持，因此休眠时间结束后会自动恢复。
+wait()是Object类的方法，调用对象的wait()方法导致当前线程放弃对象的锁（线程暂停执行），进入对象的等待池（wait pool），只有调用对象的notify()方法（或notifyAll()方法）时才能唤醒等待池中的线程进入等锁池（lock pool），如果线程重新获得对象的锁就可以进入就绪状态。
+</code></pre><p>   当一个线程进入一个对象的synchronized方法A之后，其它线程是否可进入此对象的synchronized方法B？</p>
+<pre><code>不能。其它线程只能访问该对象的非同步方法，同步方法则不能进入。因为非静态方法上的synchronized修饰符要求执行方法时要获得对象的锁，如果已经进入A方法说明对象锁已经被取走，那么试图进入B方法的线程就只能在等锁池（注意不是等待池哦）中等待对象的锁。
+</code></pre><p>   线程池子</p>
+<pre><code>Java 5+中的Executor接口定义一个执行线程的工具。它的子类型即线程池接口是ExecutorService。要配置一个线程池是比较复杂的，尤其是对于线程池的原理不是很清楚的情况下，因此在工具类Executors面提供了一些静态工厂方法，生成一些常用的线程池，
+如下所示： 
+- newSingleThreadExecutor：创建一个单线程的线程池。这个线程池只有一个线程在工作，也就是相当于单线程串行执行所有任务。如果这个唯一的线程因为异常结束，那么会有一个新的线程来替代它。此线程池保证所有任务的执行顺序按照任务的提交顺序执行。 
+- newFixedThreadPool：创建固定大小的线程池。每次提交一个任务就创建一个线程，直到线程达到线程池的最大大小。线程池的大小一旦达到最大值就会保持不变，如果某个线程因为执行异常而结束，那么线程池会补充一个新线程。 
+- newCachedThreadPool：创建一个可缓存的线程池。如果线程池的大小超过了处理任务所需要的线程，那么就会回收部分空闲（60秒不执行任务）的线程，当任务数增加时，此线程池又可以智能的添加新线程来处理任务。此线程池不会对线程池大小做限制，线程池大小完全依赖于操作系统（或者说JVM）能够创建的最大线程大小。 
+- newScheduledThreadPool：创建一个大小无限的线程池。此线程池支持定时以及周期性执行任务的需求。 
+</code></pre><p>   一个新的任务提交到线程池之后，线程池是如何处理的</p>
+<pre><code>1、线程池判断核心线程池里的线程是否都在执行任务。如果不是，则创建一个新的工作线程来执行任务。如果核心线程池里的线程都在执行任务，则执行第二步。
+
+2、线程池判断工作队列是否已经满。如果工作队列没有满，则将新提交的任务存储在这个工作队列里进行等待。如果工作队列满了，则执行第三步
+
+3、线程池判断线程池的线程是否都处于工作状态。如果没有，则创建一个新的工作线程来执行任务。如果已经满了，则交给饱和策略来处理这个任务
+</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;JVM&quot;&gt;&lt;a href=&quot;#JVM&quot; class=&quot;headerlink&quot; title=&quot;JVM&quot;&gt;&lt;/a&gt;JVM&lt;/h1&gt;&lt;p&gt;   JVM 中加载Class的原理和机制&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Class的加载到主要分5个阶段
+    1.  加载阶段
+    
+    </summary>
+    
+    
+      <category term="其他" scheme="http://blog.vnicers.com/tags/%E5%85%B6%E4%BB%96/"/>
+    
+  </entry>
+  
+  <entry>
     <title>ReactNative开发填坑</title>
     <link href="http://blog.vnicers.com/2017/02/10/ReactNative%E5%BC%80%E5%8F%91%E5%A1%AB%E5%9D%91/"/>
     <id>http://blog.vnicers.com/2017/02/10/ReactNative开发填坑/</id>
@@ -482,6 +567,30 @@
     
     
       <category term="移动端" scheme="http://blog.vnicers.com/tags/%E7%A7%BB%E5%8A%A8%E7%AB%AF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>分布式事物</title>
+    <link href="http://blog.vnicers.com/2017/01/08/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E7%89%A9/"/>
+    <id>http://blog.vnicers.com/2017/01/08/分布式事物/</id>
+    <published>2017-01-07T16:00:00.000Z</published>
+    <updated>2017-08-17T05:43:08.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h1><blockquote>
+<p>在分布式数据库中，数据分散在个台不同的机器上，包括机器的宕机，各种网络异常，为了保证事物的可靠性，分布式事物是无法避免的。<br>分布式事物是指事物的参与者，支持事物的服务器，资源服务器，以及事物管理器，分别定位于分布式事物的不同几点上。通常一个分布式事物中会涉及对多个数据源及业务系统的操作<br> 参考之前写过的一篇文章《Spring 多数据源的处理》</p>
+</blockquote>
+<h1 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h1>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;前提&quot;&gt;&lt;a href=&quot;#前提&quot; class=&quot;headerlink&quot; title=&quot;前提&quot;&gt;&lt;/a&gt;前提&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;在分布式数据库中，数据分散在个台不同的机器上，包括机器的宕机，各种网络异常，为了保证事物的可靠性，分布式事物是无法
+    
+    </summary>
+    
+    
+      <category term="分布式" scheme="http://blog.vnicers.com/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
     
   </entry>
   
@@ -924,64 +1033,6 @@ user?starts_with(&quot;J&quot;) 判断表达式的值是否是指定的参数开
     
     
       <category term="Linux" scheme="http://blog.vnicers.com/tags/Linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux使用systemd添加系统启动项目</title>
-    <link href="http://blog.vnicers.com/2014/05/24/Linux%E4%BD%BF%E7%94%A8systemd%E6%B7%BB%E5%8A%A0%E7%B3%BB%E7%BB%9F%E5%90%AF%E5%8A%A8%E9%A1%B9%E7%9B%AE/"/>
-    <id>http://blog.vnicers.com/2014/05/24/Linux使用systemd添加系统启动项目/</id>
-    <published>2014-05-23T16:00:00.000Z</published>
-    <updated>2017-08-05T07:47:19.000Z</updated>
-    
-    <content type="html"><![CDATA[<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">/etc/systemd/system/nexus.service</div><div class="line"></div><div class="line">This example is a script that uses systemd to run the repository manager service. Create a file called nexus.service. Add the following contents, <span class="keyword">then</span> save the file <span class="keyword">in</span> the /etc/systemd/system/ directory.</div><div class="line"></div><div class="line">[Unit]</div><div class="line">Description=nexus service</div><div class="line">After=network.target</div><div class="line"></div><div class="line">[Service]</div><div class="line">Type=forking</div><div class="line">ExecStart=/opt/nexus/bin/nexus start</div><div class="line">ExecStop=/opt/nexus/bin/nexus stop</div><div class="line">User=nexus</div><div class="line">Restart=on-abort</div><div class="line"></div><div class="line">[Install]</div><div class="line">WantedBy=multi-user.target</div><div class="line">Activate the service with the following commands:</div><div class="line"></div><div class="line">sudo systemctl daemon-reload</div><div class="line">sudo systemctl <span class="built_in">enable</span> nexus.service</div><div class="line">sudo systemctl start nexus.service</div><div class="line">After starting the service <span class="keyword">for</span> any Linux-based operating systems, verify that the service started successfully.</div><div class="line"></div><div class="line">tail -f /opt/sonatype-work/nexus3/<span class="built_in">log</span>/nexus.log</div><div class="line"></div><div class="line">check status</div><div class="line">sudo systemctl status nexus</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div
-    
-    </summary>
-    
-    
-      <category term="Linux" scheme="http://blog.vnicers.com/tags/Linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Java多线程对象的共享</title>
-    <link href="http://blog.vnicers.com/2014/05/18/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%85%B1%E4%BA%AB/"/>
-    <id>http://blog.vnicers.com/2014/05/18/Java多线程对象的共享/</id>
-    <published>2014-05-17T16:00:00.000Z</published>
-    <updated>2017-08-13T06:54:27.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>同步代码块和同步方法可以确保以原子的方式执行操作，同时另外一个重要的作用是内存可见性，我们不仅希望防止某个线程正在使用对象的状态，而另一个线程在同时修改这个状态，而且还希望确保一个线程修改了对象状态后，其他线程能够看到发生的状态变化。</p>
-<h1 id="可见性"><a href="#可见性" class="headerlink" title="可见性"></a>可见性</h1><p>通常我们无法确保执行读操作的线程能够适时的看到其他线程写入的值，为了确保多个线程之间对内存的写入操作的可见性必须使用同步机制。</p>
-<h1 id="重排序"><a href="#重排序" class="headerlink" title="重排序"></a>重排序</h1><p>在没有同步的情况下，编译器，处理器，以及运行时等都可能对操作的执行顺序进行一些意想不到的调整，在缺乏足够同步的多线程程序中，要想对内存操作的执行顺序进行判断，几乎无法得到正确的结论</p>
-<h1 id="枷锁与可见性"><a href="#枷锁与可见性" class="headerlink" title="枷锁与可见性"></a>枷锁与可见性</h1><p>java内置锁可以用于确保某个线程以一种可预见的方式来查看另外一个线程的执行结果，当线程A执行某个同步代码块时，线程B随后进入由同一个锁保护的同步代码块，在这种情况下可以保证，在锁被释放之前，A看到的变量值在B获得锁后同样可以由B看到。换句话说，当线程B执行由锁保护的同步代码块时，可以看到线程A之前在同一个同步代码块中的所有操作结果。如果没有同步，那么就无法实现上述保证<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://ww1.sinaimg.cn/large/818b7fe3gy1fihz8uw9wij20yq0sctcb.jpg" alt="同步的可见性保证" title="">
-                </div>
-                <div class="image-caption">同步的可见性保证</div>
-            </figure></p>
-<p>加锁的含义不仅仅局限于互斥行为，还包括内存的可见性。为了确保所有线程都能得到共享变量的最小值，所有执行读操作或者写操作都必须在同一个锁上同步。</p>
-<h1 id="Volatile-变量"><a href="#Volatile-变量" class="headerlink" title="Volatile 变量"></a>Volatile 变量</h1><p>Java语言提供了一种稍弱的同步机制，即Volatile变量。用来确保将变量的更新操作通知到其他线程。当把变量声明成volatile类型后，编译器与运行时都会注意到这个变量是共享的，因此不会将该变量上的操作与其他内存上的操作一起重排序。volatile变量不会被缓存在寄存器或者其他处理器不可见的地方。因此在读取volatile变量总会返回最新的写入的值。<br>在访问volatile变量不会执行加锁的操作，因此也不会使执行线程阻塞，因此可以将volatile变量看作是一种比synchronized关键字更轻量级的同步机制（synchronized关键字在内存可见性上的作用比volatile变量更强）<br>从内存可见性的角度来看，写入volatile变量相当于退出同步代码块，而读取volatile变量相当于进入同步代码块。但是并不建议过度依赖volatile变量的可见性，它通常比使用锁更脆弱，也难以理解。仅当volatile变量能够简化代码的实现以及对同步策略的验证时，才该使用它们。<br>通常volatile变量用作某个操作完成，发生中断或者状态的标志。</p>
-<h1 id="ThreadLocal"><a href="#ThreadLocal" class="headerlink" title="ThreadLocal"></a>ThreadLocal</h1><p>ThreadLocal是维持线程封闭性的一种更规范的方法。这个类能使线程中的某个值与保存值的对象关联起来。ThreadLocal提供了get与set等访问接口或方法。这些方法为每个使用该变量的线程都存有一份独立的副本。因此get总是返回由当前执行线程在调用set时设置的最新值</p>
-<h1 id="安全的共享对象策略"><a href="#安全的共享对象策略" class="headerlink" title="安全的共享对象策略"></a>安全的共享对象策略</h1><p>在并发程序中使用和共享对象时，可以使用一些实用的策略，包括：</p>
-<p>   <strong>线程封闭</strong> 线程封闭的对象只能由一个线程拥有，对象被封闭在该线程中，并且只能由这个线程修改<br>   <strong>只读共享</strong> 在没有额外同步的情况下，共享的只读对象可以由多个线程并发访问，任何线程都不能修改它，共享的只读变量包括不可变对象，和事实不可变对象。<br>   <strong>线程安全共享</strong> 线程安全的对象在其内部实现同步，因此多个线程可以通过对象的公有接口来进行访问而不需要进一步的同步。<br>   <strong>保护对象</strong> 被保护的对象只能通过持有特定的锁来访问，保护对象包括封装在其他线程安全对象中的对象，以及已发布的并且由某个特定的锁保护的对象。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;同步代码块和同步方法可以确保以原子的方式执行操作，同时另外一个重要的作用是内存可见性，我们不仅希望防止某个线程正在使用对象的状态，而另一个线程在同时修改这个状态，而且还希望确保一个线程修改了对象状态后，其他线程能够看到发生的状态变化。&lt;/p&gt;
-&lt;h1 id=&quot;可见性&quot;&gt;&lt;a
-    
-    </summary>
-    
-      <category term="Java并发编程" scheme="http://blog.vnicers.com/categories/Java%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/"/>
-    
-    
-      <category term="多线程" scheme="http://blog.vnicers.com/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
     
   </entry>
   

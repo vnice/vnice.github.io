@@ -13,25 +13,25 @@
     
     
     
-    <title>Centos7防火墙开放端口 | Tanwei的个人技术博客 | 仰望大神不如退而求索</title>
+    <title>分布式事物 | Tanwei的个人技术博客 | 仰望大神不如退而求索</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
     
     
-    <meta name="keywords" content="Linux">
-    <meta name="description" content="CentOS升级到7之后，发现无法使用iptables控制Linuxs的端口，google之后发现Centos 7使用firewalld代替了原来的iptables。下面记录如何使用firewalld开放Linux端口： 开启端口 firewall-cmd –zone=public –add-port=80/tcp –permanent 命令含义： –zone #作用域 –add-port=80/">
-<meta name="keywords" content="Linux">
+    <meta name="keywords" content="分布式">
+    <meta name="description" content="前提 在分布式数据库中，数据分散在个台不同的机器上，包括机器的宕机，各种网络异常，为了保证事物的可靠性，分布式事物是无法避免的。分布式事物是指事物的参与者，支持事物的服务器，资源服务器，以及事物管理器，分别定位于分布式事物的不同几点上。通常一个分布式事物中会涉及对多个数据源及业务系统的操作 参考之前写过的一篇文章《Spring 多数据源的处理》  场景">
+<meta name="keywords" content="分布式">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Centos7防火墙开放端口">
-<meta property="og:url" content="http://blog.vnicers.com/2017/06/05/Centos7 防火墙开放端口/index.html">
+<meta property="og:title" content="分布式事物">
+<meta property="og:url" content="http://blog.vnicers.com/2017/01/08/分布式事物/index.html">
 <meta property="og:site_name" content="Tanwei的个人技术博客">
-<meta property="og:description" content="CentOS升级到7之后，发现无法使用iptables控制Linuxs的端口，google之后发现Centos 7使用firewalld代替了原来的iptables。下面记录如何使用firewalld开放Linux端口： 开启端口 firewall-cmd –zone=public –add-port=80/tcp –permanent 命令含义： –zone #作用域 –add-port=80/">
+<meta property="og:description" content="前提 在分布式数据库中，数据分散在个台不同的机器上，包括机器的宕机，各种网络异常，为了保证事物的可靠性，分布式事物是无法避免的。分布式事物是指事物的参与者，支持事物的服务器，资源服务器，以及事物管理器，分别定位于分布式事物的不同几点上。通常一个分布式事物中会涉及对多个数据源及业务系统的操作 参考之前写过的一篇文章《Spring 多数据源的处理》  场景">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-09T04:46:22.000Z">
+<meta property="og:updated_time" content="2017-08-17T05:43:08.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Centos7防火墙开放端口">
-<meta name="twitter:description" content="CentOS升级到7之后，发现无法使用iptables控制Linuxs的端口，google之后发现Centos 7使用firewalld代替了原来的iptables。下面记录如何使用firewalld开放Linux端口： 开启端口 firewall-cmd –zone=public –add-port=80/tcp –permanent 命令含义： –zone #作用域 –add-port=80/">
+<meta name="twitter:title" content="分布式事物">
+<meta name="twitter:description" content="前提 在分布式数据库中，数据分散在个台不同的机器上，包括机器的宕机，各种网络异常，为了保证事物的可靠性，分布式事物是无法避免的。分布式事物是指事物的参与者，支持事物的服务器，资源服务器，以及事物管理器，分别定位于分布式事物的不同几点上。通常一个分布式事物中会涉及对多个数据源及业务系统的操作 参考之前写过的一篇文章《Spring 多数据源的处理》  场景">
     
         <link rel="alternate" type="application/atom+xml" title="Tanwei的个人技术博客" href="/atom.xml">
     
@@ -108,7 +108,7 @@
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">Centos7防火墙开放端口</div>
+        <div class="flex-col header-title ellipsis">分布式事物</div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -130,11 +130,11 @@
 <header class="content-header post-header">
 
     <div class="container fade-scale">
-        <h1 class="title">Centos7防火墙开放端口</h1>
+        <h1 class="title">分布式事物</h1>
         <h5 class="subtitle">
             
-                <time datetime="2017-06-04T16:00:00.000Z" itemprop="datePublished" class="page-time">
-  2017-06-05
+                <time datetime="2017-01-07T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2017-01-08
 </time>
 
 
@@ -150,13 +150,20 @@
 
 <div class="container body-wrap">
     
-<article id="post-Centos7 防火墙开放端口"
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#前提"><span class="post-toc-number">1.</span> <span class="post-toc-text">前提</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#场景"><span class="post-toc-number">2.</span> <span class="post-toc-text">场景</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-分布式事物"
   class="post-article article-type-post fade" itemprop="blogPost">
 
     <div class="post-card">
-        <h1 class="post-card-title">Centos7防火墙开放端口</h1>
+        <h1 class="post-card-title">分布式事物</h1>
         <div class="post-meta">
-            <time class="post-time" title="2017-06-05 00:00:00" datetime="2017-06-04T16:00:00.000Z"  itemprop="datePublished">2017-06-05</time>
+            <time class="post-time" title="2017-01-08 00:00:00" datetime="2017-01-07T16:00:00.000Z"  itemprop="datePublished">2017-01-08</time>
 
             
 
@@ -169,16 +176,10 @@
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <p>CentOS升级到7之后，发现无法使用iptables控制Linuxs的端口，google之后发现Centos 7使用firewalld代替了原来的iptables。下面记录如何使用firewalld开放Linux端口：</p>
-<p>开启端口</p>
-<p>firewall-cmd –zone=public –add-port=80/tcp –permanent</p>
-<p>命令含义：</p>
-<p>–zone #作用域</p>
-<p>–add-port=80/tcp  #添加端口，格式为：端口/通讯协议</p>
-<p>–permanent  #永久生效，没有此参数重启后失效</p>
-<p>重启防火墙</p>
-<p>firewall-cmd –reload</p>
-
+            <h1 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h1><blockquote>
+<p>在分布式数据库中，数据分散在个台不同的机器上，包括机器的宕机，各种网络异常，为了保证事物的可靠性，分布式事物是无法避免的。<br>分布式事物是指事物的参与者，支持事物的服务器，资源服务器，以及事物管理器，分别定位于分布式事物的不同几点上。通常一个分布式事物中会涉及对多个数据源及业务系统的操作<br> 参考之前写过的一篇文章《Spring 多数据源的处理》</p>
+</blockquote>
+<h1 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h1>
         </div>
 
         <blockquote class="post-copyright">
@@ -186,7 +187,7 @@
         
 
         
-        原创文章，转载请注明： 转载Tanwei的技术博客,原文地址:<a href="/2017/06/05/Centos7 防火墙开放端口/" target="_blank" rel="external">http://blog.vnicers.com/2017/06/05/Centos7 防火墙开放端口/</a>
+        原创文章，转载请注明： 转载Tanwei的技术博客,原文地址:<a href="/2017/01/08/分布式事物/" target="_blank" rel="external">http://blog.vnicers.com/2017/01/08/分布式事物/</a>
         
     </div>
     <footer>
@@ -206,7 +207,7 @@
 
         <div class="post-footer">
             
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分布式/">分布式</a></li></ul>
 
 
             
@@ -216,7 +217,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.vnicers.com/2017/06/05/Centos7 防火墙开放端口/&title=《Centos7防火墙开放端口》 — Tanwei的个人技术博客&pic=http://blog.vnicers.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.vnicers.com/2017/01/08/分布式事物/&title=《分布式事物》 — Tanwei的个人技术博客&pic=http://blog.vnicers.com/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -226,22 +227,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.vnicers.com/2017/06/05/Centos7 防火墙开放端口/&title=《Centos7防火墙开放端口》 — Tanwei的个人技术博客&source=暂时没有好描述自己的。。。" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.vnicers.com/2017/01/08/分布式事物/&title=《分布式事物》 — Tanwei的个人技术博客&source=暂时没有好描述自己的。。。" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.vnicers.com/2017/06/05/Centos7 防火墙开放端口/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.vnicers.com/2017/01/08/分布式事物/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Centos7防火墙开放端口》 — Tanwei的个人技术博客&url=http://blog.vnicers.com/2017/06/05/Centos7 防火墙开放端口/&via=http://blog.vnicers.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《分布式事物》 — Tanwei的个人技术博客&url=http://blog.vnicers.com/2017/01/08/分布式事物/&via=http://blog.vnicers.com" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.vnicers.com/2017/06/05/Centos7 防火墙开放端口/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.vnicers.com/2017/01/08/分布式事物/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -264,18 +265,18 @@
 <nav class="post-nav flex-row flex-justify-between">
   
     <div class="waves-block waves-effect prev">
-      <a href="/2017/07/02/使用DigitalOcean搭建科学上网服务/" id="post-prev" class="post-nav-link">
+      <a href="/2017/02/10/ReactNative开发填坑/" id="post-prev" class="post-nav-link">
         <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">使用DigitalOcean搭建科学上网服务</h4>
+        <h4 class="title">ReactNative开发填坑</h4>
       </a>
     </div>
   
 
   
     <div class="waves-block waves-effect next">
-      <a href="/2017/03/20/Java知识点总结/" id="post-next" class="post-nav-link">
+      <a href="/2017/01/02/分布式基本理论/" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">Java知识点总结</h4>
+        <h4 class="title">分布式基本理论</h4>
       </a>
     </div>
   
@@ -386,7 +387,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.vnicers.com/2017/06/05/Centos7 防火墙开放端口/&title=《Centos7防火墙开放端口》 — Tanwei的个人技术博客&pic=http://blog.vnicers.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.vnicers.com/2017/01/08/分布式事物/&title=《分布式事物》 — Tanwei的个人技术博客&pic=http://blog.vnicers.com/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -396,22 +397,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.vnicers.com/2017/06/05/Centos7 防火墙开放端口/&title=《Centos7防火墙开放端口》 — Tanwei的个人技术博客&source=暂时没有好描述自己的。。。" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.vnicers.com/2017/01/08/分布式事物/&title=《分布式事物》 — Tanwei的个人技术博客&source=暂时没有好描述自己的。。。" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.vnicers.com/2017/06/05/Centos7 防火墙开放端口/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.vnicers.com/2017/01/08/分布式事物/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Centos7防火墙开放端口》 — Tanwei的个人技术博客&url=http://blog.vnicers.com/2017/06/05/Centos7 防火墙开放端口/&via=http://blog.vnicers.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《分布式事物》 — Tanwei的个人技术博客&url=http://blog.vnicers.com/2017/01/08/分布式事物/&via=http://blog.vnicers.com" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.vnicers.com/2017/06/05/Centos7 防火墙开放端口/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://blog.vnicers.com/2017/01/08/分布式事物/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -422,7 +423,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACrklEQVR42u3awW6DMBAE0P7/T7fnKoLMeG2aSo9T1ATwcyV2GfvrKz6+X47229fP9795vdrVuRsOPDw8vPHQry59dbMr2P25+R3XroCHh4d3mpc8rNsH+psbxxO3Nh48PDy8z+S1v0wKUtKs4+Hh4f1fXtJk3w86Dz7w8PDwPo2XvPy3vDaibcvP5qwFDw8Pr8sEovb3cz4fWd/Dw8PDG6+qtyFsG+m25ae+Jh4eHt4BXv7AbVveZHGrvePiOPHw8PC28u5j1vsIoJ2CeQlJoudf3+Lh4eEd49WnDR7ryR3vzyrAeHh4eId57TJ//vc8gEhKS4HEw8PDO8BLNkitXXrXdoG8eBTLYHh4eHgD3nxAeQGYtOZ5ycHDw8N7hte2y2vboZJ7TSbuzc4IPDw8vK28ljQvDC0+eQ0Yxbh4eHh4Y16+DJY30G1RaWPiy01XeHh4eAd47Uv+Gj7BrC2hXU4ZHh4e3gFeG622j+lJaclDiqRlx8PDwzvBmwQQCb6NeufhCB4eHt4JXjK4ZBCTVnu+6eqyUOHh4eE9wmuXxNZq0Ykr11sH8PDw8JZ4aw/6XcFuMpWTgAMPDw/vBK9Yho9b6rbArLX10VYDPDw8vMO8/Db558UUuYx3N1Q8PDw8vK2r7fMh5oNLQt7k9/WOCTw8PLySl+vzS98feUSb/DfeTDceHh7eg7yEmkcMk+HmgS8eHh7ek7xd0W0e5ratcx3j4uHh4R3grbXCbdSb72LIJygqV3h4eHgHePN1onwK2tKSL7ZNygkeHh7eGm8tcs2XrCYP7rUWvGis8fDw8Aa8vPE9sWVqFNTmM4SHh4f3R7y9S1m7zo1Sajw8PLyP560ts+UtdTQSPDw8vGO8tvEd7VaIm+95OcHDw8M7wdsVp661yGulZfOBh4eHlx4/enYW266eO5AAAAAASUVORK5CYII=" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJ0lEQVR42u3a0U7AIAxG4b3/S89bEx2ev0XNytmVWXDwYVIp7XXh5/70fH3/9PPTb62/sB7femTIkPFaxr18niYgb9bU2nY8UmXIkHEAg3+avOFgMnK9NhkyZMioLYssdD1GhgwZMnYFXDIlH/9v/zdkyJDxEgYPgmnY5ddqtQAtQ4aMExj81v3vf/6V+oYMGTJexbjDJ/0aKUymyfA3s8iQIWM0gwe4tGC562gYNH/IkCFjNKO2rP6COg0cxf41GTJkvJBBWih25crp0TMI2TJkyDiSwVsl+LEvLWqS1FeGDBknMDotDp0pSXE0vdSTIUPGVAaZmEyTLpEXHtBmyZAh4xgGD4J84s6mBNsnQ4aM0YzOxDy5TYsE6ZdlyJAxm0HKh7UgW2yVqAVuGTJkHMaoJaJpgtpJkq/0FlCGDBnjGOn0/cs4UjQNmi1kyJAxjrErpewkt+k2tTrRZMiQ8UJGemjrsPsb9HhMlCFDxmgGD3884vG2ibSEiVouZMiQMZqRFgDSqzT+prgFMmTIOICRXr2R9HXvRV58NJQhQ8ZQRm0pPHTGqSmnypAhYyjjDp9aeCXHvvQLP/wdZMiQMYhRK2rWJqsd/lrNFjJkyBjE4EG2FjqDy/0wZMuQIeM0xt7CJM+hdzV2yJAhQ0ZKImXO2izo9k6GDBnHM2plzlqqHGyQDBkyDmDwA1waQGvNZPEYGTJkjGZ0zl398MpnScfLkCFjBOMDX2dBz1LTNKMAAAAASUVORK5CYII=" alt="微信分享二维码">
 </div>
 
 
