@@ -184,34 +184,6 @@
   </entry>
   
   <entry>
-    <title>离职感悟</title>
-    <link href="http://blog.vnicers.com/2017/08/04/%E7%A6%BB%E8%81%8C%E6%84%9F%E6%82%9F/"/>
-    <id>http://blog.vnicers.com/2017/08/04/离职感悟/</id>
-    <published>2017-08-03T16:00:00.000Z</published>
-    <updated>2017-08-23T11:28:59.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="离职感悟"><a href="#离职感悟" class="headerlink" title="离职感悟"></a>离职感悟</h1><p>离职之前没有过多的犹豫，向领导表达了自己的意思。领导和我也沟通了一会，让我再考虑考虑，我想我考虑太久了，当初到这里没打算做多久，但是一晃就4年过去了。我这人不太适应换环境，但是个人发展还是要紧，<br>这里给我的平台太小了，以业务为主，技术人员的价值在这边发挥不出来，程序员都有一个改变世界的梦想。我想换个环境趁着年轻还能奋斗。<br>这四年在这边参与的项目有不少，基本上数据中心组大大小小的项目都摸过一遍，从当初刚毕业进来，组里就差不多5个人，3个经理，3个开发人员。现在差不多有35个人了。如果不是上次聚餐点了4桌菜还真不知道队伍越来越强大了。</p>
-<h1 id="工作交接"><a href="#工作交接" class="headerlink" title="工作交接"></a>工作交接</h1><p>接下来就是工作交接了，之前负责的几个系统给大家全部做了一个完整的培训，DSP系统现在开发的人越来越多了。想起去年一个人开发的时候从前端到后端，现在全部交给你们了，感觉像把自己的孩子交给你们一样，加油。<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/img/inline/lz.jpeg" alt="交接系统" title="">
-                </div>
-                <div class="image-caption">交接系统</div>
-            </figure></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;离职感悟&quot;&gt;&lt;a href=&quot;#离职感悟&quot; class=&quot;headerlink&quot; title=&quot;离职感悟&quot;&gt;&lt;/a&gt;离职感悟&lt;/h1&gt;&lt;p&gt;离职之前没有过多的犹豫，向领导表达了自己的意思。领导和我也沟通了一会，让我再考虑考虑，我想我考虑太久了，当初到这里没打算做多
-    
-    </summary>
-    
-    
-      <category term="其它" scheme="http://blog.vnicers.com/tags/%E5%85%B6%E5%AE%83/"/>
-    
-  </entry>
-  
-  <entry>
     <title>关于此博客</title>
     <link href="http://blog.vnicers.com/2017/07/27/%E5%85%B3%E4%BA%8E%E6%AD%A4%E5%8D%9A%E5%AE%A2/"/>
     <id>http://blog.vnicers.com/2017/07/27/关于此博客/</id>
@@ -1028,6 +1000,26 @@ user?starts_with(&quot;J&quot;) 判断表达式的值是否是指定的参数开
     <summary type="html">
     
       &lt;h1 id=&quot;后台运行程序将日志输出到指定文件&quot;&gt;&lt;a href=&quot;#后台运行程序将日志输出到指定文件&quot; class=&quot;headerlink&quot; title=&quot;后台运行程序将日志输出到指定文件&quot;&gt;&lt;/a&gt;后台运行程序将日志输出到指定文件&lt;/h1&gt;&lt;figure class=&quot;hi
+    
+    </summary>
+    
+    
+      <category term="Linux" scheme="http://blog.vnicers.com/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux使用systemd添加系统启动项目</title>
+    <link href="http://blog.vnicers.com/2014/05/24/Linux%E4%BD%BF%E7%94%A8systemd%E6%B7%BB%E5%8A%A0%E7%B3%BB%E7%BB%9F%E5%90%AF%E5%8A%A8%E9%A1%B9%E7%9B%AE/"/>
+    <id>http://blog.vnicers.com/2014/05/24/Linux使用systemd添加系统启动项目/</id>
+    <published>2014-05-23T16:00:00.000Z</published>
+    <updated>2017-08-05T07:47:19.000Z</updated>
+    
+    <content type="html"><![CDATA[<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">/etc/systemd/system/nexus.service</div><div class="line"></div><div class="line">This example is a script that uses systemd to run the repository manager service. Create a file called nexus.service. Add the following contents, <span class="keyword">then</span> save the file <span class="keyword">in</span> the /etc/systemd/system/ directory.</div><div class="line"></div><div class="line">[Unit]</div><div class="line">Description=nexus service</div><div class="line">After=network.target</div><div class="line"></div><div class="line">[Service]</div><div class="line">Type=forking</div><div class="line">ExecStart=/opt/nexus/bin/nexus start</div><div class="line">ExecStop=/opt/nexus/bin/nexus stop</div><div class="line">User=nexus</div><div class="line">Restart=on-abort</div><div class="line"></div><div class="line">[Install]</div><div class="line">WantedBy=multi-user.target</div><div class="line">Activate the service with the following commands:</div><div class="line"></div><div class="line">sudo systemctl daemon-reload</div><div class="line">sudo systemctl <span class="built_in">enable</span> nexus.service</div><div class="line">sudo systemctl start nexus.service</div><div class="line">After starting the service <span class="keyword">for</span> any Linux-based operating systems, verify that the service started successfully.</div><div class="line"></div><div class="line">tail -f /opt/sonatype-work/nexus3/<span class="built_in">log</span>/nexus.log</div><div class="line"></div><div class="line">check status</div><div class="line">sudo systemctl status nexus</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div
     
     </summary>
     
