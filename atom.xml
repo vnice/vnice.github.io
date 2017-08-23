@@ -188,7 +188,7 @@
     <link href="http://blog.vnicers.com/2017/08/04/%E7%A6%BB%E8%81%8C%E6%84%9F%E6%82%9F/"/>
     <id>http://blog.vnicers.com/2017/08/04/离职感悟/</id>
     <published>2017-08-03T16:00:00.000Z</published>
-    <updated>2017-08-06T07:50:34.000Z</updated>
+    <updated>2017-08-23T11:28:59.000Z</updated>
     
     <content type="html"><![CDATA[<h1 id="离职感悟"><a href="#离职感悟" class="headerlink" title="离职感悟"></a>离职感悟</h1><p>离职之前没有过多的犹豫，向领导表达了自己的意思。领导和我也沟通了一会，让我再考虑考虑，我想我考虑太久了，当初到这里没打算做多久，但是一晃就4年过去了。我这人不太适应换环境，但是个人发展还是要紧，<br>这里给我的平台太小了，以业务为主，技术人员的价值在这边发挥不出来，程序员都有一个改变世界的梦想。我想换个环境趁着年轻还能奋斗。<br>这四年在这边参与的项目有不少，基本上数据中心组大大小小的项目都摸过一遍，从当初刚毕业进来，组里就差不多5个人，3个经理，3个开发人员。现在差不多有35个人了。如果不是上次聚餐点了4桌菜还真不知道队伍越来越强大了。</p>
 <h1 id="工作交接"><a href="#工作交接" class="headerlink" title="工作交接"></a>工作交接</h1><p>接下来就是工作交接了，之前负责的几个系统给大家全部做了一个完整的培训，DSP系统现在开发的人越来越多了。想起去年一个人开发的时候从前端到后端，现在全部交给你们了，感觉像把自己的孩子交给你们一样，加油。<br><figure class="image-bubble">
@@ -207,7 +207,7 @@
     </summary>
     
     
-      <category term="其他" scheme="http://blog.vnicers.com/tags/%E5%85%B6%E4%BB%96/"/>
+      <category term="其它" scheme="http://blog.vnicers.com/tags/%E5%85%B6%E5%AE%83/"/>
     
   </entry>
   
@@ -216,7 +216,7 @@
     <link href="http://blog.vnicers.com/2017/07/27/%E5%85%B3%E4%BA%8E%E6%AD%A4%E5%8D%9A%E5%AE%A2/"/>
     <id>http://blog.vnicers.com/2017/07/27/关于此博客/</id>
     <published>2017-07-26T21:51:27.000Z</published>
-    <updated>2017-08-07T13:12:23.000Z</updated>
+    <updated>2017-08-23T11:28:59.000Z</updated>
     
     <content type="html"><![CDATA[<h1 id="搭建原因"><a href="#搭建原因" class="headerlink" title="搭建原因"></a>搭建原因</h1><p>之前博客是东写一下，西写一下，到处都有，像什么<a href="http://www.csdn.net/" target="_blank" rel="external">csdn</a>，<a href="https://segmentfault.com/" target="_blank" rel="external">segmentfault</a>，<a href="https://www.jianshu.com/" target="_blank" rel="external">简书</a>,什么都有，有的是记一下遇到的问题的解决方案，有的是转载一下别人，后面再也没有关注过，<br>都只是零零散散的记录一些东西。没时间打理，现在终于换到自己搭建的Blog了。后面会花一段时间陆续会把之前的blog转移过来。</p>
 <h1 id="博客框架的选择"><a href="#博客框架的选择" class="headerlink" title="博客框架的选择"></a>博客框架的选择</h1><p>刚开始是想从头到尾一个人写博客框架的，但是后来想想，这也得花大把的精力来维护，所以在网上找了找开源的。从之前关注的一些开发者的博客看到一些界面挺好看的<br>比如<a href="http://www.ityouknow.com/" target="_blank" rel="external">纯洁的微笑的博客</a>,上次特意问他本人用的博客框架，用的<a href="https://github.com/DONGChuan/Yummy-Jekyll" target="_blank" rel="external">Yummy-Jekyll</a>的主题，我也折腾了一番，但是看到github上好像有一年作者没有更新了，所以放弃用Yummy-Jekyll了。后来在网上搜索了一下现在流行的应该是<a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>。然后就选择它了。所用的主题是<a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank" rel="external">indigo</a>，还是比较钟意<code>material-design</code>风格的。</p>
@@ -251,7 +251,7 @@
     </summary>
     
     
-      <category term="其他" scheme="http://blog.vnicers.com/tags/%E5%85%B6%E4%BB%96/"/>
+      <category term="其它" scheme="http://blog.vnicers.com/tags/%E5%85%B6%E5%AE%83/"/>
     
   </entry>
   
@@ -447,7 +447,7 @@
     <link href="http://blog.vnicers.com/2017/03/20/Java%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/"/>
     <id>http://blog.vnicers.com/2017/03/20/Java知识点总结/</id>
     <published>2017-03-19T16:00:00.000Z</published>
-    <updated>2017-08-17T09:10:14.000Z</updated>
+    <updated>2017-08-23T11:28:59.000Z</updated>
     
     <content type="html"><![CDATA[<h1 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h1><p>   JVM 中加载Class的原理和机制</p>
 <pre><code>Class的加载到主要分5个阶段
@@ -523,7 +523,7 @@ wait()是Object类的方法，调用对象的wait()方法导致当前线程放�
     </summary>
     
     
-      <category term="其他" scheme="http://blog.vnicers.com/tags/%E5%85%B6%E4%BB%96/"/>
+      <category term="其它" scheme="http://blog.vnicers.com/tags/%E5%85%B6%E5%AE%83/"/>
     
   </entry>
   
