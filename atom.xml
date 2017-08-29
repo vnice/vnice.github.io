@@ -152,7 +152,7 @@
     <link href="http://blog.vnicers.com/2017/08/05/Dubbo%E9%87%8D%E6%96%B0%E7%BB%B4%E6%8A%A4/"/>
     <id>http://blog.vnicers.com/2017/08/05/Dubbo重新维护/</id>
     <published>2017-08-04T16:00:00.000Z</published>
-    <updated>2017-08-08T10:39:03.000Z</updated>
+    <updated>2017-08-29T04:59:46.000Z</updated>
     
     <content type="html"><![CDATA[<p>今天从群里得到消息说Dubbo又重新维护了，然后去<a href="http://dubbo.io/" target="_blank" rel="external">官网</a>看了一下，<br>确实是得到官方重新维护了，但是还不了解最新的规划放向</p>
 <figure class="image-bubble">
@@ -169,7 +169,33 @@
                 </div>
                 <div class="image-caption"></div>
             </figure><br>面临的问题还是有很多的，但是应付一般的企业需求应该是足够了。<br>之前公司里面用过阿里的烂尾项目，踩了很多坑。所以现在还是慎重选择国内的开源框架。</p>
-]]></content>
+<h1 id="Dubbo的一些坑"><a href="#Dubbo的一些坑" class="headerlink" title="Dubbo的一些坑"></a>Dubbo的一些坑</h1><h2 id="在application节点设置logger使用slf4j之后，还是报没有找到log4j的警告"><a href="#在application节点设置logger使用slf4j之后，还是报没有找到log4j的警告" class="headerlink" title="在application节点设置logger使用slf4j之后，还是报没有找到log4j的警告"></a>在application节点设置logger使用slf4j之后，还是报没有找到log4j的警告</h2><pre><code>在dubbo启动之前设置 System.setProperty(&quot;dubbo.application.logger&quot;,&quot;slf4j&quot;);   
+</code></pre><h2 id="使用Dubbo注解-Service-和Spring注解-Transactional冲突的问题，同样存在于和其他自定义使用AOP代理过得对象有冲突"><a href="#使用Dubbo注解-Service-和Spring注解-Transactional冲突的问题，同样存在于和其他自定义使用AOP代理过得对象有冲突" class="headerlink" title="使用Dubbo注解@Service 和Spring注解 @Transactional冲突的问题，同样存在于和其他自定义使用AOP代理过得对象有冲突"></a>使用Dubbo注解@Service 和Spring注解 @Transactional冲突的问题，同样存在于和其他自定义使用AOP代理过得对象有冲突</h2><pre><code>原因:Dubbo早期 使用Spring2,如果自己排除了Spring低版本，使用高版本的Spring。其代理的生成方式有变，早期使用JDK动态代理，现在默认是使用CGLib字节码生成方式而Dubbo对于字节码生成方式没有做考虑，所以存在问题
+
+解决方案1：
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Service service;</div><div class="line"><span class="keyword">if</span> (AopUtils.isAopProxy(proxy) )&#123;</div><div class="line">       service =（根据代理对象获得到的cglib或者jdkproxy的原始对象）</div><div class="line">&#125;<span class="keyword">else</span>&#123;</div><div class="line">       service = bean.getClass().getAnnotation(Service.class);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</code></pre><p>   解决方案2：不用注解，使用xml方式更好</p>
+<h2 id="2-5-3会间歇性连接超时"><a href="#2-5-3会间歇性连接超时" class="headerlink" title="2.5.3会间歇性连接超时"></a>2.5.3会间歇性连接超时</h2><p>   <a href="https://github.com/alibaba/dubbo/issues/482" target="_blank" rel="external">问题</a><br>   参考<a href="http://blog.csdn.net/csujiangyu/article/details/51984600" target="_blank" rel="external">解决方案</a><br>   以及修改host文件</p>
+<h2 id="分布式事物问题"><a href="#分布式事物问题" class="headerlink" title="分布式事物问题"></a>分布式事物问题</h2><pre><code>dubbo暂时没有支持分布式事物的功能，考虑之后将dubbox的分布式事物功能合并过来，
+可以自己使用Zookeeper自己实现分布式事物
+</code></pre><h2 id="dubbo-管理控制台的问题"><a href="#dubbo-管理控制台的问题" class="headerlink" title="dubbo 管理控制台的问题"></a>dubbo 管理控制台的问题</h2><pre><code>dubbo的管理控制台是一个阉割版。到处是bug。推荐使用 [dubbokeeper](https://github.com/dubboclub/dubbokeeper)
+</code></pre><h2 id="优雅停机的bug"><a href="#优雅停机的bug" class="headerlink" title="优雅停机的bug"></a>优雅停机的bug</h2><pre><code>dubbo的原生graceful shutdown是有bug的，仅释放了一些资源但没有尝试等待服务线程结束。官方还在进行修复和优化，另外如果dubbo是同web容器一起启动的话，dubbo和web容器会有一个时间差,
+具体可以参考解决方案https://my.oschina.net/u/1398931/blog/790709  
+</code></pre><h2 id="提供者的RpcResult的attachment放了值，消费着获取不到"><a href="#提供者的RpcResult的attachment放了值，消费着获取不到" class="headerlink" title="提供者的RpcResult的attachment放了值，消费着获取不到"></a>提供者的RpcResult的attachment放了值，消费着获取不到</h2><pre><code>必须要从扩展的层次来操作，比如通过做Filter扩展
+</code></pre><h2 id="dubbo提供者线程池满了后不返回报错"><a href="#dubbo提供者线程池满了后不返回报错" class="headerlink" title="dubbo提供者线程池满了后不返回报错"></a>dubbo提供者线程池满了后不返回报错</h2><pre><code>新版本2.5.4 说是解决了。未验证，参考issue https://github.com/alibaba/dubbo/issues/494
+</code></pre><h2 id="dubbo-提供restful-webservice"><a href="#dubbo-提供restful-webservice" class="headerlink" title="dubbo 提供restful webservice"></a>dubbo 提供restful webservice</h2><pre><code>该功能暂时还没排上计划，可以自己使用resteasy 或者spring mvc
+</code></pre><h2 id="Dubbo以webservice协议发布接口时不支持最新的CXF"><a href="#Dubbo以webservice协议发布接口时不支持最新的CXF" class="headerlink" title="Dubbo以webservice协议发布接口时不支持最新的CXF"></a>Dubbo以webservice协议发布接口时不支持最新的CXF</h2><pre><code>可以使用cxf老版本的xfire，或者cxf新版本的3.1.6
+</code></pre><h2 id="客户端与服务端Channel断了，无法自动恢复"><a href="#客户端与服务端Channel断了，无法自动恢复" class="headerlink" title="客户端与服务端Channel断了，无法自动恢复"></a>客户端与服务端Channel断了，无法自动恢复</h2><pre><code>自己还没有碰到该问题，这是个大问题 - -，详见https://github.com/alibaba/dubbo/issues/458
+</code></pre><h2 id="服务提供者启动暴露服务后，少量请求超时"><a href="#服务提供者启动暴露服务后，少量请求超时" class="headerlink" title="服务提供者启动暴露服务后，少量请求超时"></a>服务提供者启动暴露服务后，少量请求超时</h2><pre><code>多半是有的服务接口处理耗时较长，在配置里面把对应的超时时间调大一点应该就可以了
+</code></pre><h2 id="dubbo的异步调用传递性问题"><a href="#dubbo的异步调用传递性问题" class="headerlink" title="dubbo的异步调用传递性问题"></a>dubbo的异步调用传递性问题</h2><pre><code>若cosumer async=true去调 serviceA,确实是异步调用.serviceA并未在xml配置async .那么serviceA调用serviceB会变成async=true异步的,导致返回值为null
+在查看了github 的issue之后作者标记在2.5.4.M1 里程碑版本重点在解决这个问题
+</code></pre><h2 id="消费者抛监控异常"><a href="#消费者抛监控异常" class="headerlink" title="消费者抛监控异常"></a>消费者抛监控异常</h2><pre><code>配置文件打开了dubbo的监控，但是simple-monitor没有运行。
+</code></pre><h2 id="dubbo-默认的序列化方式存在的问题"><a href="#dubbo-默认的序列化方式存在的问题" class="headerlink" title="dubbo 默认的序列化方式存在的问题"></a>dubbo 默认的序列化方式存在的问题</h2><pre><code>dubbo默认序列化协议是hession，hession对于特殊对象，序列化不行这是他的一大劣势，解决办法：
+1、自己转化下思路，比如转化为string类型的
+2、不用hession协议，直接使用protobuf协议做序列化协议
+</code></pre><h2 id="所有非dubbo的序列化协议都是不建议在生成上使用的"><a href="#所有非dubbo的序列化协议都是不建议在生成上使用的" class="headerlink" title="所有非dubbo的序列化协议都是不建议在生成上使用的- -"></a>所有非dubbo的序列化协议都是不建议在生成上使用的- -</h2><pre><code>非dubbo协议为了调试和测试使用的，使用非Dubbo的协议都存在一个问题，如何进行服务注册与服务发布？以及如何进行负载均衡等？
+</code></pre><h1 id="Spring-Cloud"><a href="#Spring-Cloud" class="headerlink" title="Spring Cloud"></a>Spring Cloud</h1><pre><code>能够选择Spring Cloud的话还是选择Spring Cloud吧，指望dubbo能够稳定下来还是遥遥无期 
+</code></pre>]]></content>
     
     <summary type="html">
     
