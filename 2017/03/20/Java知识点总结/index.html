@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/818b7fe3gy1fims08sh9bj20u20gkgvn.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/818b7fe3gy1fims7ids22j20sg0h940g.jpg">
-<meta property="og:updated_time" content="2017-08-23T11:28:59.000Z">
+<meta property="og:updated_time" content="2017-09-04T10:04:02.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java知识点总结">
 <meta name="twitter:description" content="JVM   JVM 中加载Class的原理和机制 Class的加载到主要分5个阶段     1.  加载阶段 主要由类加载器来完成         Bootstrap ClassLoader 负责加载jre中的lib/rt.jar 同时可以指定JVM参数 -Xbootclasspath         Extension ClassLoader 负责加载JDK/lib/ext/*.jar 扩展包下">
@@ -117,7 +117,7 @@
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
                 <i class="icon icon-lg icon-chevron-left"></i>
             </a>
-            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="搜尋">
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
                 <i class="icon icon-lg icon-search"></i>
             </a>
@@ -156,7 +156,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#JVM"><span class="post-toc-number">1.</span> <span class="post-toc-text">JVM</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#多线程"><span class="post-toc-number">2.</span> <span class="post-toc-text">多线程</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#JVM"><span class="post-toc-number">1.</span> <span class="post-toc-text">JVM</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#多线程"><span class="post-toc-number">2.</span> <span class="post-toc-text">多线程</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#NIO"><span class="post-toc-number">3.</span> <span class="post-toc-text">NIO</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Oracle-数据库优化"><span class="post-toc-number">4.</span> <span class="post-toc-text">Oracle 数据库优化</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#where-语句优化-避免全表扫描"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">where 语句优化  避免全表扫描</span></a></li></ol></li></ol>
         </nav>
     </aside>
     
@@ -208,7 +208,7 @@
  - 终身颐养园（Tenured）：这是足够老的幸存对象的归宿。年轻代收集（Minor-GC）过程是不会触及这个地方的。
  新建的对象都是用新生代分配内存，Eden空间不足的时候，会把存活的对象转移到Survivor中，新生代大小可以由-Xmn来控制，也可以用-XX:SurvivorRatio来控制Eden和Survivor的比例旧生代。用于存放新生代中经过多次垃圾回收仍然存活的对象
  当年轻代收集不能把对象放进终身颐养园时，就会触发一次完全收集（Major-GC），这里可能还会牵扯到压缩，以便为大对象腾出足够的空间。
-</code></pre><p>   <img src="https://ws1.sinaimg.cn/large/818b7fe3gy1fims08sh9bj20u20gkgvn.jpg" alt="">      </p>
+</code></pre><p>   <img src="https://ws1.sinaimg.cn/large/818b7fe3gy1fims08sh9bj20u20gkgvn.jpg" alt=""><br>    新生代按照8：2的比例分配了Eden区 占80%，Survivor 0 和Survivor 1各占10%，默认创建的对象都会在Eden区<br>    当Eden没有足够的空间的时候回触发一次minor gc,然后将存活下来的对象转到s0中，然后清空eden区，再次发生minor gc 的时候将s0中的对象转到s1<br>    当存活的对象反复在eden-&gt;s0,或者s0-&gt;s1移动的时候，GC对象的年龄也会累加，当这个年龄超过默认阈值15时，会将对象移动到老年代，<br>    老年代用于存放几次minor gc 之后存活的对象，当老年代内存不足的时候回触发full gc<br>    永久代在jdk8之后移除，存放到堆外内存。     </p>
 <p>   JVM 内存模型</p>
 <p>   <img src="https://ws1.sinaimg.cn/large/818b7fe3gy1fims7ids22j20sg0h940g.jpg" alt=""></p>
 <p>   JVM各种参数的含义</p>
@@ -229,7 +229,8 @@ JAVA_OPTS=”-server -Dfile.encoding=UTF-8 -Xms=512m -Xmx1024m -XX:PermSize=128m
 wait()是Object类的方法，调用对象的wait()方法导致当前线程放弃对象的锁（线程暂停执行），进入对象的等待池（wait pool），只有调用对象的notify()方法（或notifyAll()方法）时才能唤醒等待池中的线程进入等锁池（lock pool），如果线程重新获得对象的锁就可以进入就绪状态。
 </code></pre><p>   当一个线程进入一个对象的synchronized方法A之后，其它线程是否可进入此对象的synchronized方法B？</p>
 <pre><code>不能。其它线程只能访问该对象的非同步方法，同步方法则不能进入。因为非静态方法上的synchronized修饰符要求执行方法时要获得对象的锁，如果已经进入A方法说明对象锁已经被取走，那么试图进入B方法的线程就只能在等锁池（注意不是等待池哦）中等待对象的锁。
-</code></pre><p>   线程池子</p>
+</code></pre><p>   CAS 非阻塞同步算法<br>    语意: “我认为V的值应该为A，如果是，那么将V的值更新为B，否则不修改并告诉V的值实际为多少”</p>
+<p>   线程池子</p>
 <pre><code>Java 5+中的Executor接口定义一个执行线程的工具。它的子类型即线程池接口是ExecutorService。要配置一个线程池是比较复杂的，尤其是对于线程池的原理不是很清楚的情况下，因此在工具类Executors面提供了一些静态工厂方法，生成一些常用的线程池，
 如下所示： 
 - newSingleThreadExecutor：创建一个单线程的线程池。这个线程池只有一个线程在工作，也就是相当于单线程串行执行所有任务。如果这个唯一的线程因为异常结束，那么会有一个新的线程来替代它。此线程池保证所有任务的执行顺序按照任务的提交顺序执行。 
@@ -237,12 +238,22 @@ wait()是Object类的方法，调用对象的wait()方法导致当前线程放�
 - newCachedThreadPool：创建一个可缓存的线程池。如果线程池的大小超过了处理任务所需要的线程，那么就会回收部分空闲（60秒不执行任务）的线程，当任务数增加时，此线程池又可以智能的添加新线程来处理任务。此线程池不会对线程池大小做限制，线程池大小完全依赖于操作系统（或者说JVM）能够创建的最大线程大小。 
 - newScheduledThreadPool：创建一个大小无限的线程池。此线程池支持定时以及周期性执行任务的需求。 
 </code></pre><p>   一个新的任务提交到线程池之后，线程池是如何处理的</p>
-<pre><code>1、线程池判断核心线程池里的线程是否都在执行任务。如果不是，则创建一个新的工作线程来执行任务。如果核心线程池里的线程都在执行任务，则执行第二步。
+<pre><code>1、线程池判断核心线程池里的线程是都在工作。如果不是，则直接执行任务。如果核心线程池里的线程都在执行任务，则执行第二步。
 
 2、线程池判断工作队列是否已经满。如果工作队列没有满，则将新提交的任务存储在这个工作队列里进行等待。如果工作队列满了，则执行第三步
 
 3、线程池判断线程池的线程是否都处于工作状态。如果没有，则创建一个新的工作线程来执行任务。如果已经满了，则交给饱和策略来处理这个任务
-</code></pre>
+</code></pre><p>   查看JVM 线程dump文件的方式<br>    kill -3 pid 或者 jstack pid</p>
+<h1 id="NIO"><a href="#NIO" class="headerlink" title="NIO"></a>NIO</h1><p>   NIO主要包括三个核心部分，Chanel,Buffer和Selector,与传统的IO相比，IO是基于字节流和字符流的操作，<br>   而NIO基于通道和缓冲区，Selector监听通道事件，IO面向流，<br>   NIO面向缓冲区 IO的各种流是阻塞的。这意味着，当一个线程调用read() 或 write()时，该线程被阻塞，直到有一些数据被读取，或数据完全写入。<br>   该线程在此期间不能再干任何事情了。 NIO的非阻塞模式，使一个线程从某通道发送请求读取数据，但是它仅能得到目前可用的数据，如果目前没有数据可用时，就什么都不会获取。<br>   而不是保持线程阻塞，所以直至数据变的可以读取之前，该线程可以继续做其他的事情。 非阻塞写也是如此。一个线程请求写入一些数据到某通道，但不需要等待它完全写入，这个线程同时可以去做别的事情。</p>
+<h1 id="Oracle-数据库优化"><a href="#Oracle-数据库优化" class="headerlink" title="Oracle 数据库优化"></a>Oracle 数据库优化</h1><h2 id="where-语句优化-避免全表扫描"><a href="#where-语句优化-避免全表扫描" class="headerlink" title="where 语句优化  避免全表扫描"></a>where 语句优化  避免全表扫描</h2><ol>
+<li>查询操作避免全表扫描，在where条件和order by 条件上建立索引</li>
+<li>避免where条件的null判断和不等于(&lt;&gt;,!=)判断，以及or判断，会导致全表扫描,or语句可以拆分成unin all 语句</li>
+<li>对于连续的数字条件查询，使用between代替in</li>
+<li>where 条件避免字段做表达式操作和函数操作，应该拿到=右边操作条件</li>
+<li>where 语句条件避免@参数使用</li>
+<li>使用exist代替in</li>
+</ol>
+
         </div>
 
         <blockquote class="post-copyright">
@@ -428,7 +439,7 @@ wait()是Object类的方法，调用对象的wait()方法导致当前线程放�
             
                 <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
             
-            <span>本部落格係採用<a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh_TW">創用 CC 姓名標示 4.0 國際 授權條款授權</a></span>
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
         </p>
     </div>
     <div class="bottom">
